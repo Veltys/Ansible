@@ -15,6 +15,9 @@ Ansible master repository that contains a collection of different useful roles t
 - [ ] Create a to-do list
 
 ### [0.0.3] - 2023-02-18
+#### Added
+- **inventory** folder
+
 #### Fixed
 - **README.md** file format
 
