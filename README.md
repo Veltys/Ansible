@@ -14,13 +14,17 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.0.3] - 2023-02-18
+#### Fixed
+- **README.md** file format
+
 ### [0.0.2] - 2023-02-18
 #### Added
-- **.gitignore** creation
+- **.gitignore** file
 
 ### [0.0.1] - 2023-02-18
 #### Added
-- **README.md** creation
+- **README.md** file
 
 
 ## Acknowledgments, sources consulted and other credits
