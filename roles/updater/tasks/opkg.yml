@@ -1,0 +1,25 @@
+# Title         : opkg.yml
+# Description   : Updates the inventory OpenSPA based servers thanks to shell module
+# Author        : Veltys
+# Date          : 2023-02-18
+# Version       : 1.0.1
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Old ansible updater (opkg) for OpenSPA'
+  become: true
+  ansible.builtin.shell:
+    cmd: "opkg update"
+
+- name: 'Old ansible upgrader (opkg) for OpenSPA'
+  become: true
+  register: updatesys
+  ansible.builtin.shell:
+    cmd: "opkg upgrade"
+
+- name: 'Display the last line of the previous task if not empty'
+  ansible.builtin.debug:
+    msg: "{{ updatesys.stdout_lines }}"
+  when: updatesys.stdout_lines | length > 0
