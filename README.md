@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.0.4] - 2023-02-19
+#### Added
+- **secrets.tgz.gpg** encrypted secrets container
+
 ### [0.0.3] - 2023-02-18
 #### Added
 - **inventory** folder
