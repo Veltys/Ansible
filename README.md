@@ -14,10 +14,11 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.1.0] - 2023-02-18
+### [0.1.0] - 2023-02-19
 #### Added
 - **updater** role created from other repo content
 - **updater.yml** playbook
+- **updater.yml** executable permissions
 
 ### [0.0.4] - 2023-02-19
 #### Added
