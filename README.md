@@ -14,6 +14,12 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.0] - 2023-05-13
+#### Added
+- **confirm_facilities** role created based in other repo script
+- **confirm_facilities.yml** playbook
+- **confirm_facilities.yml** executable permissions
+
 ### [0.2.2] - 2023-05-13
 #### Fixed
 - Updater role

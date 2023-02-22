@@ -1,0 +1,26 @@
+# Title         : main.yml
+# Description   : Confirm facilities main role file
+# Author        : Veltys
+# Date          : 2023-05-13
+# Version       : 1.0.0
+# Usage         : (imported as a role by those playbooks which need it)
+# Notes         : 
+
+
+---
+- name: 'Copy required files'
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ files }}"
+
+- name: 'Confirmation by aliases'
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ general_aliases_file }}"
+    state: present
+    create: true
+    line: "{{ item }}"
+  loop: "{{ general_aliases }}"
