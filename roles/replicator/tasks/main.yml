@@ -1,0 +1,21 @@
+# Title         : main.yml
+# Description   : Replicator role main tasks file
+# Author        : Veltys
+# Date          : 2023-02-22
+# Version       : 1.0.0
+# Usage         : (imported as a role by those playbooks which need it)
+# Notes         : 
+
+
+---
+- name: 'Moodle switcher'
+  block:
+    - ansible.builtin.import_tasks: "{{ mode }}.yml"
+
+  rescue:
+  - name: 'Inform about the error'
+    debug:
+      msg: '''mode'' parameter is requiered but not given or is wrong. Please, provide a valid mode, cannot continue.'
+
+  - name: 'Stop playbook execution'
+    meta: end_play

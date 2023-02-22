@@ -14,6 +14,11 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.2.0] - 2023-02-22
+#### Added
+- **replicator** role generated partially from other repo content
+- **replicator_clone.yml** playbook
+
 ### [0.1.0] - 2023-02-19
 #### Added
 - **updater** role created from other repo content

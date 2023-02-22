@@ -1,0 +1,155 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : clonar.yml
+# Description   : Ansible playbook to clean up the test environment and cloning the production one
+# Author        : Veltys
+# Date          : 2023-02-19
+# Version       : 2.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Package web and database'
+  tags:
+    - files
+    - compress
+
+  block:
+    - name: 'Delete files if exist'
+      ansible.builtin.file:
+        dest: [
+          "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}.{{ ext }}"
+        ]
+        state: absent
+
+    - name: 'Export database'
+      community.mysql.mysql_db:
+        state: dump
+        login_user: "{{ bbdd_user }}"
+        login_password: "{{ bbdd_password }}"
+        name: "{{ bbdd_bbdd }}"
+        target: "{{ directory }}/{{ web }}/{{ bbdd }}"
+
+    - name: 'Compress'
+      community.general.archive:
+        path: [
+          "{{ directory }}/{{ web }}/{{ web_dirs[0] }}",
+          "{{ directory }}/{{ web }}/{{ web_dirs[1] }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}"
+        ]
+        dest: "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
+
+
+- name: 'Download files'
+  tags:
+    - transfer
+
+  block:
+    - name: 'Download compressed file'
+      ansible.builtin.fetch:
+        src: "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
+        dest: "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
+        flat: true
+
+
+- name: 'Uncompress files'
+  delegate_to: localhost
+  tags:
+    - files
+    - uncompress
+
+  block:
+    - name: 'Delete files if exist'
+      ansible.builtin.file:
+        dest: [
+          "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}.{{ ext }}"
+        ]
+        state: absent
+
+    - name: 'Delete directories if exist'
+      # become: true
+      ansible.builtin.file:
+        dest: [
+          "{{ directory }}/{{ web }}/{{ web_dirs[0] }}",
+          "{{ directory }}/{{ web }}/{{ web_dirs[1] }}"
+        ]
+        state: absent
+
+    - name: 'Uncompress'
+      # become: true
+      ansible.builtin.unarchive:
+        src: "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
+        dest: "{{ directory }}/{{ web }}/"
+
+
+- name: 'Deploy'
+  delegate_to: localhost
+  tags:
+    - files
+    - deploy
+
+  block:
+    - name: 'Change permissions'
+      become: true
+      ansible.builtin.file:
+        path: [
+          "{{ directorio }}/{{ web }}/{{ web_dirs[0] }}",
+          "{{ directorio }}/{{ web }}/{{ web_dirs[1] }}"
+        ]
+        state: directory
+        recurse: true
+        owner: www-data
+        group: www-data
+
+    - name: 'Clean database'
+      community.mysql.mysql_db:
+        state: absent
+        login_user: "{{ bbdd_user }}"
+        login_password: "{{ bbdd_password }}"
+        name: "{{ bbdd_bbdd }}"
+
+    - name: 'Create database'
+      community.mysql.mysql_db:
+        state: present
+        login_user: "{{ bbdd_user }}"
+        login_password: "{{ bbdd_password }}"
+        name: "{{ bbdd_bbdd }}"
+
+    - name: 'Restore database'
+      community.mysql.mysql_db:
+        state: import
+        login_user: "{{ bbdd_user }}"
+        login_password: "{{ bbdd_password }}"
+        name: "{{ bbdd_bbdd }}"
+        target: "{{ directorio }}/{{ web }}/{{ bbdd }}"
+
+
+- name: 'Clean'
+  tags:
+    - files
+    - clean
+
+  block:
+    - name: 'Delete files if exist'
+      ansible.builtin.file:
+        dest: [
+          "{{ directorio }}/{{ web }}/{{ web }}.{{ ext }}",
+          "{{ directorio }}/{{ web }}/{{ bbdd }}",
+          "{{ directorio }}/{{ web }}/{{ bbdd }}.{{ ext }}"
+        ]
+        state: absent
+
+    - name: 'Delete files if exist'
+      delegate_to: localhost
+      ansible.builtin.file:
+        dest: [
+          "{{ directorio }}/{{ web }}/{{ web }}.{{ ext }}",
+          "{{ directorio }}/{{ web }}/{{ bbdd }}",
+          "{{ directorio }}/{{ web }}/{{ bbdd }}.{{ ext }}"
+        ]
+        state: absent

@@ -1,0 +1,45 @@
+# Title         : main.yml
+# Description   : Replicator role main tasks file
+# Author        : Veltys
+# Date          : 2023-02-23
+# Version       : 0.1.0
+# Usage         : (imported as a role by those playbooks which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Load vars'
+  tags:
+    - clean
+    - cloner
+    - deploy
+    - files
+    - compress
+    - transfer
+    - uncompress
+    - updater
+
+  block:
+    - name: 'Load common vars'
+      ansible.builtin.include_vars: vars/common.yml
+    - name: 'Load client vars'
+      ansible.builtin.include_vars: vars/{{ client }}.yml
+
+  rescue:
+  - name: 'Inform about the error'
+    debug:
+      msg: 'Client ''{{ client }}'' supplied is not valid. Please, provide a valid client, cannot continue.'
+
+  - name: 'Stop playbook execution'
+    meta: end_play
+
+
+- name: 'Moodle cloner'
+  tags:
+    - cloner
+  ansible.builtin.import_tasks: cloner.yml
+
+#- name: 'Moodle updater'
+#  tags:
+#    - updater
+#  ansible.builtin.import_tasks: updater.yml
