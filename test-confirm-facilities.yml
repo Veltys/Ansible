@@ -1,0 +1,51 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : test-confirm-facilities.yml
+# Description   : Ansible Confirm facilities deploy test
+# Author        : rafael.mendez
+# Date          : 2023-02-22
+# Version       : 3.0.0
+# Usage         : ansible-playbook test-confirm-facilities.yml | sh test-confirm-facilities.yml | bash test-confirm-facilities.yml | ./test-confirm-facilities.yml
+# Notes         : 
+
+
+---
+- name: 'Global vars definition'
+  gather_facts: false
+  hosts: [
+    localhost,
+    all,
+  ]
+  vars_prompt:
+    - name: entorno
+      prompt: 'Seleccione entorno: ¿Pruebas o producción? [P/r]'
+      private: false
+  tasks:
+    - name: 'Setting environment'
+      ansible.builtin.set_fact:
+        DEBUG: "{{ ((entorno[0] | default('p') | lower) == 'r') | ternary(false, true) }}"
+
+- name: 'Confirm facilities deploy'
+  gather_facts: false
+  hosts: [
+    localhost,
+    all,
+  ]
+#  pre_tasks:
+#    - ansible.builtin.setup:
+#      when: not (DEBUG | default(true) | bool)
+  roles: 
+    - role: confirm_facilities
+      when: not DEBUG
+
+- name: 'Confirm facilities test'
+  gather_facts: false
+  hosts: [
+    pl_*,
+  ]
+#  pre_tasks:
+#    - ansible.builtin.setup:
+#      when: (DEBUG | default(true) | bool)
+  roles: 
+    - role: confirm_facilities
+      when: DEBUG

@@ -1,0 +1,20 @@
+# Title         : global.yml
+# Description   : Confirm facilities global vars file
+# Author        : rafael.mendez
+# Date          : 2023-02-21
+# Version       : 1.0.0
+# Usage         : (imported as a var file by those playbooks, roles, etc. which need it)
+# Notes         : 
+
+
+files					: [
+  { src: 'confirm.sh'			, dest: '/usr/local/bin/confirm'	, mode: '0777' },
+]
+general_aliases			: [
+  'alias crontab=''crontab -i''',
+  'alias poweroff=''/usr/local/bin/confirm poweroff''',
+  'alias reboot=''/usr/local/bin/confirm reboot''',
+  'alias shutdown=''/usr/local/bin/confirm shutdown''',
+  'alias sudo=''sudo ''',
+]
+general_aliases_file	: '/etc/profile.d/00-aliases.sh'
