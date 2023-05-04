@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Title         : informe.sh
+# Description   : Informe diario del estado del sistema
+# Author        : Veltys
+# Date          : 2023-04-28
+# Version       : 1.0.1
+# Usage         : (Añadir a la crontab) | bash informe.sh | ./informe.sh
+# Notes         : Requiere el programa mutt instalado y configurado
+
+
+correo='{{ host.mailers.correo }}'												# Replaced by Ansible
+
+temperaturas={{ host.mailers.temperaturas | lower }}							# Replaced by Ansible
+
+mensaje="Informe diario de $(uname -n), correspondiente al $(date):
+
+$(cat /var/log/health.log)
+"
+
+
+if "$temperaturas"; then
+	mensaje="${mensaje}
+
+$(/usr/local/bin/grafico_temperaturas.sh{{ host.mailers.sonda_dht11 | ternary(' -t', '') }} /var/log/health.log)
+"
+fi
+
+
+echo "$mensaje" | mutt -s "$(whoami)@$(uname -n): informe diario" "${correo}"
+
+truncate -s 0 /var/log/health.log

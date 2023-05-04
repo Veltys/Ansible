@@ -1,0 +1,90 @@
+# Title         : main.yml
+# Description   : Installer role main vars file
+# Author        : Veltys
+# Date          : 2023-05-05
+# Version       : 1.2.2
+# Usage         : (imported as a var file by those playbooks, roles, etc. which need it)
+# Notes         : 
+
+
+backup				: {
+  crontab_entries	: [
+    { job: '/usr/local/bin/backup.sh'				, name: 'Weekly backup'									, minute		: '0'		, hour	: '5'	, weekday	: '0'	 },
+    { job: '/usr/local/bin/clean_old_backups.sh'	, name: 'Monthly cleanup of old backups'				, minute		: '0'		, hour	: '8'	, day		: '1'	 },
+  ],
+  scripts			: [
+    { src: 'backup'						, dest: '/usr/local/bin'			, mode: '0744' },
+    { src: 'clean_old_backups'			, dest: '/usr/local/bin'			, mode: '0744' },
+  ],
+  templates			: [
+    { src: 'backup'						, dest: '/etc'						, mode: '0644' },
+  ],
+}
+cleaner				: {
+  packages			: [ 'dphys-swapfile' ],
+}
+dynamic_dns			: {
+  crontab_entries	: [
+    { job: '/usr/local/bin/dynamic_dns_updater.sh'	, name: 'Dynamic IP update (1/2)'						, special_time	: 'reboot'										 },
+    { job: '/usr/local/bin/dynamic_dns_updater.sh'	, name: 'Dynamic IP update (2/2)'						, minute		: '0,30'										 },
+  ],
+  templates			: [
+    { src: 'dynamic_dns_updater.sh'		, dest: '/usr/local/bin'			, mode: '0700' },
+  ],
+}
+env					: {
+  bashrc			: [
+    { line: '\1'	, regexp: '^#(force_color_prompt=yes)$'					 },
+    { line: '\1\2'	, regexp: '^(\s*)#(alias dir=''dir --color=auto'')$'	 },
+    { line: '\1\2'	, regexp: '^(\s*)#(#alias vdir=''vdir --color=auto'')$'	 },
+    { line: '\1'	, regexp: '^#(export GCC_COLORS=.*)$'					 },
+    { line: '\1'	, regexp: '^#(alias ll=.*)$'			 				 },
+    { line: '\1'	, regexp: '^#(alias la=.*)$'			 				 },
+    { line: '\1'	, regexp: '^#(alias l=.*)$'			 					 },
+  ],
+}
+locale				: {
+  packages			: [
+    { distro: [ 'centos'			 ]	, packages: [ 'man-pages-es', 'man-pages-es-extra'	 ]	, },
+    { distro: [ 'debian', 'ubuntu'	 ]	, packages: [ 'manpages-es'							 ]	, },
+    { distro: [ 'suse'				 ]	, packages: [ 'man-pages-es'						 ]	, },
+  ],
+}
+kde				: {
+  packages			: [
+    { distro: [ 'centos'	 ]	, groups	: [ 'kde-desktop'		 ]	, },
+    { distro: [ 'debian'	 ]	, packages	: [ 'kde-full'			 ]	, },
+    { distro: [ 'suse'		 ]	, patterns	: [ 'kde', 'kde_plasma'	 ]	, },
+    { distro: [ 'ubuntu'	 ]	, packages	: [ 'kubuntu-desktop'	 ]	, },
+  ],
+}
+mailers				: {
+  crontab_entries	: [
+    { job: '/usr/local/bin/informe.sh'				, name: 'Daily sending and deletion of the health log'	, minute		: '59'		, hour	: '23'						 },
+    { job: '/usr/local/bin/reinicio.sh'				, name: 'Warning in case of reboot'						, special_time	: 'reboot'										 },
+  ],
+  scripts			: [],
+  scripts_extra		: [
+    { src: 'grafico_temperaturas.sh'	, dest: '/usr/local/bin'			, mode: '0755' },
+  ],
+  templates			: [
+    { src: '.muttrc'					, dest: "/home/{{ ansible_user }}"	, mode: '0600' },
+  ],
+  templates_root	: [
+    { src: 'informe.sh'					, dest: '/usr/local/bin'			, mode: '0755' },
+    { src: 'reinicio.sh'				, dest: '/usr/local/bin'			, mode: '0755' },
+  ],
+}
+ntp					: {
+  file				: '/etc/ntp.conf',
+  servers			: [ 'hora.roa.es' ],
+}
+ssh_directory		: "/home/{{ ansible_user }}/.ssh"
+ssh_keys			: {
+  ssh_keys			: [
+    { src: "{{ general.name }}"			, dest: "{{ ssh_directory }}"			, mode: '0600' },
+  ],
+  other_files		: [
+    { src: 'authorized_keys'			, dest: "{{ ssh_directory }}"			, mode: '0644' },
+  ],
+}

@@ -1,0 +1,42 @@
+# Title         : motd.yml
+# Description   : Configures a fancy MOTD
+# Author        : Veltys
+# Date          : 2023-04-28
+# Version       : 1.0.2
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+# Notes         : Designed to be executed in a loop
+
+
+---
+- name: 'Copy required files'
+  tags:
+    - configuration
+    - motd
+  ansible.builtin.copy:
+    src: "files/MOTD/{{ inner_item }}.sh"
+    dest: "/etc/update-motd.d/{{ inner_item }}"
+    mode: '0755'
+  loop: "{{ item.parts }}"
+  loop_control:
+    loop_var: inner_item
+
+- name: 'Install required packages'
+  tags:
+    - configuration
+    - motd
+  ansible.builtin.package:
+    name: "{{ item.packages }}"
+    state: present
+  when: item.packages | length > 0
+
+- name: 'Execute MOTD requirements'
+  tags:
+    - configuration
+    - motd
+  ignore_errors: True															# When a one-time operation is required, subsequent operations may fail
+  ansible.builtin.command:
+    cmd: "{{ inner_item }}"
+  loop: "{{ item.req }}"
+  loop_control:
+    loop_var: inner_item

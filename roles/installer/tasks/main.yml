@@ -1,0 +1,145 @@
+# Title         : main.yml
+# Description   : Installer role main file
+# Author        : Veltys
+# Date          : 2023-05-04
+# Version       : 1.0.3
+# Usage         : (imported as a role by those playbooks which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Password changer'
+  tags:
+    - configuration
+    - passwords
+  ansible.builtin.import_tasks: configurers/passwords.yml
+
+- name: 'Include updater role'
+  tags:
+    - installation
+    - update
+  ansible.builtin.include_role:
+    name: updater
+
+- name: 'General installer'
+  tags:
+    - installation
+    - packages
+  ansible.builtin.import_tasks: installers/general.yml
+
+- name: 'MOTD configurer'
+  tags:
+    - configuration
+    - motd
+  ansible.builtin.include_tasks: configurers/motd.yml
+  loop: "{{ [ common.motd ] + [ group.motd ] + [ host.motd ] }}"
+  when: host.motd.enabled
+
+- name: 'NTP configurer'
+  tags:
+    - configuration
+    - ntp
+  ansible.builtin.import_tasks: configurers/ntp.yml
+  when: "
+    'ntp' in common.packages_to_install or
+    'ntp' in group.packages_to_install or
+    'ntp' in host.packages_to_install
+    "
+
+- name: 'General cleaner'
+  tags:
+    - installation
+    - cleaner
+  ansible.builtin.import_tasks: installers/cleaner.yml
+
+- name: 'IPv6 configurer'
+  tags:
+    - configuration
+    - ipv6
+  ansible.builtin.import_tasks: configurers/ipv6.yml
+  when: ipv6_config | default(False)
+
+- name: 'Firewall configurer'
+  tags:
+    - configuration
+    - firewall
+  ansible.builtin.import_tasks: configurers/firewall.yml
+  when: "
+    'ufw' in common.packages_to_install or
+    'ufw' in group.packages_to_install or
+    'ufw' in host.packages_to_install
+    "
+
+- name: 'Dynamic DNS configurer'
+  tags:
+    - configuration
+    - dynamic_dns
+  ansible.builtin.import_tasks: configurers/dynamic_dns.yml
+  when: host.dynamic_dns.hosts | length > 0
+
+- name: 'Backup configurer'
+  tags:
+    - configuration
+    - backup
+  ansible.builtin.import_tasks: configurers/backup.yml
+  when: "
+    'duplicity' in common.packages_to_install or
+    'duplicity' in group.packages_to_install or
+    'duplicity' in host.packages_to_install
+    "
+
+- name: 'Mailers configurer'
+  tags:
+    - configuration
+    - mailers
+  ansible.builtin.import_tasks: configurers/mailers.yml
+  when: "
+    ('mutt' in common.packages_to_install and 'gpgsm' in common.packages_to_install) or
+    ('mutt' in group.packages_to_install and 'gpgsm' in group.packages_to_install) or
+    ('mutt' in host.packages_to_install and 'gpgsm' in host.packages_to_install)
+    "
+
+- name: 'SSH keys configurer'
+  tags:
+    - configuration
+    - ssh_keys
+  ansible.builtin.import_tasks: configurers/ssh_keys.yml
+
+- name: 'Environment customizer'
+  tags:
+    - customization
+    - environment
+  ansible.builtin.import_tasks: customizers/environment.yml
+
+- name: 'fstab configurer'
+  tags:
+    - configuration
+    - fstab
+  ansible.builtin.import_tasks: configurers/fstab.yml
+
+- name: 'crontab configurer'
+  tags:
+    - configuration
+    - crontab
+  ansible.builtin.import_tasks: configurers/crontab.yml
+
+- name: 'Spanish locale installer'
+  tags:
+    - installation
+    - locale
+  ansible.builtin.import_tasks: installers/locale.yml
+
+- name: 'KDE installer'
+  tags:
+    - installation
+    - kde
+  ansible.builtin.import_tasks: installers/kde.yml
+  when: common.kde.install or
+    group.kde.install or
+    host.kde.install
+
+- name: 'Warnings informer'
+  tags:
+    - informer
+    - warnings
+  ansible.builtin.import_tasks: informers/warnings.yml

@@ -1,0 +1,40 @@
+# Title         : environment.yml
+# Description   : Customize some environment variables
+# Author        : Veltys
+# Date          : 2023-04-28
+# Version       : 1.2.1
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : 
+
+
+---
+- name: 'Enable some interesting facilities'
+  become: False
+  ansible.builtin.lineinfile:
+    backrefs: True
+    path: '~/.bashrc'
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop: "{{ env.bashrc }}"
+
+- name: 'Enable SSH agent'
+  become: False
+  ansible.builtin.blockinfile:
+    insertbefore: 'EOF'
+    block: |
+      # Añadir clave(s) SSH al agente
+      eval $(ssh-agent)
+      ssh-add ~/.ssh/id_rsa
+    path: '~/.bashrc'
+  when:
+    common.env.ssh_agent or
+    group.env.ssh_agent or
+    host.env.ssh_agent
+
+- name: 'Add other useful aliases'
+  become: False
+  ansible.builtin.lineinfile:
+    line: "alias {{ item.name }}='{{ item.command }}'"
+    path: '~/.bash_aliases'
+    regexp: '^( )*alias {{ item.name }}=''{{ item.command }}'''
+  loop: "{{ common.env.aliases + group.env.aliases + host.env.aliases }}"

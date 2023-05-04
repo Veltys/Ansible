@@ -1,0 +1,40 @@
+# Title         : ssh_keys.yml
+# Description   : Configures the SSH keys
+# Author        : Veltys
+# Date          : 2023-04-28
+# Version       : 1.0.5
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : 
+
+
+---
+- name: 'Create ~/.ssh directory'
+  become: False
+  ansible.builtin.file:
+    path: "{{ ssh_directory }}"
+    state: directory
+    mode: '0700'
+
+- name: 'Copy required files (1/2)'
+  become: False
+  ansible.builtin.copy:
+    src: "ssh_keys/{{ item[0].src }}.{{ item[1] }}"
+    dest: "{{ item[0].dest }}/{{ item[0].src }}.{{ item[1] }}"
+    mode: "{{ item[0].mode }}"
+  loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
+
+- name: 'Copy required files (2/2)'
+  become: False
+  ansible.builtin.copy:
+    src: "ssh_keys/{{ item.src }}"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ ssh_keys.other_files }}"
+
+- name: 'Make soft links'
+  become: False
+  ansible.builtin.file:
+    src: "{{ item[0].dest }}/{{ item[0].src }}.{{ item[1] }}"
+    dest: "{{ item[0].dest }}/id_rsa{{ (item[1] == 'pem') | ternary('', '.' + item[1]) }}"
+    state: link
+  loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
