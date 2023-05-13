@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2023-05-04
-# Version       : 1.0.3
+# Date          : 2023-05-06
+# Version       : 1.0.4
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -18,6 +18,8 @@
   tags:
     - installation
     - update
+  vars:
+    netdata_build: 'N'
   ansible.builtin.include_role:
     name: updater
 
