@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.2.1] - 2023-05-13
+#### Fixed
+- Internally host accessing when available
+
 ### [0.2.0] - 2023-05-13
 #### Added
 - **installer** role created based in other repo script
