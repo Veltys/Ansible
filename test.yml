@@ -1,0 +1,19 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : test.yml
+# Description   : Basic Ansible ping test
+# Author        : rafael.mendez
+# Date          : 2023-03-21
+# Version       : 1.1.2
+# Usage         : ansible-playbook test.yml | sh test.yml | bash test.yml | ./test.yml
+# Notes         : 
+
+
+---
+- name: 'Test'
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: 'Ping'
+    ansible.builtin.ping:
