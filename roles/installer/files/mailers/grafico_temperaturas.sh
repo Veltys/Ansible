@@ -1,0 +1,1 @@
+../grafico_temperaturas/grafico_temperaturas.sh

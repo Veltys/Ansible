@@ -14,10 +14,42 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.2.0] - 2023-02-22
+### [0.4.0] - 2023-05-23
 #### Added
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
+
+### [0.3.3] - 2023-05-19
+#### Fixed
+- Error if ~/.bash_aliases doesn't exist
+
+### [0.3.2] - 2023-05-19
+#### Added
+- New server
+
+### [0.3.1] - 2023-05-13
+#### Deleted
+- An ansible-incompatible server from inventory
+
+### [0.3.0] - 2023-05-13
+#### Added
+- **confirm_facilities** role created based in other repo script
+- **confirm_facilities.yml** playbook
+- **confirm_facilities.yml** executable permissions
+
+### [0.2.2] - 2023-05-13
+#### Fixed
+- Updater role
+
+### [0.2.1] - 2023-05-13
+#### Fixed
+- Internally host accessing when available
+
+### [0.2.0] - 2023-05-13
+#### Added
+- **installer** role created based in other repo script
+- **installer.yml** playbook
+- **installer.yml** executable permissions
 
 ### [0.1.0] - 2023-02-19
 #### Added

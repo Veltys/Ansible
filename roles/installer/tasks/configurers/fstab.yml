@@ -1,0 +1,95 @@
+# Title         : fstab.yml
+# Description   : Configure fstab
+# Author        : Veltys
+# Date          : 2023-04-28
+# Version       : 1.1.2
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Copy required templates'
+  no_log: True																	# Password hidden, please!
+  ansible.builtin.template:
+    src: 'fstab/smbcredentials.j2'
+    dest: "/root/.smbcredentials_{{ item.user }}"
+    mode: '0600'
+  loop: "{{ common.fstab.cifs + group.fstab.cifs + host.fstab.cifs }}"
+
+- name: 'fstab configurer for CIFS mounts'
+  no_log: True																	# Password hidden, please!
+  block:
+
+  - name: 'Comment in fstab for CIFS mounts'
+    lineinfile:
+      insertbefore: 'EOF'
+      line: '# CIFS mounted folders'
+      path: '/etc/fstab'
+
+  - name: 'Entries in fstab for CIFS mounts'
+    ansible.posix.mount:
+      src: "//{{ item.0.addr }}/{{ item.1.name }}"
+      path: "{{ item.1.dest }}"
+      fstype: 'cifs'
+      opts: "credentials=/root/.smbcredentials_{{ item.0.user }},iocharset=utf8,nofail,file_mode=0777,dir_mode=0777,vers=3.0,x-systemd.automount"
+      dump: '0'
+      passno: '0'
+      state: 'mounted'
+    loop: "{{ common.fstab.cifs | subelements('folders') + group.fstab.cifs | subelements('folders') + host.fstab.cifs | subelements('folders') }}"
+    loop_control:
+      label: "{{ item.1.name }}"
+
+  when: "
+    ('cifs-utils' in common.packages_to_install) or
+    ('cifs-utils' in group.packages_to_install) or
+    ('cifs-utils' in host.packages_to_install)
+    "
+
+- name: 'fstab configurer for SSHFS mounts'
+  block:
+
+  - name: 'Comment in fstab for SSHFS mounts'
+    lineinfile:
+      insertbefore: 'EOF'
+      line: '# SSHFS mounted folders'
+      path: '/etc/fstab'
+
+  - name: 'Caculate key hash for SSHFS mounts'
+    changed_when: False
+    delegate_to: localhost
+    run_once: True
+    ansible.builtin.shell:
+#     cmd: "echo -n '[{{ item.addr }}]:{{ item.port }}' | openssl sha1 -mac HMAC -macopt hexkey:$(echo {{ item.ssh_key.salt }} | base64 -d | xxd -p) | awk '{print $2}' | xxd -r -p | base64"
+      cmd: "echo -n '{{ item.addr }}' | openssl sha1 -mac HMAC -macopt hexkey:$(echo {{ item.ssh_key.salt }} | base64 -d | xxd -p) | awk '{print $2}' | xxd -r -p | base64"
+    register: ssh_hashes
+    loop: "{{ common.fstab.sshfs + group.fstab.sshfs + host.fstab.sshfs }}"
+    loop_control:
+      label: "{{ item.addr }}"
+
+  - name: 'Add entries in know_hosts for SSHFS mounts'
+    ansible.builtin.known_hosts:
+      path: '/root/.ssh/known_hosts'
+      name: "{{ item.0.addr }}"
+      key: "|1|{{ item.0.ssh_key.salt }}|{{ item.1.stdout }} {{ item.0.ssh_key.ssh_key }}"
+    loop: "{{ common.fstab.sshfs + group.fstab.sshfs + host.fstab.sshfs | zip(ssh_hashes.results) }}"
+    loop_control:
+      label: "{{ item.0.addr }}"
+
+  - name: 'Entries in fstab for SSHFS mounts'
+    ansible.posix.mount:
+      src: "{{ item.0.user }}@{{ item.0.addr }}:{{ item.1.dest }}"
+      path: "{{ item.1.dest }}"
+      fstype: 'fuse.sshfs'
+      opts: "allow_other,IdentityFile={{ ssh_directory }}/id_rsa"
+      dump: '0'
+      passno: '0'
+      state: 'mounted'
+    loop: "{{ common.fstab.sshfs | subelements('folders') + group.fstab.sshfs | subelements('folders') + host.fstab.sshfs | subelements('folders') }}"
+    loop_control:
+      label: "{{ item.1.name }}"
+
+  when: "
+    ('sshfs' in common.packages_to_install) or
+    ('sshfs' in group.packages_to_install) or
+    ('sshfs' in host.packages_to_install)
+    "

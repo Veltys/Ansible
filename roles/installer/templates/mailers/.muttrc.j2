@@ -1,0 +1,12 @@
+set from = "{{ host.mailers.correo }}"
+set realname = "{{ general.name }}"
+set imap_user = "{{ common.mailers.imap_user }}"
+set imap_pass = "{{ host.mailers.imap_password }}"
+set folder = "{{ common.mailers.folder }}"
+set spoolfile = "{{ common.mailers.spoolfile }}"
+set postponed ="{{ common.mailers.postponed }}"
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set certificate_file = ~/.mutt/certificates
+set smtp_url = "{{ common.mailers.smtp_url }}"
+set smtp_pass = "{{ host.mailers.imap_password }}"

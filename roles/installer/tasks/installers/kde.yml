@@ -1,0 +1,59 @@
+# Title         : kde.yml
+# Description   : Install KDE
+# Author        : Veltys
+# Date          : 2023-03-22
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Debian-based installer'
+  block:
+  - name: 'Find required packages'
+    ansible.builtin.set_fact:
+      packages_to_install: "{{
+        kde.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
+        map(attribute='packages') | list | flatten }}"
+
+  - name: 'Install required packages'
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ packages_to_install }}"
+
+  when:
+    ansible_facts.distribution | lower == 'ubuntu' or
+    ansible_facts.distribution | lower == 'debian'
+
+- name: 'Centos installer'
+  block:
+  - name: 'Find required groups'
+    ansible.builtin.set_fact:
+      groups_to_install: "{{
+        kde.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
+        map(attribute='groups') | list | flatten }}"
+
+  - name: 'Install required groups'
+    ansible.builtin.dnf:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ groups_to_install }}"
+
+  when: ansible_facts.distribution | lower == 'centos'
+
+- name: 'SUSE installer'
+  block:
+  - name: 'Find required patterns'
+    ansible.builtin.set_fact:
+      patterns_to_install: "{{
+        kde.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
+        map(attribute='patterns') | list | flatten }}"
+
+  - name: 'Install required groups'
+    community.general.zypper:
+      name: "{{ item }}"
+      type: pattern
+    loop: "{{ patterns_to_install }}"
+
+  when: "'SUSE' in ansible_facts['distribution'] | lower()"

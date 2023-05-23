@@ -1,0 +1,59 @@
+# Title         : mailers.yml
+# Description   : Configure mailers
+# Author        : Veltys
+# Date          : 2023-04-28
+# Version       : 1.2.1
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Update git submodule'
+  become: False
+  delegate_to: localhost
+  run_once: True
+  ansible.builtin.command:
+    cmd: 'git submodule update --init'
+
+- name: 'Copy required files'
+  ansible.builtin.copy:
+    src: "mailers/{{ item.src }}"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ mailers.scripts }}"
+
+- name: 'Copy extra files'
+  ansible.builtin.copy:
+    src: "mailers/{{ item.src }}"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ mailers.scripts_extra }}"
+  when: host_id in groups['rpis']
+
+- name: 'Copy required templates'
+  become: False
+  ansible.builtin.template:
+    src: "mailers/{{ item.src }}.j2"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ mailers.templates }}"
+
+- name: 'Copy root templates'
+  ansible.builtin.template:
+    src: "mailers/{{ item.src }}.j2"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ mailers.templates_root }}"
+
+- name: 'Installing crontabs'
+  become: False
+  ansible.builtin.cron:
+    job: "{{ item.job }}"
+    name: "{{ item.name }}"
+    minute: "{{ item.minute | default(omit) }}"
+    hour: "{{ item.hour | default(omit) }}"
+    day: "{{ item.day | default(omit) }}"
+    month: "{{ item.month | default(omit) }}"
+    weekday: "{{ item.weekday | default(omit) }}"
+    special_time: "{{ item.special_time | default(omit) }}"
+  loop: "{{ mailers.crontab_entries }}"

@@ -1,0 +1,21 @@
+# Title         : main.yml
+# Description   : Confirm facilities main vars file
+# Author        : Veltys
+# Date          : 2023-05-13
+# Version       : 1.0.1
+# Usage         : (imported as a var file by those playbooks, roles, etc. which need it)
+# Notes         : 
+
+
+confirm_bin_path		: '/usr/local/bin/confirm'
+files					: [
+  { src: 'confirm.sh'			, dest: "{{ confirm_bin_path }}"	, mode: '0777' },
+]
+general_aliases			: [
+  'alias crontab=''crontab -i''',
+  "alias poweroff='{{ confirm_bin_path }} poweroff'",
+  "alias reboot='{{ confirm_bin_path }} reboot'",
+  "alias shutdown='{{ confirm_bin_path }} shutdown'",
+  'alias sudo=''sudo ''',
+]
+general_aliases_file	: '/etc/profile.d/00-aliases.sh'

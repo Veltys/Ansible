@@ -1,0 +1,27 @@
+# Title         : locale.yml
+# Description   : Install Spanish locale
+# Author        : Veltys
+# Date          : 2023-03-22
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Spanish locale installer'
+  community.general.locale_gen:
+    name: 'es_ES.UTF-8'
+    state: present
+
+- name: 'Find required packages'
+  ansible.builtin.set_fact:
+    packages_to_install: "{{
+      locale.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
+      map(attribute='packages') | list | flatten }}"
+
+- name: 'Install required packages'
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  register: installation
+  loop: "{{ packages_to_install }}"
