@@ -3,7 +3,7 @@
 # Title         : clonar.yml
 # Description   : Ansible playbook to clean up the test environment and cloning the production one
 # Author        : Veltys
-# Date          : 2023-02-19
+# Date          : 2023-05-24
 # Version       : 2.0.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
@@ -51,11 +51,12 @@
     - name: 'Download compressed file'
       ansible.builtin.fetch:
         src: "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
-        dest: "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
+        dest: "/tmp/{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
         flat: true
 
 
 - name: 'Uncompress files'
+  become: true
   delegate_to: localhost
   tags:
     - files
@@ -72,7 +73,6 @@
         state: absent
 
     - name: 'Delete directories if exist'
-      # become: true
       ansible.builtin.file:
         dest: [
           "{{ directory }}/{{ web }}/{{ web_dirs[0] }}",
@@ -81,9 +81,8 @@
         state: absent
 
     - name: 'Uncompress'
-      # become: true
       ansible.builtin.unarchive:
-        src: "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
+        src: "/tmp/{{ directory }}/{{ web }}/{{ web }}.{{ ext }}"
         dest: "{{ directory }}/{{ web }}/"
 
 
@@ -98,13 +97,13 @@
       become: true
       ansible.builtin.file:
         path: [
-          "{{ directorio }}/{{ web }}/{{ web_dirs[0] }}",
-          "{{ directorio }}/{{ web }}/{{ web_dirs[1] }}"
+          "{{ directory }}/{{ web }}/{{ web_dirs[0] }}",
+          "{{ directory }}/{{ web }}/{{ web_dirs[1] }}"
         ]
         state: directory
         recurse: true
-        owner: www-data
-        group: www-data
+        owner: 'www-data'
+        group: 'www-data'
 
     - name: 'Clean database'
       community.mysql.mysql_db:
@@ -145,10 +144,11 @@
         state: absent
 
     - name: 'Delete files if exist'
+      become: true
       delegate_to: localhost
       ansible.builtin.file:
         dest: [
-          "{{ directorio }}/{{ web }}/{{ web }}.{{ ext }}",
+          "/tmp/{{ directory }}/{{ web }}/{{ web }}.{{ ext }}",
           "{{ directorio }}/{{ web }}/{{ bbdd }}",
           "{{ directorio }}/{{ web }}/{{ bbdd }}.{{ ext }}"
         ]

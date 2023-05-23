@@ -1,0 +1,47 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : replicator_clone_iuppiter_atlas.yml
+# Description   : Playbook to start the Replicator role in clone mode
+# Author        : Veltys
+# Date          : 2023-05-23
+# Version       : 1.0.0
+# Usage         : ansible-playbook replicator_clone_iuppiter_atlas.yml | sh replicator_clone_iuppiter_atlas.yml | bash replicator_clone_iuppiter_atlas.yml | ./replicator_clone_iuppiter_atlas.yml
+# Notes         : It is necessary to be super user for it to work correctly, and also it is necessary to become it (become, do you get it?)
+
+
+---
+#- name: 'Ensure properly user'
+#  gather_facts: false
+#  hosts: localhost
+#  tags:
+#    - clean
+#    - cloner
+#    - deploy
+#    - files
+#    - compress
+#    - transfer
+#    - uncompress
+#    - updater
+#  tasks:
+#    - name: 'Check who am I'
+#      register: whoami
+#      ansible.builtin.shell:
+#        cmd: 'whoami'
+#
+#    - name: 'Fail if I am not www-data or root'
+#      ansible.builtin.fail:
+#        msg: >
+#          This script must be run as www-data or root user
+#          Current user is {{ whoami.stdout }}
+#          Please use sudo -u www-data ansible-playbook replicator_clone.yml or a similar way to run this playbook
+#      when: whoami.stdout != 'root' and whoami.stdout != 'www-data'
+
+
+- name: 'Run replicator role in ''clone to test env'' mode'
+  hosts: iuppiter
+
+  roles:
+  - role: replicator
+    vars:
+      client: 'atlas'
+      mode: 'clone'
