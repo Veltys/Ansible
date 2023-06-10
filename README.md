@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.4] - 2023-06-10
+#### Added
+- **installer** role now calls **confirm_facilities** role
+
 ### [0.3.3] - 2023-05-19
 #### Fixed
 - Error if ~/.bash_aliases doesn't exist
