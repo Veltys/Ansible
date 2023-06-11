@@ -3,8 +3,8 @@
 # Title         : clonar.yml
 # Description   : Ansible playbook to clean up the test environment and cloning the production one
 # Author        : Veltys
-# Date          : 2023-05-24
-# Version       : 2.0.0
+# Date          : 2023-06-11
+# Version       : 2.0.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -125,7 +125,7 @@
         login_user: "{{ bbdd_user }}"
         login_password: "{{ bbdd_password }}"
         name: "{{ bbdd_bbdd }}"
-        target: "{{ directorio }}/{{ web }}/{{ bbdd }}"
+        target: "{{ directory }}/{{ web }}/{{ bbdd }}"
 
 
 - name: 'Clean'
@@ -137,9 +137,9 @@
     - name: 'Delete files if exist'
       ansible.builtin.file:
         dest: [
-          "{{ directorio }}/{{ web }}/{{ web }}.{{ ext }}",
-          "{{ directorio }}/{{ web }}/{{ bbdd }}",
-          "{{ directorio }}/{{ web }}/{{ bbdd }}.{{ ext }}"
+          "{{ directory }}/{{ web }}/{{ web }}.{{ ext }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}.{{ ext }}"
         ]
         state: absent
 
@@ -149,7 +149,7 @@
       ansible.builtin.file:
         dest: [
           "/tmp/{{ directory }}/{{ web }}/{{ web }}.{{ ext }}",
-          "{{ directorio }}/{{ web }}/{{ bbdd }}",
-          "{{ directorio }}/{{ web }}/{{ bbdd }}.{{ ext }}"
+          "{{ directory }}/{{ web }}/{{ bbdd }}",
+          "{{ directory }}/{{ web }}/{{ bbdd }}.{{ ext }}"
         ]
         state: absent
