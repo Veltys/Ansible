@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.6] - 2023-06-11
+#### Added
+- Crontab entry for *Uranus*
+
 ### [0.3.5] - 2023-06-10
 #### Fixed
 - **confirm_facilities** role compatibility tags
