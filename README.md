@@ -19,6 +19,14 @@ Ansible master repository that contains a collection of different useful roles t
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
 
+### [0.3.7] - 2023-06-13
+#### Added
+- New server
+
+### [0.3.6] - 2023-06-11
+#### Added
+- Crontab entry for *Uranus*
+
 ### [0.3.6] - 2023-06-11
 #### Added
 - Crontab entry for *Uranus*
