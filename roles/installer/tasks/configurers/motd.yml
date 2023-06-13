@@ -14,10 +14,22 @@
     - configuration
     - motd
   ansible.builtin.copy:
-    src: "files/MOTD/{{ inner_item }}.sh"
+    src: "MOTD/{{ inner_item }}.sh"
     dest: "/etc/update-motd.d/{{ inner_item }}"
     mode: '0755'
-  loop: "{{ item.parts }}"
+  loop: "{{ item.files }}"
+  loop_control:
+    loop_var: inner_item
+
+- name: 'Copy required templates'
+  tags:
+    - configuration
+    - motd
+  ansible.builtin.template:
+    src: "MOTD/{{ inner_item }}.sh"
+    dest: "/etc/update-motd.d/{{ inner_item }}"
+    mode: '0755'
+  loop: "{{ item.templates }}"
   loop_control:
     loop_var: inner_item
 

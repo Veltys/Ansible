@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.8] - 2023-06-13
+#### Added
+- Template support for MOTD
+
 ### [0.3.7] - 2023-06-13
 #### Added
 - New server
