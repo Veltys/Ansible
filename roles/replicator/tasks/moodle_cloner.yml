@@ -4,7 +4,7 @@
 # Description   : Ansible playbook to clean up the test environment and cloning the production one
 # Author        : Veltys
 # Date          : 2023-06-13
-# Version       : 2.0.2
+# Version       : 2.0.3
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -97,14 +97,15 @@
     - name: 'Change permissions'
       become: true
       ansible.builtin.file:
-        path: [
-          "{{ directory }}/{{ web }}/{{ web_dirs[0] }}",
-          "{{ directory }}/{{ web }}/{{ web_dirs[1] }}"
-        ]
+        path: "{{ item }}"
         state: directory
         recurse: true
         owner: 'www-data'
         group: 'www-data'
+      loop: [
+          "{{ directory }}/{{ web }}/{{ web_dirs[0] }}",
+          "{{ directory }}/{{ web }}/{{ web_dirs[1] }}"
+        ]
 
     - name: 'Clean database'
       community.mysql.mysql_db:
