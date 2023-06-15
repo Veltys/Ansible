@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2023-06-10
-# Version       : 1.1.0
+# Date          : 2023-06-15
+# Version       : 1.1.1
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -33,8 +33,9 @@
   tags:
     - configuration
     - motd
-  ansible.builtin.include_tasks: configurers/motd.yml
-  loop: "{{ [ common.motd ] + [ group.motd ] + [ host.motd ] }}"
+  ansible.builtin.import_tasks: configurers/motd.yml
+  vars:
+    motd: "{{ common.motd | combine(group.motd, host.motd, list_merge = 'append', recursive = true) }}"
   when: host.motd.enabled
 
 - name: 'NTP configurer'

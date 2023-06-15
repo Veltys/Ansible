@@ -11,7 +11,7 @@
 
 cache=/tmp/weather.cache
 
-command="curl \"es.wttr.in/{{ item.location | default('') }}?0&m\""
+command="curl \"es.wttr.in/{{ motd.location | default('') }}?0&m\""
 
 exptime=21600 # 6 (horas) * 60 (minutos) * 60 (segundos)
 
