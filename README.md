@@ -14,6 +14,9 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.12] - 2023-07-20
+#### Added
+- New server
 ### [0.3.11] - 2023-07-20
 #### Fixed
 - User and password variables for Dynamic DNS are now group variables
