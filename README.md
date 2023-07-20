@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.10] - 2023-07-20
+#### Fixed
+- Loop index var in Dynamic DNS template
+
 ### [0.3.9] - 2023-06-15
 #### Fixed
 - MOTD var iteration
