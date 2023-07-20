@@ -19,6 +19,18 @@ Ansible master repository that contains a collection of different useful roles t
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
 
+### [0.3.10] - 2023-07-20
+#### Fixed
+- Loop index var in Dynamic DNS template
+
+### [0.3.9] - 2023-06-15
+#### Fixed
+- MOTD var iteration
+
+### [0.3.8] - 2023-06-13
+#### Added
+- Template support for MOTD
+
 ### [0.3.7] - 2023-06-13
 #### Added
 - New server
