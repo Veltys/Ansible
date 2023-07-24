@@ -19,6 +19,7 @@ Ansible master repository that contains a collection of different useful roles t
 - Some weather MOTD location corrections
 - Temporary (or permanent, maybe) dynamic DNS name changes
 - **Eros** is a server now
+- FIX: More dynamic DNS hosts
 
 ### [0.3.12] - 2023-07-20
 #### Added
