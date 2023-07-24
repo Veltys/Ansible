@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.14] - 2023-07-24
+#### Added
+- Timezone configuration
+
 ### [0.3.13] - 2023-07-24
 #### Fixed
 - Some weather MOTD location corrections

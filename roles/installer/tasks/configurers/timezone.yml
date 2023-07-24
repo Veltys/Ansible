@@ -1,0 +1,13 @@
+# Title         : timezone.yml
+# Description   : Configures the timezone
+# Author        : Veltys
+# Date          : 2023-07-24
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Timezone configurer'
+  ansible.builtin.command:
+    cmd: 'timedatectl set-timezone Europe/Madrid'
