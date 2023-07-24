@@ -14,6 +14,11 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.13] - 2023-07-24
+#### Fixed
+- Some weather MOTD location corrections
+- Temporary (or permanent, maybe) dynamic DNS name changes
+
 ### [0.3.12] - 2023-07-20
 #### Added
 - New server
