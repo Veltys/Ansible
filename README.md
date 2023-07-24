@@ -19,6 +19,23 @@ Ansible master repository that contains a collection of different useful roles t
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
 
+### [0.3.13] - 2023-07-24
+#### Fixed
+- Some weather MOTD location corrections
+- Temporary (or permanent, maybe) dynamic DNS name changes
+- **Eros** is a server now
+- FIX: More dynamic DNS hosts
+
+### [0.3.12] - 2023-07-20
+#### Added
+- New server
+#### Fixed
+- Duplicated entry in **Changelog** section in **README.md**
+
+### [0.3.11] - 2023-07-20
+#### Fixed
+- User and password variables for Dynamic DNS are now group variables
+
 ### [0.3.10] - 2023-07-20
 #### Fixed
 - Loop index var in Dynamic DNS template
@@ -34,10 +51,6 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.7] - 2023-06-13
 #### Added
 - New server
-
-### [0.3.6] - 2023-06-11
-#### Added
-- Crontab entry for *Uranus*
 
 ### [0.3.6] - 2023-06-11
 #### Added
