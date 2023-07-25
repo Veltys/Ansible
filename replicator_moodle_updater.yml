@@ -1,0 +1,20 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : replicator_moodle_updater.yml
+# Description   : Playbook to start the Replicator role in Moodle updater mode
+# Author        : Veltys
+# Date          : 2023-07-25
+# Version       : 1.0.0
+# Usage         : ansible-playbook replicator_moodle_updater.yml | sh replicator_moodle_updater.yml | bash replicator_moodle_updater.yml | ./replicator_moodle_updater.yml
+# Notes         : It is necessary to be super user for it to work correctly, and also it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Replicator role in ''Moodle updater'' mode'
+  hosts: localhost
+
+  roles:
+  - role: replicator
+    vars:
+      client: 'atlas'
+      mode: 'moodle_updater'

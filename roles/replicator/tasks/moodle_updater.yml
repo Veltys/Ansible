@@ -1,0 +1,54 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : moodle_updater.yml
+# Description   : Replicator role moodle_updater tasks file
+# Author        : Veltys
+# Date          : 2023-07-25
+# Version       : 1.1.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Perform backup'
+  become: true
+  tags:
+    - files
+    - backup
+
+  # It is not possible to move it from Ansible, so shell
+  ansible.builtin.command:
+    cmd: "mv {{ directory }}/{{ web }}/{{ web_dirs[0] }} {{ directory }}/{{ web }}/{{ web_dirs[0] }}.bak"
+
+
+- name: 'New repo cloning'
+  become: true
+  tags:
+    - files
+    - clone
+
+  ansible.builtin.git:
+    repo: 'https://github.com/moodle/moodle.git'
+    dest: "{{ directory }}/{{ web }}/{{ web_dirs[0] }}"
+    version: "{{ moodle_version }}"
+
+
+- name: 'Files and directories copying'
+  become: true
+  tags:
+    - files
+    - copy
+
+  block:
+    - name: 'Basic items copy'
+      ansible.builtin.copy:
+        src: "{{ directory }}/{{ web }}/{{ web_dirs[0] }}.bak/{{ item.path }}/{{ item.object }}"
+        dest: "{{ directory }}/{{ web }}/{{ web_dirs[0] }}/{{ item.path }}"
+        remote_src: yes
+      loop: "{{ objects_to_copy }}"
+
+    - name: 'Rest of the directories copy'
+      ansible.builtin.copy:
+        src: "{{ directory }}/{{ web }}/{{ web_dirs[0] }}.bak/{{ objects_to_copy_recursively }}/"
+        dest: "{{ directory }}/{{ web }}/{{ web_dirs[0] }}/{{ objects_to_copy_recursively }}"
+        remote_src: yes
