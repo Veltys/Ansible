@@ -1,0 +1,20 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : replicator_cloner_iuppiter_atlas.yml
+# Description   : Playbook to start the Replicator role in Moodle cloner mode
+# Author        : Veltys
+# Date          : 2023-07-25
+# Version       : 1.0.1
+# Usage         : ansible-playbook replicator_cloner_iuppiter_atlas.yml | sh replicator_cloner_iuppiter_atlas.yml | bash replicator_cloner_iuppiter_atlas.yml | ./replicator_cloner_iuppiter_atlas.yml
+# Notes         : It is necessary to be super user for it to work correctly, and also it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Replicator role in ''Moodle cloner to test env'' mode'
+  hosts: iuppiter
+
+  roles:
+  - role: replicator
+    vars:
+      client: 'atlas'
+      mode: 'moodle_cloner'
