@@ -1,0 +1,12 @@
+user='{{ group.dynamic_dns.user }}'
+password='{{ group.dynamic_dns.password }}'
+
+{% for h in host.dynamic_dns.hosts -%}
+	hosts[{{ loop.index0 }}]='{{ h }}'{{ "\n" }}
+{%- endfor %}
+
+url='{{ common.dynamic_dns.url }}'
+
+# Log
+log={{ host.dynamic_dns.log | lower }}
+log_file='{{ common.dynamic_dns.log_file }}'
