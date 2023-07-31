@@ -17,6 +17,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.15] - 2023-07-31
 #### Fixed
 - Dynamic DNS change
+- Host IP change
 
 ### [0.3.14] - 2023-07-24
 #### Added
