@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.16] - 2023-07-31
+#### Fixed
+- Dynamic DNS configuration separated from script
+
 ### [0.3.15] - 2023-07-31
 #### Fixed
 - Dynamic DNS change

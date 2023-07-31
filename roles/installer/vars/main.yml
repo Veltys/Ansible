@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main vars file
 # Author        : Veltys
-# Date          : 2023-05-05
-# Version       : 1.2.2
+# Date          : 2023-07-31
+# Version       : 1.2.3
 # Usage         : (imported as a var file by those playbooks, roles, etc. which need it)
 # Notes         : 
 
@@ -28,8 +28,11 @@ dynamic_dns			: {
     { job: '/usr/local/bin/dynamic_dns_updater.sh'	, name: 'Dynamic IP update (1/2)'						, special_time	: 'reboot'										 },
     { job: '/usr/local/bin/dynamic_dns_updater.sh'	, name: 'Dynamic IP update (2/2)'						, minute		: '0,30'										 },
   ],
+  scripts			: [
+    { src: 'dynamic_dns_updater'		, dest: '/usr/local/bin'			, mode: '0744' },
+  ],
   templates			: [
-    { src: 'dynamic_dns_updater.sh'		, dest: '/usr/local/bin'			, mode: '0700' },
+    { src: 'dynamic_dns_updater'		, dest: '/etc'						, mode: '0600' },
   ],
 }
 env					: {
