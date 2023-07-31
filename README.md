@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.15] - 2023-07-31
+#### Fixed
+- Dynamic DNS change
+
 ### [0.3.14] - 2023-07-24
 #### Added
 - Timezone configuration
@@ -23,7 +27,7 @@ Ansible master repository that contains a collection of different useful roles t
 - Some weather MOTD location corrections
 - Temporary (or permanent, maybe) dynamic DNS name changes
 - **Eros** is a server now
-- FIX: More dynamic DNS hosts
+- More dynamic DNS hosts
 
 ### [0.3.12] - 2023-07-20
 #### Added
