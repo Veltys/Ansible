@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Confirm facilities main role file
 # Author        : Veltys
-# Date          : 2023-06-10
-# Version       : 1.0.1
+# Date          : 2023-08-01
+# Version       : 1.0.2
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : 
 
@@ -24,7 +24,7 @@
   - confirm_facilities
   ansible.builtin.lineinfile:
     path: "{{ general_aliases_file }}"
-    state: present
+    state: 'present'
     create: true
     line: "{{ item }}"
   loop: "{{ general_aliases }}"

@@ -1,8 +1,8 @@
 # Title         : environment.yml
 # Description   : Customize some environment variables
 # Author        : Veltys
-# Date          : 2023-05-19
-# Version       : 1.3.0
+# Date          : 2023-08-01
+# Version       : 1.3.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -35,7 +35,7 @@
   become: False
   ansible.builtin.file:
     path: '~/.bash_aliases'
-    state: touch
+    state: 'touch'
 
 - name: 'Add other useful aliases'
   become: False

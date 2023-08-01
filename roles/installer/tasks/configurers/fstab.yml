@@ -1,8 +1,8 @@
 # Title         : fstab.yml
 # Description   : Configure fstab
 # Author        : Veltys
-# Date          : 2023-04-28
-# Version       : 1.1.2
+# Date          : 2023-08-01
+# Version       : 1.2.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -65,6 +65,11 @@
     loop: "{{ common.fstab.sshfs + group.fstab.sshfs + host.fstab.sshfs }}"
     loop_control:
       label: "{{ item.addr }}"
+
+  - name: 'Ensure required directory existence'
+    ansible.builtin.file:
+      path: '/root/.ssh'
+      state: 'directory'
 
   - name: 'Add entries in know_hosts for SSHFS mounts'
     ansible.builtin.known_hosts:

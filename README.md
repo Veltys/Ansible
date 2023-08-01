@@ -19,6 +19,11 @@ Ansible master repository that contains a collection of different useful roles t
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
 
+### [0.3.17] - 2023-08-01
+#### Fixed
+- Some strings quotation
+- */root/.ssh* directory could not exist
+
 ### [0.3.16] - 2023-07-31
 #### Fixed
 - Dynamic DNS configuration separated from script
