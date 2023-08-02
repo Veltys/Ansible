@@ -4,7 +4,7 @@
 # Description   : Semi-automated playbook for Installation / configuration of Linux machines
 # Author        : Veltys
 # Date          : 2023-04-28
-# Version       : 1.0.1
+# Version       : 1.0.0
 # Usage         : ansible-playbook installer.yml | sh installer.yml | bash installer.yml | ./installer.yml
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 

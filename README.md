@@ -14,9 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.18] - 2023-08-02
+### [0.3.18] - 2023-08-14
 #### Added
 - Python installer
+- Apache2 configurer
 
 ### [0.3.17] - 2023-08-01
 #### Fixed

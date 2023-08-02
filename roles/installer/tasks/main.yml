@@ -119,6 +119,17 @@
     ('mutt' in host.packages_to_install.general and 'gpgsm' in host.packages_to_install.general)
     "
 
+- name: 'Apache configurer'
+  tags:
+    - configuration
+    - apache
+  ansible.builtin.import_tasks: configurers/apache.yml
+  when: "
+    ('apache2' in common.packages_to_install.general) or
+    ('apache2' in group.packages_to_install.general) or
+    ('apache2' in host.packages_to_install.general)
+    "
+
 - name: 'SSH keys configurer'
   tags:
     - configuration
