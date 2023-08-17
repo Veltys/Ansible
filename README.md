@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.20] - 2023-08-17
+#### Fixed
+- host_id var was suppressed
+
 ### [0.3.19] - 2023-08-14
 #### Added
 - New server (**Tellus**)
