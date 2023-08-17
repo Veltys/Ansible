@@ -1,0 +1,230 @@
+<VirtualHost *:80>
+	# The ServerName directive sets the request scheme, hostname and port that
+	# the server uses to identify itself. This is used when creating
+	# redirection URLs. In the context of virtual hosts, the ServerName
+	# specifies what hostname must appear in the request's Host: header to
+	# match this virtual host. For the default virtual host (this file) this
+	# value is not decisive as it is used as a last resort host regardless.
+	# However, you must set it for any further virtual host explicitly.
+	ServerName {{ item.site }}
+
+	ServerAdmin webmaster@veltys.es
+	DocumentRoot /var/www/vhosts/{{ item.site }}/httpdocs
+
+	# Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+	# error, crit, alert, emerg.
+	# It is also possible to configure the loglevel for particular
+	# modules, e.g.
+	#LogLevel info ssl:warn
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+	# For most configuration files from conf-available/, which are
+	# enabled or disabled at a global level, it is possible to
+	# include a line for only one particular virtual host. For example the
+	# following line enables the CGI configuration for this host only
+	# after it has been globally disabled with "a2disconf".
+	#Include conf-available/serve-cgi-bin.conf
+
+	{%- if not 'basic' in item.types %}{{ "\n" }}
+	<Directory "/var/www/vhosts/{{ item.site }}/httpdocs">
+		AllowOverride All
+	</Directory>
+
+	<Directory "/var/www/vhosts/{{ item.site }}/httpdocs/.well-known/acme-challenge">
+		# Require all granted
+		Order Deny,Allow
+		Allow from all
+		Satisfy any
+	</Directory>
+
+	<LocationMatch "^/.well-known/acme-challenge/(.*/|)\.">
+		# Require all denied
+		Order Allow,Deny
+		Deny from all
+	</LocationMatch>
+
+	<IfModule mod_ssl.c>
+		<IfModule mod_rewrite.c>
+			RewriteEngine On
+			RewriteCond %{HTTPS} off
+			RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,QSA]
+		</IfModule>
+	</IfModule>
+	{%- endif %}{{ "\n" -}}
+</VirtualHost>
+
+{%- if not 'basic' in item.types %}{{ "\n" }}
+<IfModule mod_ssl.c>
+	<VirtualHost *:443>
+		ServerName {{ item.site }}
+
+		<IfModule mod_headers.c>
+			Header always set Strict-Transport-Security "max-age=7776000; includeSubDomains; preload"
+		</IfModule>
+
+		ServerAdmin webmaster@veltys.es
+		DocumentRoot /var/www/vhosts/{{ item.site }}/httpdocs
+
+		ErrorLog ${APACHE_LOG_DIR}/error.log
+		CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+		<Directory "/var/www/vhosts/{{ item.site }}/httpdocs">
+			AllowOverride All
+		</Directory>
+
+		<Directory "/var/www/vhosts/{{ item.site }}/httpdocs/.well-known/acme-challenge">
+			# Require all granted
+			Order Deny,Allow
+			Allow from all
+			Satisfy any
+		</Directory>
+
+		<LocationMatch "^/.well-known/acme-challenge/(.*/|)\.">
+			# Require all denied
+			Order Allow,Deny
+			Deny from all
+		</LocationMatch>
+
+		SSLEngine on
+		SSLVerifyClient none
+		Include /etc/letsencrypt/options-ssl-apache.conf
+		SSLCertificateFile /etc/letsencrypt/live/{{ item.site }}/fullchain.pem
+		SSLCertificateKeyFile /etc/letsencrypt/live/{{ item.site }}/privkey.pem
+
+		{%- if 'proxy' in item.types %}{{ "\n\n\t\t" -}}
+		<IfModule mod_proxy.c>
+			{% if 'amp' in item.types -%}
+			SSLProxyEngine On
+			SSLProxyVerify None
+			SSLProxyCheckPeerCN Off
+			SSLProxyCheckPeerName Off
+			SSLProxyCheckPeerExpire Off
+			{{- "\n\n\t\t\t" }}{% endif -%}
+
+			<IfModule mod_proxy_http.c>
+				ProxyPass			"/.well-known"	!
+			{%- if 'amp' in item.types or 'tvheadend' in item.types %}{{ "\n" }}
+				<IfModule mod_proxy_wstunnel.c>{{ "\n" }}
+				{%- if 'amp' in item.types %}
+					ProxyPass			"/stream/"	"ws://{{ item.ip }}:8080/stream/"
+					ProxyPassReverse	"/stream/"	"wss://{{ item.ip }}:8080/stream/"
+				{%- elif 'tvheadend' in item.types %}
+					ProxyPass			"/comet/ws"	"ws://{{ item.ip }}:{{ item.port | default(80) }}/comet"
+					ProxyPassReverse	"/comet/ws"	"ws://{{ item.ip }}:{{ item.port | default(80) }}/comet"
+				{%- endif %}{{ "\n\t\t\t\t" -}}
+				</IfModule>{{ "\n" }}
+			{%- endif %}{{ "\n\t\t\t\t" -}}
+				ProxyPass			"/"				"http://{{ item.ip }}:{{ item.port | default(80) }}/"
+				ProxyPassReverse	"/"				"http://{{ item.ip }}:{{ item.port | default(80) }}/"
+			{%- if 'preserveHost' in item.types %}{{ "\n\t\t\t\t" -}}
+				ProxyPreserveHost	On
+			{%- endif -%}
+			{% if 'enigma2' in item.types or 'tvheadend' in item.types %}{{ "\n\n\t\t\t\t" -}}
+				<IfModule mod_substitute.c>
+					AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE audio/x-mpegurl
+					{% if 'enigma2' in item.types -%}
+					Substitute "s|http://(.*)@{{ item.ip }}:8001/|https://{{ item.site }}:8001/|i"
+					{%- elif 'tvheadend' in item.types -%}
+					Substitute "s|http://{{ item.ip }}:{{ item.port | default(80) }}/|https://{{ item.site }}/|i"
+					{%- endif %}{{ "\n\t\t\t\t" -}}
+				</IfModule>
+			{%- endif -%}
+
+			{%- if item.auth %}{{ "\n" }}
+				<IfModule mod_auth_basic.c>
+					<Proxy *>
+						AuthType Basic
+						AuthName "Acceso restringido"
+						AuthBasicProvider file
+						AuthUserFile "/var/www/vhosts/{{ item.site }}/passwords"
+
+				{%- if group.apache.local_auto_auth or group.apache.network_auto_auth %}{{ "\n" }}
+						<RequireAny>
+							Require valid-user
+					{% if group.apache.local_auto_auth %}{{ "\t\t" -}}
+							Require ip 127.0.0.1
+					{% endif -%}
+					{% if group.apache.network_auto_auth %}{{ "\t\t" -}}
+							Require ip 192.168.0.0/16
+					{%- endif %}{{ "\n\t\t\t\t\t\t" -}}
+						</RequireAny>
+				{%- else %}{{ "\n\t\t\t\t\t\t" -}}
+						Require valid-user
+				{%- endif %}{{ "\n\t\t\t\t\t" -}}
+					</Proxy>
+				</IfModule>
+			{%- endif %}{{ "\n\t\t\t" -}}
+			</IfModule>
+		</IfModule>
+		{{- "\n\t" }}{% else -%}
+			{% if item.auth -%}{{ "\n\n\t\t" -}}
+		<IfModule mod_auth_basic.c>
+			<Location />
+				AuthType Basic
+				AuthName "Acceso restringido"
+				AuthBasicProvider file
+				AuthUserFile "/var/www/vhosts/{{ item.site }}/passwords"
+
+				{%- if group.apache.local_auto_auth or group.apache.network_auto_auth %}{{ "\n" }}
+				<RequireAny>
+					Require valid-user
+					{% if group.apache.local_auto_auth -%}
+					Require ip 127.0.0.1
+					{% endif -%}
+					{% if group.apache.network_auto_auth -%}
+					Require ip 192.168.0.0/16
+					{%- endif %}{{ "\n\t\t\t\t" -}}
+				</RequireAny>
+				{%- else %}{{ "\n\t\t\t\t" -}}
+				Require valid-user
+				{%- endif %}{{ "\n\t\t\t" -}}
+			</Location>
+		</IfModule>
+			{%- endif %}
+		{{- "\n\t" }}{% endif -%}
+	</VirtualHost>
+</IfModule>
+{{- "\n" }}{% endif %}
+
+{%- if 'enigma2' in item.types %}{{ "\n" -}}
+<IfModule mod_ssl.c>
+	<VirtualHost *:8001>
+		ServerName {{ item.site }}
+
+		ServerAdmin webmaster@veltys.es
+		DocumentRoot /var/www/vhosts/{{ item.site }}/httpdocs
+
+		ErrorLog ${APACHE_LOG_DIR}/error-nike.log
+		CustomLog ${APACHE_LOG_DIR}/access-nike.log combined
+
+		SSLEngine on
+		SSLVerifyClient none
+		Include /etc/letsencrypt/options-ssl-apache.conf
+		SSLCertificateFile /etc/letsencrypt/live/{{ item.site }}/fullchain.pem
+		SSLCertificateKeyFile /etc/letsencrypt/live/{{ item.site }}/privkey.pem
+
+		<IfModule mod_proxy.c>
+			<IfModule mod_proxy_http.c>
+				ProxyPass			"/.well-known"	!
+				ProxyPass			"/"				"http://{{ item.ip }}:8001/"
+				ProxyPassReverse	"/"				"http://{{ item.ip }}:8001/"
+
+				<IfModule mod_auth_basic.c>
+					<Proxy *>
+						AuthType Basic
+						AuthName "Acceso restringido"
+						AuthBasicProvider file
+						AuthUserFile "/var/www/vhosts/{{ item.site }}/passwords"
+
+						Require valid-user
+					</Proxy>
+				</IfModule>
+			</IfModule>
+		</IfModule>
+	</VirtualHost>
+</IfModule>
+{{- "\n" }}{% endif %}{{ "\n" -}}
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet

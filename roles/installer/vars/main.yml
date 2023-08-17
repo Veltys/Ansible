@@ -46,19 +46,19 @@ env					: {
     { line: '\1'	, regexp: '^#(alias l=.*)$'			 					 },
   ],
 }
-locale				: {
-  packages			: [
-    { distro: [ 'centos'			 ]	, packages: [ 'man-pages-es', 'man-pages-es-extra'	 ]	, },
-    { distro: [ 'debian', 'ubuntu'	 ]	, packages: [ 'manpages-es'							 ]	, },
-    { distro: [ 'suse'				 ]	, packages: [ 'man-pages-es'						 ]	, },
-  ],
-}
 kde				: {
   packages			: [
     { distro: [ 'centos'	 ]	, groups	: [ 'kde-desktop'		 ]	, },
     { distro: [ 'debian'	 ]	, packages	: [ 'kde-full'			 ]	, },
     { distro: [ 'suse'		 ]	, patterns	: [ 'kde', 'kde_plasma'	 ]	, },
     { distro: [ 'ubuntu'	 ]	, packages	: [ 'kubuntu-desktop'	 ]	, },
+  ],
+}
+locale				: {
+  packages			: [
+    { distro: [ 'centos'			 ]	, packages: [ 'man-pages-es', 'man-pages-es-extra'	 ]	, },
+    { distro: [ 'debian', 'ubuntu'	 ]	, packages: [ 'manpages-es'							 ]	, },
+    { distro: [ 'suse'				 ]	, packages: [ 'man-pages-es'						 ]	, },
   ],
 }
 mailers				: {

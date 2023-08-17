@@ -19,6 +19,19 @@ Ansible master repository that contains a collection of different useful roles t
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
 
+### [0.3.20] - 2023-08-17
+#### Fixed
+- host_id var was suppressed
+
+### [0.3.19] - 2023-08-14
+#### Added
+- New server (**Tellus**)
+
+### [0.3.18] - 2023-08-14
+#### Added
+- Python installer
+- Apache2 configurer
+
 ### [0.3.17] - 2023-08-01
 #### Fixed
 - Some strings quotation
