@@ -14,9 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.21] - 2023-08-21
+### [0.3.21] - 2023-08-22
 #### Added
 - New server (**Xana**)<br />Missing key files for server are intentional, see next commit
+- Rescue block if SSH keys are not generated
 
 ### [0.3.20] - 2023-08-17
 #### Fixed
