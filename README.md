@@ -16,7 +16,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.21] - 2023-08-22
 #### Added
-- New server (**Xana**)<br />Missing key files for server are intentional, see next commit
+- New server (**Xana**)<br />Missing key files for server are intentional, see next commit<br />Now, keys can be generated with Ansible (and a little of help)
 - Rescue block if SSH keys are not generated
 
 ### [0.3.20] - 2023-08-17
