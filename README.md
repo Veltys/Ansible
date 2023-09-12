@@ -17,6 +17,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.22] - 2023-09-12
 #### Fixed
 - Configuration for redirections
+- New connection method
 
 ### [0.3.21] - 2023-08-22
 #### Added
