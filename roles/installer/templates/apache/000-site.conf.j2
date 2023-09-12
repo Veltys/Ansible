@@ -158,6 +158,11 @@
 			{%- endif %}{{ "\n\t\t\t" -}}
 			</IfModule>
 		</IfModule>
+		{{- "\n\t" }}{% elif 'redirect' in item.types %}{{ "\n\n\t\t" -}}
+		<IfModule mod_rewrite.c>
+			RewriteEngine On
+			RewriteRule ^ https://%{HTTP_HOST}:{{ item.port }}%{REQUEST_URI} [R=307,L,QSA]
+		</IfModule>
 		{{- "\n\t" }}{% else -%}
 			{% if item.auth -%}{{ "\n\n\t\t" -}}
 		<IfModule mod_auth_basic.c>
