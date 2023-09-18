@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.23] - 2023-09-18
+#### Fixed
+- New configuration for enigma2 proxifying
+
 ### [0.3.22] - 2023-09-12
 #### Fixed
 - Configuration for redirections

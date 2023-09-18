@@ -121,7 +121,9 @@
 			{%- if 'preserveHost' in item.types %}{{ "\n\t\t\t\t" -}}
 				ProxyPreserveHost	On
 			{%- endif -%}
-			{% if 'enigma2' in item.types or 'tvheadend' in item.types %}{{ "\n\n\t\t\t\t" -}}
+			{% if 'enigma2' in item.types or 'tvheadend' in item.types %}{{ "\n\t\t\t\t" -}}
+				ProxyAddHeaders		Off
+
 				<IfModule mod_substitute.c>
 					AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE audio/x-mpegurl
 					{% if 'enigma2' in item.types -%}
