@@ -1,23 +1,24 @@
 # Title         : locale.yml
 # Description   : Install Spanish locale
 # Author        : Veltys
-# Date          : 2023-08-01
-# Version       : 1.0.1
+# Date          : 2023-10-04
+# Version       : 1.1.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
-- name: 'Spanish locale installer'
-  community.general.locale_gen:
-    name: 'es_ES.UTF-8'
-    state: 'present'
+- name: 'Clean previous variables'
+  ansible.builtin.set_fact:
+    packages_to_install: []
 
 - name: 'Find required packages'
-  ansible.builtin.set_fact:
-    packages_to_install: "{{
-      locale.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
-      map(attribute='packages') | list | flatten }}"
+  ansible.builtin.include_tasks: ../configurers/packages_finder_loop.yml
+  loop: "{{ locale.packages }}"
+  loop_control:
+    index_var: i
+    label: "{{ locale.packages[i].distro }}"
+    loop_var: outer_item
 
 - name: 'Install required packages'
   ansible.builtin.package:
@@ -25,3 +26,24 @@
     state: 'present'
   register: installation
   loop: "{{ packages_to_install }}"
+
+- name: 'Spanish locale installer for Debian-based distros'
+  community.general.locale_gen:
+    name: 'es_ES.UTF-8'
+    state: 'present'
+  when: "
+    'debian' in ansible_facts['distribution'] | lower() or
+    'ubuntu' in ansible_facts['distribution'] | lower()
+    "
+
+- name: 'Spanish locale installer for CentOS and SUSE'
+  ansible.builtin.command:
+    cmd: "{{ item }}"
+  when: "
+    'centos' in ansible_facts['distribution'] | lower() or
+    'suse' in ansible_facts['distribution'] | lower()
+    "
+  loop: [
+    'localedef -c -i es_ES -f UTF-8 es_ES.UTF-8',
+    'localectl set-locale LANG=es_ES.UTF-8',
+  ]

@@ -1,8 +1,8 @@
 # Title         : ssh_keys.yml
 # Description   : Configures the SSH keys
 # Author        : Veltys
-# Date          : 2023-08-22
-# Version       : 1.1.0
+# Date          : 2023-10-03
+# Version       : 1.2.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -89,6 +89,8 @@
         mode: "{{ item[0].mode }}"
       loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
 
+  when: host.ssh_keys_config
+
 
 - name: 'Copy required files (2/2)'
   become: False
@@ -107,3 +109,4 @@
     dest: "{{ item[0].dest }}/id_rsa{{ (item[1] == 'pem') | ternary('', '.' + item[1]) }}"
     state: 'link'
   loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
+  when: host.ssh_keys_config

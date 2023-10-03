@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main vars file
 # Author        : Veltys
-# Date          : 2023-07-31
-# Version       : 1.2.3
+# Date          : 2023-10-04
+# Version       : 1.2.4
 # Usage         : (imported as a var file by those playbooks, roles, etc. which need it)
 # Notes         : 
 
@@ -48,17 +48,17 @@ env					: {
 }
 kde				: {
   packages			: [
-    { distro: [ 'centos'	 ]	, groups	: [ 'kde-desktop'		 ]	, },
+    { distro: [ 'centos'	 ]	, packages	: [ 'kde-desktop'		 ]	, },
     { distro: [ 'debian'	 ]	, packages	: [ 'kde-full'			 ]	, },
-    { distro: [ 'suse'		 ]	, patterns	: [ 'kde', 'kde_plasma'	 ]	, },
+    { distro: [ 'suse'		 ]	, packages	: [ 'kde', 'kde_plasma'	 ]	, },
     { distro: [ 'ubuntu'	 ]	, packages	: [ 'kubuntu-desktop'	 ]	, },
   ],
 }
 locale				: {
   packages			: [
-    { distro: [ 'centos'			 ]	, packages: [ 'man-pages-es', 'man-pages-es-extra'	 ]	, },
-    { distro: [ 'debian', 'ubuntu'	 ]	, packages: [ 'manpages-es'							 ]	, },
-    { distro: [ 'suse'				 ]	, packages: [ 'man-pages-es'						 ]	, },
+    { distro: [ 'centos'			 ]	, packages: [ 'glibc-locale-source', 'glibc-langpack-es'											 ]	, },
+    { distro: [ 'debian', 'ubuntu'	 ]	, packages: [ 												  'manpages-es'							 ]	, },
+    { distro: [ 'suse'				 ]	, packages: [ 'glibc-i18ndata'								, 'man-pages-es'						 ]	, },
   ],
 }
 mailers				: {

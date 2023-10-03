@@ -1,24 +1,38 @@
 # Title         : general.yml
 # Description   : Install required Python packages
 # Author        : Veltys
-# Date          : 2023-08-02
-# Version       : 1.0.0
+# Date          : 2023-10-03
+# Version       : 1.1.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
-- name: 'Common packages installer'
-  ansible.builtin.pip:
-    name: "{{ common.packages_to_install.python }}"
-    state: 'present'
+- name: 'Python installer'
+  block:
+  - name: 'Common packages installer'
+    ansible.builtin.pip:
+      name: "{{ common.packages_to_install.python }}"
+      state: 'present'
 
-- name: 'Group-specific packages installer'
-  ansible.builtin.pip:
-    name: "{{ group.packages_to_install.python }}"
-    state: 'present'
+  - name: 'Group-specific packages installer'
+    ansible.builtin.pip:
+      name: "{{ group.packages_to_install.python }}"
+      state: 'present'
 
-- name: 'Host-specific packages installer'
-  ansible.builtin.pip:
-    name: "{{ host.packages_to_install.python }}"
-    state: 'present'
+  - name: 'Host-specific packages installer'
+    ansible.builtin.pip:
+      name: "{{ host.packages_to_install.python }}"
+      state: 'present'
+
+  rescue:
+  - name: 'Manual installing required'
+    ansible.builtin.debug:
+      msg: "{{
+          ( 'It seems the Python installer cannot install automatically the required packages. Please, install them manually: (sudo) pip(3) --break-system-packages install' +
+            ' ' + common.packages_to_install.python | join(' ') +
+            ' ' + group.packages_to_install.python | join(' ') +
+            ' ' + host.packages_to_install.python | join(' ')
+          )
+          | regex_replace('( +)', ' ') | regex_replace('( +)$', '')
+        }}"

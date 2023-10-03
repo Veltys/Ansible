@@ -1,8 +1,8 @@
 # Title         : environment.yml
 # Description   : Customize some environment variables
 # Author        : Veltys
-# Date          : 2023-08-01
-# Version       : 1.3.1
+# Date          : 2023-10-03
+# Version       : 1.4.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -26,10 +26,7 @@
       eval $(ssh-agent)
       ssh-add ~/.ssh/id_rsa
     path: '~/.bashrc'
-  when:
-    common.env.ssh_agent or
-    group.env.ssh_agent or
-    host.env.ssh_agent
+  when: host.env.ssh_agent
 
 - name: 'Ensure required file existence'
   become: False

@@ -1,59 +1,46 @@
 # Title         : kde.yml
 # Description   : Install KDE
 # Author        : Veltys
-# Date          : 2023-08-01
-# Version       : 1.0.1
+# Date          : 2023-10-04
+# Version       : 1.1.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
+- name: 'Clean previous variables'
+  ansible.builtin.set_fact:
+    packages_to_install: []
+
+- name: 'Find required packages'
+  ansible.builtin.include_tasks: ../configurers/packages_finder_loop.yml
+  loop: "{{ kde.packages }}"
+  loop_control:
+    index_var: i
+    label: "{{ kde.packages[i].distro }}"
+    loop_var: outer_item
+
 - name: 'Debian-based installer'
-  block:
-  - name: 'Find required packages'
-    ansible.builtin.set_fact:
-      packages_to_install: "{{
-        kde.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
-        map(attribute='packages') | list | flatten }}"
-
-  - name: 'Install required packages'
-    ansible.builtin.package:
-      name: "{{ item }}"
-      state: 'present'
-    loop: "{{ packages_to_install }}"
-
-  when:
-    ansible_facts.distribution | lower == 'ubuntu' or
-    ansible_facts.distribution | lower == 'debian'
+  ansible.builtin.package:
+    name: "{{ packages_to_install }}"
+    state: 'present'
+  when: "
+    'debian' in ansible_facts['distribution'] | lower() or
+    'ubuntu' in ansible_facts['distribution'] | lower()
+    "
 
 - name: 'Centos installer'
-  block:
-  - name: 'Find required groups'
-    ansible.builtin.set_fact:
-      groups_to_install: "{{
-        kde.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
-        map(attribute='groups') | list | flatten }}"
-
-  - name: 'Install required groups'
-    ansible.builtin.dnf:
-      name: "{{ item }}"
-      state: 'present'
-    loop: "{{ groups_to_install }}"
-
-  when: ansible_facts.distribution | lower == 'centos'
+  ansible.builtin.dnf:
+    name: "{{ packages_to_install }}"
+    state: 'present'
+  when: "
+    'centos' in ansible_facts['distribution'] | lower()
+    "
 
 - name: 'SUSE installer'
-  block:
-  - name: 'Find required patterns'
-    ansible.builtin.set_fact:
-      patterns_to_install: "{{
-        kde.packages | selectattr('distro', 'contains', ansible_facts['distribution'] | lower) |
-        map(attribute='patterns') | list | flatten }}"
-
-  - name: 'Install required groups'
-    community.general.zypper:
-      name: "{{ item }}"
-      type: pattern
-    loop: "{{ patterns_to_install }}"
-
-  when: "'SUSE' in ansible_facts['distribution'] | lower()"
+  community.general.zypper:
+    name: "{{ packages_to_install }}"
+    type: pattern
+  when: "
+    'suse' in ansible_facts['distribution'] | lower()
+    "
