@@ -14,7 +14,11 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.24] - 2023-10-05
+### [0.3.24] - 2023-10-06
+#### Added
+- *btop* package for some hosts
+    - Debian and 32-bit Raspbian seems to be incompatible
+
 #### Fixed
 - Various optimizations
 
@@ -29,8 +33,11 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.21] - 2023-08-22
 #### Added
-- New server (**Xana**)<br />Missing key files for server are intentional, see next commit<br />Now, keys can be generated with Ansible (and a little of help)
+- New server (**Xana**)
+    - Missing key files for server are intentional, see next commit
+    - Now, keys can be generated with Ansible (and a little of help)
 - Rescue block if SSH keys are not generated
+
 #### Fixed
 - Change in public keys format
 
@@ -75,6 +82,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.12] - 2023-07-20
 #### Added
 - New server
+
 #### Fixed
 - Duplicated entry in **Changelog** section in **README.md**
 
