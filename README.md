@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.25] - 2023-10-15
+#### Fixed
+- Apache sites template variable names
+
 ### [0.3.24] - 2023-10-06
 #### Added
 - *btop* package for some hosts

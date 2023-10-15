@@ -1,3 +1,11 @@
+# Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
+# Description   : Apache virtualhost config file
+# Author        : Veltys
+# Date          : 2023-10-15
+# Version       : 1.9.0
+# Usage         : (automatically loaded by Apache if configured)
+# Notes         : Ansible-generated, do not manually edit
+
 <VirtualHost *:80>
 	# The ServerName directive sets the request scheme, hostname and port that
 	# the server uses to identify itself. This is used when creating
@@ -108,16 +116,16 @@
 			{%- if 'amp' in item.types or 'tvheadend' in item.types %}{{ "\n" }}
 				<IfModule mod_proxy_wstunnel.c>{{ "\n" }}
 				{%- if 'amp' in item.types %}
-					ProxyPass			"/stream/"	"ws://{{ item.ip }}:8080/stream/"
-					ProxyPassReverse	"/stream/"	"wss://{{ item.ip }}:8080/stream/"
+					ProxyPass			"/stream/"	"ws://{{ item.dest }}:8080/stream/"
+					ProxyPassReverse	"/stream/"	"wss://{{ item.dest }}:8080/stream/"
 				{%- elif 'tvheadend' in item.types %}
-					ProxyPass			"/comet/ws"	"ws://{{ item.ip }}:{{ item.port | default(80) }}/comet"
-					ProxyPassReverse	"/comet/ws"	"ws://{{ item.ip }}:{{ item.port | default(80) }}/comet"
+					ProxyPass			"/comet/ws"	"ws://{{ item.dest }}:{{ item.port | default(80) }}/comet"
+					ProxyPassReverse	"/comet/ws"	"ws://{{ item.dest }}:{{ item.port | default(80) }}/comet"
 				{%- endif %}{{ "\n\t\t\t\t" -}}
 				</IfModule>{{ "\n" }}
 			{%- endif %}{{ "\n\t\t\t\t" -}}
-				ProxyPass			"/"				"http://{{ item.ip }}:{{ item.port | default(80) }}/"
-				ProxyPassReverse	"/"				"http://{{ item.ip }}:{{ item.port | default(80) }}/"
+				ProxyPass			"/"				"http://{{ item.dest }}:{{ item.port | default(80) }}/"
+				ProxyPassReverse	"/"				"http://{{ item.dest }}:{{ item.port | default(80) }}/"
 			{%- if 'preserveHost' in item.types %}{{ "\n\t\t\t\t" -}}
 				ProxyPreserveHost	On
 			{%- endif -%}
@@ -127,9 +135,9 @@
 				<IfModule mod_substitute.c>
 					AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE audio/x-mpegurl
 					{% if 'enigma2' in item.types -%}
-					Substitute "s|http://(.*)@{{ item.ip }}:8001/|https://{{ item.site }}:8001/|i"
+					Substitute "s|http://(.*)@{{ item.dest }}:8001/|https://{{ item.site }}:8001/|i"
 					{%- elif 'tvheadend' in item.types -%}
-					Substitute "s|http://{{ item.ip }}:{{ item.port | default(80) }}/|https://{{ item.site }}/|i"
+					Substitute "s|http://{{ item.dest }}:{{ item.port | default(80) }}/|https://{{ item.site }}/|i"
 					{%- endif %}{{ "\n\t\t\t\t" -}}
 				</IfModule>
 			{%- endif -%}
@@ -163,7 +171,7 @@
 		{{- "\n\t" }}{% elif 'redirect' in item.types %}{{ "\n\n\t\t" -}}
 		<IfModule mod_rewrite.c>
 			RewriteEngine On
-			RewriteRule ^ https://%{HTTP_HOST}:{{ item.port }}%{REQUEST_URI} [R=307,L,QSA]
+			RewriteRule ^ https://{{ item.dest }}:{{ item.port | default(443) }}%{REQUEST_URI} [R=307,L,QSA]
 		</IfModule>
 		{{- "\n\t" }}{% else -%}
 			{% if item.auth -%}{{ "\n\n\t\t" -}}
@@ -215,8 +223,8 @@
 		<IfModule mod_proxy.c>
 			<IfModule mod_proxy_http.c>
 				ProxyPass			"/.well-known"	!
-				ProxyPass			"/"				"http://{{ item.ip }}:8001/"
-				ProxyPassReverse	"/"				"http://{{ item.ip }}:8001/"
+				ProxyPass			"/"				"http://{{ item.dest }}:8001/"
+				ProxyPassReverse	"/"				"http://{{ item.dest }}:8001/"
 
 				<IfModule mod_auth_basic.c>
 					<Proxy *>
