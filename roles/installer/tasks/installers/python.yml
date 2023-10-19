@@ -1,8 +1,8 @@
 # Title         : general.yml
 # Description   : Install required Python packages
 # Author        : Veltys
-# Date          : 2023-10-03
-# Version       : 1.1.0
+# Date          : 2023-10-19
+# Version       : 1.1.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -14,16 +14,19 @@
     ansible.builtin.pip:
       name: "{{ common.packages_to_install.python }}"
       state: 'present'
+    when: common.packages_to_install.python | length > 0
 
   - name: 'Group-specific packages installer'
     ansible.builtin.pip:
       name: "{{ group.packages_to_install.python }}"
       state: 'present'
+    when: group.packages_to_install.python | length > 0
 
   - name: 'Host-specific packages installer'
     ansible.builtin.pip:
       name: "{{ host.packages_to_install.python }}"
       state: 'present'
+    when: host.packages_to_install.python | length > 0
 
   rescue:
   - name: 'Manual installing required'

@@ -14,6 +14,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.27] - 2023-10-19
+#### Fixed
+- Various errors
+
 ### [0.3.26] - 2023-10-19
 #### Added
 - New server (**Carpo**)
