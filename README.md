@@ -20,6 +20,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - New connection method for SSH-mounted devices
+- Windows servers excluded from Linux playbooks
 
 ### [0.3.25] - 2023-10-15
 #### Fixed

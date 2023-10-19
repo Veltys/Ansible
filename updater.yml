@@ -3,8 +3,8 @@
 # Title         : updater.yml
 # Description   : Updates the inventory servers thanks to apt or another equivalent module, as well as other independent programs
 # Author        : Veltys
-# Date          : 2023-05-06
-# Version       : 3.0.1
+# Date          : 2023-10-19
+# Version       : 3.0.2
 # Usage         : ansible-playbook updater.yml | sh updater.yml | bash updater.yml | ./updater.yml
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -12,7 +12,7 @@
 ---
 - name: 'Updater'
   become: True
-  hosts: all
+  hosts: 'all:!windows'
   vars_prompt:
     - name: netdata_build
       prompt: 'Building Netdata would be a large process. Do you really want to build it? [y/N]'
