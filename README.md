@@ -17,6 +17,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.25] - 2023-10-15
 #### Fixed
 - Apache sites template variable names
+- New IP range in local network
 
 ### [0.3.24] - 2023-10-06
 #### Added
