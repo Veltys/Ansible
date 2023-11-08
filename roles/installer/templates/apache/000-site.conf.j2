@@ -1,8 +1,8 @@
 # Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
 # Description   : Apache virtualhost config file
 # Author        : Veltys
-# Date          : 2023-10-15
-# Version       : 1.9.0
+# Date          : 2023-11-08
+# Version       : 1.9.1
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -231,7 +231,7 @@
 						AuthType Basic
 						AuthName "Acceso restringido"
 						AuthBasicProvider file
-						AuthUserFile "/var/www/vhosts/{{ item.site }}/passwords"
+						AuthUserFile "/var/www/vhosts/{{ item.site }}/passwords-streaming"
 
 						Require valid-user
 					</Proxy>
