@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.29] - 2023-11-08
 #### Fixed
 - Some Apache configuration issues
+- Network reconfiguration
 
 ### [0.3.28] - 2023-10-30
 #### Added
