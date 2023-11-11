@@ -3,17 +3,25 @@
 # Title         : test.yml
 # Description   : Basic Ansible ping test
 # Author        : rafael.mendez
-# Date          : 2023-03-21
-# Version       : 1.1.2
+# Date          : 2023-10-19
+# Version       : 2.0.0
 # Usage         : ansible-playbook test.yml | sh test.yml | bash test.yml | ./test.yml
 # Notes         : 
 
 
 ---
-- name: 'Test'
-  hosts: all
+- name: 'Test GNU/Linux servers'
+  hosts: 'all:!windows'
   gather_facts: no
 
   tasks:
   - name: 'Ping'
     ansible.builtin.ping:
+
+- name: 'Test Microsoft Windows servers'
+  hosts: 'windows'
+  gather_facts: no
+
+  tasks:
+  - name: 'Ping'
+    ansible.builtin.win_ping:

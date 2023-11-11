@@ -1,7 +1,8 @@
 # Ansible
 [![GitHub commits](https://badgen.net/github/commits/Veltys/Ansible)](https://GitHub.com/Veltys/Ansible/commit/)
-[![GitHub latest commit](https://badgen.net/github/last-commit/Veltys/Ansible)](https://GitHub.com/Veltys/Ansible-apt/commit/)
+[![GitHub latest commit](https://badgen.net/github/last-commit/Veltys/Ansible)](https://GitHub.com/Veltys/Ansible/commit/)
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Veltys/Ansible/blob/master/LICENSE.md)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/891edd40bfb14decb9efedbf5ee5f6a9)](https://app.codacy.com/gh/Veltys/Ansible/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 Ansible master repository with different useful roles
 
@@ -18,6 +19,59 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
+
+### [0.3.29] - 2023-11-08
+#### Fixed
+- Some Apache configuration issues
+- Network reconfiguration
+
+### [0.3.28] - 2023-10-30
+#### Added
+- Codacy badge
+
+### [0.3.27] - 2023-10-19
+#### Fixed
+- Various errors
+
+### [0.3.26] - 2023-10-19
+#### Added
+- New server (**Carpo**)
+
+#### Fixed
+- New connection method for SSH-mounted devices
+- Windows servers excluded from Linux playbooks
+
+### [0.3.25] - 2023-10-15
+#### Fixed
+- Apache sites template variable names
+- New IP range in local network
+
+### [0.3.24] - 2023-10-06
+#### Added
+- *btop* package for some hosts
+    - Debian and 32-bit Raspbian seems to be incompatible
+
+#### Fixed
+- Various optimizations
+
+### [0.3.23] - 2023-09-18
+#### Fixed
+- New configuration for enigma2 proxifying
+
+### [0.3.22] - 2023-09-12
+#### Fixed
+- Configuration for redirections
+- New connection method
+
+### [0.3.21] - 2023-08-22
+#### Added
+- New server (**Xana**)
+    - Missing key files for server are intentional, see next commit
+    - Now, keys can be generated with Ansible (and a little of help)
+- Rescue block if SSH keys are not generated
+
+#### Fixed
+- Change in public keys format
 
 ### [0.3.20] - 2023-08-17
 #### Fixed
@@ -60,6 +114,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.12] - 2023-07-20
 #### Added
 - New server
+
 #### Fixed
 - Duplicated entry in **Changelog** section in **README.md**
 

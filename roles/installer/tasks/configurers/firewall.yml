@@ -1,8 +1,8 @@
 # Title         : ntp.yml
 # Description   : Configures the UFW firewall
 # Author        : Veltys
-# Date          : 2023-04-07
-# Version       : 1.0.2
+# Date          : 2023-09-13
+# Version       : 1.0.3
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -11,31 +11,31 @@
 - name: 'Common UFW rules configurer'
   community.general.ufw:
     comment: "{{ item.comment }}"
-    dest: "{{ item.dest }}"
-    rule: 'allow'
-    src: "{{ item.src }}"
-    port: "{{ item.port }}"
+    from_ip: "{{ item.src }}"
     proto: "{{ item.proto }}"
+    rule: 'allow'
+    to_ip: "{{ item.dest }}"
+    to_port: "{{ item.port }}"
   loop: "{{ common.ufw.rules }}"
 
 - name: 'Group-specific UFW rules configurer'
   community.general.ufw:
     comment: "{{ item.comment }}"
-    dest: "{{ item.dest }}"
-    rule: 'allow'
-    src: "{{ item.src }}"
-    port: "{{ item.port }}"
+    from_ip: "{{ item.src }}"
     proto: "{{ item.proto }}"
+    rule: 'allow'
+    to_ip: "{{ item.dest }}"
+    to_port: "{{ item.port }}"
   loop: "{{ group.ufw.rules }}"
 
 - name: 'Host-specific UFW rules configurer'
   community.general.ufw:
     comment: "{{ item.comment }}"
-    dest: "{{ item.dest }}"
-    rule: 'allow'
-    src: "{{ item.src }}"
-    port: "{{ item.port }}"
+    from_ip: "{{ item.src }}"
     proto: "{{ item.proto }}"
+    rule: 'allow'
+    to_ip: "{{ item.dest }}"
+    to_port: "{{ item.port }}"
   loop: "{{ host.ufw.rules }}"
 
 - name: 'UFW enabler'
