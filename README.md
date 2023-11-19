@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.30] - 2023-11-19
+#### Added
+- Deployer for authorized_keys file
+
 ### [0.3.29] - 2023-11-08
 #### Fixed
 - Some Apache configuration issues
