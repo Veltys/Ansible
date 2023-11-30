@@ -25,6 +25,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - Deployer for authorized_keys file with parameters
+- *Xana.pub* wrong public key file
 
 #### Deleted
 - Old servers (Neptuno, Tellus and Uranus)
