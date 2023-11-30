@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.31] - 2023-11-30
 #### Added
 - New key for GitHub deployments
+- Xana's server reverse proxy configuration
 
 #### Deleted
 - Old servers (Neptuno, Tellus and Uranus)
