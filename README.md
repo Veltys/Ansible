@@ -21,6 +21,9 @@ Ansible master repository that contains a collection of different useful roles t
 - Xana's server reverse proxy configuration
 - Xana's server website configuration
 
+#### Fixed
+- Deployer for authorized_keys file with parameters
+
 #### Deleted
 - Old servers (Neptuno, Tellus and Uranus)
 
