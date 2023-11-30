@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.31] - 2023-11-30
+#### Deleted
+- Old servers (Neptuno, Tellus and Uranus)
+
 ### [0.3.30] - 2023-11-20
 #### Added
 - Deployer for authorized_keys file
