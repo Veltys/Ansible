@@ -18,20 +18,22 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.32] - 2023-12-14
 #### Fixed
 - **Xana** server connectivity issues
+- **README.md** format
+
 ### [0.3.31] - 2023-11-30
 #### Added
 - New key for GitHub deployments
-- Xana's server reverse proxy configuration
-- Xana's server website configuration
-- Zelo's client streaming password
-- Tique's client streaming password
+- **Xana** server reverse proxy configuration
+- **Xana** server website configuration
+- **Zelo** client streaming password
+- **Tique** client streaming password
 
 #### Fixed
 - Deployer for authorized_keys file with parameters
 - *Xana.pub* wrong public key file
 
 #### Deleted
-- Old servers (Neptuno, Tellus and Uranus)
+- Old servers (**Neptuno**, **Tellus** and **Uranus**)
 - Unnecesary apache mods
 
 ### [0.3.30] - 2023-11-20
