@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.34] - 2023-12-21
 #### Added
 - Compatibility with 'www.' apache sites
+- Smarter reverse proxifying
 
 #### Fixed
 - Some **Ultra** sites need the new 'www' configuration

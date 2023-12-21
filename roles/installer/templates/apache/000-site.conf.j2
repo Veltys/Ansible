@@ -2,7 +2,7 @@
 # Description   : Apache virtualhost config file
 # Author        : Veltys
 # Date          : 2023-12-21
-# Version       : 1.9.2
+# Version       : 1.9.3
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -130,8 +130,8 @@
 				{%- endif %}{{ "\n\t\t\t\t" -}}
 				</IfModule>{{ "\n" }}
 			{%- endif %}{{ "\n\t\t\t\t" -}}
-				ProxyPass			"/"				"http://{{ item.dest }}:{{ item.port | default(80) }}/"
-				ProxyPassReverse	"/"				"http://{{ item.dest }}:{{ item.port | default(80) }}/"
+				ProxyPass			"/"				"http{% if item.port | default(80) == 443 %}s{% endif %}://{{ item.dest }}:{{ item.port | default(80) }}/"
+				ProxyPassReverse	"/"				"http{% if item.port | default(80) == 443 %}s{% endif %}://{{ item.dest }}:{{ item.port | default(80) }}/"
 			{%- if 'preserveHost' in item.types %}{{ "\n\t\t\t\t" -}}
 				ProxyPreserveHost	On
 			{%- endif -%}
