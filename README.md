@@ -22,6 +22,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - Some **Ultra** sites need the new 'www' configuration
 - Some **Xana** sites need the new 'www' configuration
+- Some **Ultra** sites need extra configuration
 
 #### Deleted
 - Obsolete configuration
