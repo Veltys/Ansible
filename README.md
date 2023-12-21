@@ -19,6 +19,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - Compatibility with 'www.' apache sites
 - Smarter reverse proxifying
+- SSL reverse proxifying
 
 #### Fixed
 - Some **Ultra** sites need the new 'www' configuration

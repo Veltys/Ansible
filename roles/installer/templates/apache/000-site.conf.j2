@@ -2,7 +2,7 @@
 # Description   : Apache virtualhost config file
 # Author        : Veltys
 # Date          : 2023-12-21
-# Version       : 1.9.3
+# Version       : 1.9.4
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -109,8 +109,10 @@
 
 		{%- if 'proxy' in item.types %}{{ "\n\n\t\t" -}}
 		<IfModule mod_proxy.c>
-			{% if 'amp' in item.types -%}
-			SSLProxyEngine On
+		{%- if 'amp' in item.types or item.port | default(80) == 443 -%}{{ "\n\t\t\t" -}}
+			SSLProxyEngine on
+		{%- endif %}{{ "\n\t\t\t" -}}
+		{% if 'amp' in item.types -%}
 			SSLProxyVerify None
 			SSLProxyCheckPeerCN Off
 			SSLProxyCheckPeerName Off
