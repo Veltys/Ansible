@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.35] - 2024-01-21
+#### Fixed
+- DDNS various errors
+
 ### [0.3.34] - 2023-12-21
 #### Added
 - Compatibility with 'www.' apache sites
