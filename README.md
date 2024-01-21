@@ -16,6 +16,9 @@ Ansible master repository that contains a collection of different useful roles t
 - [ ] Create a to-do list
 
 ### [0.3.35] - 2024-01-21
+#### Added
+- Scripts for Passport system
+
 #### Fixed
 - DDNS various errors
 

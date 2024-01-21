@@ -1,0 +1,6 @@
+SLEEP_TIME=5
+
+url='https://{{ common.passport.user }}:{{ common.passport.password }}@{{ common.passport.server }}/{{ common.passport.petition | default('') }}'
+
+# Log
+log={{ host.passport.log | lower }}
