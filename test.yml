@@ -2,7 +2,7 @@
 
 # Title         : test.yml
 # Description   : Basic Ansible ping test
-# Author        : rafael.mendez
+# Author        : Veltys
 # Date          : 2023-10-19
 # Version       : 2.0.0
 # Usage         : ansible-playbook test.yml | sh test.yml | bash test.yml | ./test.yml
