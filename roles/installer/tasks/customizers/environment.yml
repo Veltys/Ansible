@@ -1,8 +1,8 @@
 # Title         : environment.yml
 # Description   : Customize some environment variables
 # Author        : Veltys
-# Date          : 2023-10-03
-# Version       : 1.4.0
+# Date          : 2023-11-20
+# Version       : 1.4.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -24,7 +24,7 @@
     block: |
       # Añadir clave(s) SSH al agente
       eval $(ssh-agent)
-      ssh-add ~/.ssh/id_rsa
+      ssh-add ~/.ssh/id_ed25519
     path: '~/.bashrc'
   when: host.env.ssh_agent
 

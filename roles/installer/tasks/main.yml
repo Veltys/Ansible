@@ -107,6 +107,13 @@
   ansible.builtin.import_tasks: configurers/dynamic_dns.yml
   when: host.dynamic_dns.hosts | length > 0
 
+- name: 'Passport system configurer'
+  tags:
+    - configuration
+    - passport
+  ansible.builtin.import_tasks: configurers/passport.yml
+  when: host.passport.enabled
+
 - name: 'Backup configurer'
   tags:
     - configuration

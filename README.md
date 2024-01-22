@@ -20,6 +20,64 @@ Ansible master repository that contains a collection of different useful roles t
 - **replicator** role generated partially from other repo content
 - **replicator_clone.yml** playbook
 
+### [0.3.35] - 2024-01-21
+#### Added
+- Scripts for Passport system
+
+#### Fixed
+- DDNS various errors
+
+### [0.3.34] - 2023-12-21
+#### Added
+- Compatibility with 'www.' apache sites
+- Smarter reverse proxifying
+- SSL reverse proxifying
+
+#### Fixed
+- Some **Ultra** sites need the new 'www' configuration
+- Some **Xana** sites need the new 'www' configuration
+- Some **Ultra** sites need extra configuration
+- Some **Xana** sites need extra configuration
+
+#### Deleted
+- Obsolete configuration
+
+### [0.3.33] - 2023-12-19
+#### Fixed
+- More services in **Xana** server
+- Services order in **Eros** server
+
+#### Deleted
+- Obsolete configuration
+
+### [0.3.32] - 2023-12-14
+#### Fixed
+- **Xana** server connectivity issues
+- **README.md** format
+
+### [0.3.31] - 2023-11-30
+#### Added
+- New key for GitHub deployments
+- **Xana** server reverse proxy configuration
+- **Xana** server website configuration
+- **Zelo** client streaming password
+- **Tique** client streaming password
+
+#### Fixed
+- Deployer for authorized_keys file with parameters
+- *Xana.pub* wrong public key file
+
+#### Deleted
+- Old servers (**Neptuno**, **Tellus** and **Uranus**)
+- Unnecesary apache mods
+
+### [0.3.30] - 2023-11-20
+#### Added
+- Deployer for authorized_keys file
+
+#### Fixed
+- RSA SSH keys changed to ed25519 keys
+
 ### [0.3.29] - 2023-11-08
 #### Fixed
 - Some Apache configuration issues

@@ -85,7 +85,7 @@
       src: "{{ item.0.user }}@{{ item.0.addr }}:{{ item.1.dest }}"
       path: "{{ item.1.dest }}"
       fstype: 'fuse.sshfs'
-      opts: "allow_other,IdentityFile={{ ssh_directory }}/id_rsa"
+      opts: "allow_other,IdentityFile={{ ssh_directory }}/id_ed25519"
       dump: '0'
       passno: '0'
       state: 'mounted'

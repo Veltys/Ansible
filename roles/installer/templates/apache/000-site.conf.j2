@@ -1,8 +1,8 @@
 # Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
 # Description   : Apache virtualhost config file
 # Author        : Veltys
-# Date          : 2023-11-08
-# Version       : 1.9.1
+# Date          : 2023-12-21
+# Version       : 1.9.4
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -15,6 +15,9 @@
 	# value is not decisive as it is used as a last resort host regardless.
 	# However, you must set it for any further virtual host explicitly.
 	ServerName {{ item.site }}
+	{%- if 'www' in item.types %}{{ "\n\t" -}}
+	ServerName www.{{ item.site }}
+	{%- endif %}{{ "\n\n\t" -}}
 
 	ServerAdmin webmaster@veltys.es
 	DocumentRoot /var/www/vhosts/{{ item.site }}/httpdocs
@@ -67,6 +70,9 @@
 <IfModule mod_ssl.c>
 	<VirtualHost *:443>
 		ServerName {{ item.site }}
+		{%- if 'www' in item.types %}{{ "\n\t\t" }}
+		ServerName www.{{ item.site }}
+		{%- endif %}{{ "\n\n\t\t" -}}
 
 		<IfModule mod_headers.c>
 			Header always set Strict-Transport-Security "max-age=7776000; includeSubDomains; preload"
@@ -103,8 +109,10 @@
 
 		{%- if 'proxy' in item.types %}{{ "\n\n\t\t" -}}
 		<IfModule mod_proxy.c>
-			{% if 'amp' in item.types -%}
-			SSLProxyEngine On
+		{%- if 'amp' in item.types or item.port | default(80) == 443 -%}{{ "\n\t\t\t" -}}
+			SSLProxyEngine on
+		{%- endif %}{{ "\n\t\t\t" -}}
+		{% if 'amp' in item.types -%}
 			SSLProxyVerify None
 			SSLProxyCheckPeerCN Off
 			SSLProxyCheckPeerName Off
@@ -124,8 +132,8 @@
 				{%- endif %}{{ "\n\t\t\t\t" -}}
 				</IfModule>{{ "\n" }}
 			{%- endif %}{{ "\n\t\t\t\t" -}}
-				ProxyPass			"/"				"http://{{ item.dest }}:{{ item.port | default(80) }}/"
-				ProxyPassReverse	"/"				"http://{{ item.dest }}:{{ item.port | default(80) }}/"
+				ProxyPass			"/"				"http{% if item.port | default(80) == 443 %}s{% endif %}://{{ item.dest }}:{{ item.port | default(80) }}/"
+				ProxyPassReverse	"/"				"http{% if item.port | default(80) == 443 %}s{% endif %}://{{ item.dest }}:{{ item.port | default(80) }}/"
 			{%- if 'preserveHost' in item.types %}{{ "\n\t\t\t\t" -}}
 				ProxyPreserveHost	On
 			{%- endif -%}
