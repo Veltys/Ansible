@@ -28,6 +28,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Deleted
 - Old servers (Neptuno, Tellus and Uranus)
+- Unnecesary apache mods
 
 ### [0.3.30] - 2023-11-20
 #### Added
