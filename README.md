@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.36] - 2024-02-26
 #### Added
 - Deployer for authorized_keys file in native Ansible format
+- Executable permissions for **deploy_authorized_keys.yml** playbook file
 - New *sk-ssh-ed25519* key for an existent host
 - New *sk-ssh-ed25519* key for another existent host
 - New *sk-ssh-ed25519* key for the last intended existent host
