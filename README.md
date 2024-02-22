@@ -19,6 +19,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - Deployer for authorized_keys file in native Ansible format
 - New *sk-ssh-ed25519* key for an existent host
+- New *sk-ssh-ed25519* key for another existent host
 
 #### Deleted
 - Deployer for authorized_keys file in bash format
