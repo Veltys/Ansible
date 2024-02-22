@@ -1,8 +1,8 @@
 # Title         : ssh_keys.yml
 # Description   : Configures the SSH keys
 # Author        : Veltys
-# Date          : 2023-11-20
-# Version       : 1.2.1
+# Date          : 2024-02-22
+# Version       : 1.3.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -14,7 +14,6 @@
     path: "{{ ssh_directory }}"
     state: 'directory'
     mode: '0700'
-
 
 - name: 'Copy SSH key files'
   become: False
@@ -91,16 +90,12 @@
 
   when: host.ssh_keys_config
 
-
-- name: 'Copy required files (2/2)'
-  become: False
-  tags: authorized_keys_file
-  ansible.builtin.copy:
-    src: "ssh_keys/{{ item.src }}"
-    dest: "{{ item.dest }}/{{ item.src }}"
-    mode: "{{ item.mode }}"
-  loop: "{{ ssh_keys.other_files }}"
-
+- name: 'authorized_keys files deployer'
+  tags:
+    - configuration
+    - ssh_keys
+    - authorized_keys_file
+  ansible.builtin.import_tasks: configurers/deploy_authorized_keys.yml
 
 - name: 'Make soft links'
   become: False

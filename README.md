@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.36] - 2024-02-22
+#### Added
+- Deployer for authorized_keys file in native Ansible format
+
 ### [0.3.35] - 2024-01-21
 #### Added
 - Scripts for Passport system
