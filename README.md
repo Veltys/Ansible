@@ -15,11 +15,12 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.36] - 2024-02-22
+### [0.3.36] - 2024-02-26
 #### Added
 - Deployer for authorized_keys file in native Ansible format
 - New *sk-ssh-ed25519* key for an existent host
 - New *sk-ssh-ed25519* key for another existent host
+- New *sk-ssh-ed25519* key for the last intended existent host
 
 #### Deleted
 - Deployer for authorized_keys file in bash format
