@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - Deployer for authorized_keys file in native Ansible format
 
+#### Deleted
+- Deployer for authorized_keys file in bash format
+
 ### [0.3.35] - 2024-01-21
 #### Added
 - Scripts for Passport system
