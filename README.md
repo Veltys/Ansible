@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.37] - 2024-02-27
+#### Fixed
+- No gathering facts in **deploy_authorized_keys.yml** playbook file
+
 ### [0.3.36] - 2024-02-26
 #### Added
 - Deployer for authorized_keys file in native Ansible format

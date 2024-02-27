@@ -3,14 +3,15 @@
 # Title         : deploy_authorized_keys.yml
 # Description   : authorized_keys file deployer
 # Author        : Veltys
-# Date          : 2024-02-22
-# Version       : 1.0.0
+# Date          : 2024-02-27
+# Version       : 1.0.1
 # Usage         : ansible-playbook deploy_authorized_keys.yml | sh deploy_authorized_keys.yml | bash deploy_authorized_keys.yml | ./deploy_authorized_keys.yml
 # Notes         : 
 
 
 ---
 - name: 'authorized_keys file deployer'
+  gather_facts: false
   hosts: 'all:!windows'
   tasks:
     - include_role:
