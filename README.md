@@ -15,6 +15,11 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.39] - 2024-04-01
+#### Fixed
+- Partially reverted some improvements previously made
+    - One more time, yes, I know
+
 ### [0.3.38] - 2024-03-20
 #### Added
 - New *sk-ecdsa-sha2-nistp256* keys for some existent hosts
