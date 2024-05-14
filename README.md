@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.40] - 2024-05-14
 #### Fixed
 - Apache template change
+- More active modules in Apache
 
 ### [0.3.39] - 2024-04-01
 #### Fixed
