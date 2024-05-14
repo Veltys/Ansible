@@ -1,8 +1,8 @@
 # Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
 # Description   : Apache virtualhost config file
 # Author        : Veltys
-# Date          : 2023-12-21
-# Version       : 1.9.4
+# Date          : 2024-05-14
+# Version       : 1.9.5
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -38,10 +38,10 @@
 	# after it has been globally disabled with "a2disconf".
 	#Include conf-available/serve-cgi-bin.conf
 
-	{%- if not 'basic' in item.types %}{{ "\n" }}
 	<Directory "/var/www/vhosts/{{ item.site }}/httpdocs">
 		AllowOverride All
 	</Directory>
+	{%- if not 'basic' in item.types %}{{ "\n\n\t" -}}
 
 	<Directory "/var/www/vhosts/{{ item.site }}/httpdocs/.well-known/acme-challenge">
 		# Require all granted
