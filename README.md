@@ -22,6 +22,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Deleted
 - Some old hosts
+- *Rayo* host does not need Apache as it uses a K8s version
 
 ### [0.3.39] - 2024-04-01
 #### Fixed
