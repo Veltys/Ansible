@@ -19,6 +19,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - Apache template change
 - More active modules in Apache
+- Bad authentication configuration for *Xana* host
 
 #### Deleted
 - Some old hosts
