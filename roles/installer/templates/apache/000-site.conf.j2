@@ -1,8 +1,8 @@
 # Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
 # Description   : Apache virtualhost config file
 # Author        : Veltys
-# Date          : 2024-05-14
-# Version       : 1.9.5
+# Date          : 2024-05-16
+# Version       : 1.10.0
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -70,7 +70,7 @@
 <IfModule mod_ssl.c>
 	<VirtualHost *:443>
 		ServerName {{ item.site }}
-		{%- if 'www' in item.types %}{{ "\n\t\t" }}
+		{%- if 'www' in item.types %}{{ "\n\t\t" -}}
 		ServerName www.{{ item.site }}
 		{%- endif %}{{ "\n\n\t\t" -}}
 
@@ -83,6 +83,26 @@
 
 		ErrorLog ${APACHE_LOG_DIR}/error.log
 		CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+		{%- if 'apcupsd' in item.types %}{{ "\n\n\t\t" -}}
+		<IfModule mod_alias.c>
+			RedirectMatch ^/$ /cgi-bin/apcupsd/multimon.cgi
+		</IfModule>
+
+		ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+		<Directory "/usr/lib/cgi-bin">
+			AllowOverride None
+			Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+			Require all granted
+		</Directory>
+
+		Alias /apcupsd /usr/lib/cgi-bin
+		<Directory "/usr/lib/cgi-bin">
+			AllowOverride None
+			Options +ExecCGI
+			Require all granted
+		</Directory>
+		{%- endif %}{{ "\n\n\t\t" -}}
 
 		<Directory "/var/www/vhosts/{{ item.site }}/httpdocs">
 			AllowOverride All
