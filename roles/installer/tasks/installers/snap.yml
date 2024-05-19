@@ -1,0 +1,60 @@
+# Title         : general.yml
+# Description   : Install required Python packages
+# Author        : Veltys
+# Date          : 2024-05-19
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Snap installer'
+  block:
+  - name: 'Common packages installer'
+    tags:
+      - installation
+      - snap
+    community.general.snap:
+      classic: "{{ item.classic }}"
+      name: "{{ item.package }}"
+      state: 'present'
+    loop: "{{ common.packages_to_install.snap }}"
+    when: common.packages_to_install.snap | length > 0
+
+  - name: 'Group-specific packages installer'
+    tags:
+      - installation
+      - snap
+    community.general.snap:
+      classic: "{{ item.classic }}"
+      name: "{{ item.package }}"
+      state: 'present'
+    loop: "{{ group.packages_to_install.snap }}"
+    when: group.packages_to_install.snap | length > 0
+
+  - name: 'Host-specific packages installer'
+    tags:
+      - installation
+      - snap
+    community.general.snap:
+      classic: "{{ item.classic }}"
+      name: "{{ item.package }}"
+      state: 'present'
+    loop: "{{ host.packages_to_install.snap }}"
+    when: host.packages_to_install.snap | length > 0
+
+  rescue:
+  - name: 'Manual installing required'
+    tags:
+      - installation
+      - snap
+    ansible.builtin.debug:
+      msg: "{{
+          (
+            'It seems the Snap installer cannot install automatically the required packages. Please, install them manually: \n' +
+            (common.packages_to_install.snap | map('extract', 'package', 'classic') | map('combine', { 'cmd': 'snap install ' + item.package + (' --classic' if item.classic else '') }) | map(attribute='cmd') | join('\n')) +
+            '\n' + (group.packages_to_install.snap | map('extract', 'package', 'classic') | map('combine', { 'cmd': 'snap install ' + item.package + (' --classic' if item.classic else '') }) | map(attribute='cmd') | join('\n')) +
+            '\n' + (host.packages_to_install.snap | map('extract', 'package', 'classic') | map('combine', { 'cmd': 'snap install ' + item.package + (' --classic' if item.classic else '') }) | map(attribute='cmd') | join('\n'))
+          )
+          | regex_replace('( +)', ' ') | regex_replace('( +)$', '')
+        }}"

@@ -1,14 +1,17 @@
 # Title         : dynamic_dns.yml
 # Description   : Configures the Dynamic DNS
 # Author        : Veltys
-# Date          : 2024-01-22
-# Version       : 1.2.0
+# Date          : 2024-05-19
+# Version       : 1.2.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
 - name: 'Copy required templates'
+  tags:
+    - configuration
+    - dynamic_dns
   ansible.builtin.template:
     src: "dynamic_dns/{{ item.src }}.j2"
     dest: "{{ item.dest }}/{{ item.src }}"
@@ -16,6 +19,9 @@
   loop: "{{ dynamic_dns.templates }}"
 
 - name: 'Execute scripts for the first time'
+  tags:
+    - configuration
+    - dynamic_dns
   ansible.builtin.command:
     cmd: "{{ item.dest }}/{{ item.src }}"
   when: item.src[-3:] == '.sh'
@@ -24,6 +30,9 @@
     label: "{{ item.src }}"
 
 - name: 'Installing crontabs'
+  tags:
+    - configuration
+    - dynamic_dns
   ansible.builtin.cron:
     job: "{{ item.job }}"
     name: "{{ item.name }}"

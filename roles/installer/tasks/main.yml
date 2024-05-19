@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2023-10-19
-# Version       : 1.4.1
+# Date          : 2024-05-19
+# Version       : 1.5.0
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -15,6 +15,7 @@
     - packages_finder
     - packages
     - python
+    - snap
     - ntp
     - firewall
     - backup
@@ -26,7 +27,7 @@
   tags:
     - configuration
     - passwords
-  ansible.builtin.import_tasks: configurers/passwords.yml
+  ansible.builtin.include_tasks: configurers/passwords.yml
   when: host.passwords.password | length > 0
 
 - name: 'Include updater role'
@@ -48,14 +49,21 @@
   tags:
     - installation
     - python
-  ansible.builtin.import_tasks: installers/python.yml
+  ansible.builtin.include_tasks: installers/python.yml
   when: "'python3-pip' in packages_to_install"
+
+- name: 'Snap installer'
+  tags:
+    - installation
+    - snap
+  ansible.builtin.include_tasks: installers/snap.yml
+  when: "'snapd' in packages_to_install"
 
 - name: 'MOTD configurer'
   tags:
     - configuration
     - motd
-  ansible.builtin.import_tasks: configurers/motd.yml
+  ansible.builtin.include_tasks: configurers/motd.yml
   vars:
     motd: "{{ common.motd | combine(group.motd, host.motd, list_merge = 'append', recursive = true) }}"
   when: "
@@ -77,7 +85,7 @@
   tags:
     - configuration
     - ntp
-  ansible.builtin.import_tasks: configurers/ntp.yml
+  ansible.builtin.include_tasks: configurers/ntp.yml
   when: "'ntp' in packages_to_install"
 
 - name: 'General cleaner'
@@ -90,49 +98,49 @@
   tags:
     - configuration
     - ipv6
-  ansible.builtin.import_tasks: configurers/ipv6.yml
+  ansible.builtin.include_tasks: configurers/ipv6.yml
   when: host.ipv6_config
 
 - name: 'Firewall configurer'
   tags:
     - configuration
     - firewall
-  ansible.builtin.import_tasks: configurers/firewall.yml
+  ansible.builtin.include_tasks: configurers/firewall.yml
   when: "'ufw' in packages_to_install"
 
 - name: 'Dynamic DNS configurer'
   tags:
     - configuration
     - dynamic_dns
-  ansible.builtin.import_tasks: configurers/dynamic_dns.yml
+  ansible.builtin.include_tasks: configurers/dynamic_dns.yml
   when: host.dynamic_dns.hosts | length > 0
 
 - name: 'Passport system configurer'
   tags:
     - configuration
     - passport
-  ansible.builtin.import_tasks: configurers/passport.yml
+  ansible.builtin.include_tasks: configurers/passport.yml
   when: host.passport.enabled
 
 - name: 'Backup configurer'
   tags:
     - configuration
     - backup
-  ansible.builtin.import_tasks: configurers/backup.yml
+  ansible.builtin.include_tasks: configurers/backup.yml
   when: "'duplicity' in packages_to_install"
 
 - name: 'Mailers configurer'
   tags:
     - configuration
     - mailers
-  ansible.builtin.import_tasks: configurers/mailers.yml
+  ansible.builtin.include_tasks: configurers/mailers.yml
   when: "'mutt' in packages_to_install"
 
 - name: 'Apache configurer'
   tags:
     - configuration
     - apache
-  ansible.builtin.import_tasks: configurers/apache.yml
+  ansible.builtin.include_tasks: configurers/apache.yml
   when: "'apache2' in packages_to_install"
 
 - name: 'SSH keys configurer'
@@ -176,7 +184,7 @@
   tags:
     - installation
     - kde
-  ansible.builtin.import_tasks: installers/kde.yml
+  ansible.builtin.include_tasks: installers/kde.yml
   when: common.kde.install or
     group.kde.install or
     host.kde.install

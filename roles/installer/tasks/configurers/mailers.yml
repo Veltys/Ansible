@@ -1,8 +1,8 @@
 # Title         : mailers.yml
 # Description   : Configure mailers
 # Author        : Veltys
-# Date          : 2023-10-19
-# Version       : 1.3.0
+# Date          : 2024-05-19
+# Version       : 1.3.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -12,10 +12,16 @@
   become: False
   delegate_to: localhost
   run_once: True
+  tags:
+    - configuration
+    - mailers
   ansible.builtin.command:
     cmd: 'git submodule update --init'
 
 - name: 'Copy required files'
+  tags:
+    - configuration
+    - mailers
   ansible.builtin.copy:
     src: "mailers/{{ item.src }}"
     dest: "{{ item.dest }}/{{ item.src }}"
@@ -25,6 +31,9 @@
 
 - name: 'Copy required templates'
   become: False
+  tags:
+    - configuration
+    - mailers
   ansible.builtin.template:
     src: "mailers/{{ item.src }}.j2"
     dest: "{{ item.dest }}/{{ item.src }}"
@@ -32,6 +41,9 @@
   loop: "{{ mailers.templates }}"
 
 - name: 'Copy root templates'
+  tags:
+    - configuration
+    - mailers
   ansible.builtin.template:
     src: "mailers/{{ item.src }}.j2"
     dest: "{{ item.dest }}/{{ item.src }}"
@@ -40,6 +52,9 @@
 
 - name: 'Installing crontabs'
   become: False
+  tags:
+    - configuration
+    - mailers
   ansible.builtin.cron:
     job: "{{ item.job }}"
     name: "{{ item.name }}"

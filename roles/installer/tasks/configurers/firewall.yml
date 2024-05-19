@@ -1,14 +1,17 @@
 # Title         : ntp.yml
 # Description   : Configures the UFW firewall
 # Author        : Veltys
-# Date          : 2023-09-13
-# Version       : 1.0.3
+# Date          : 2024-05-19
+# Version       : 1.0.4
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
 - name: 'Common UFW rules configurer'
+  tags:
+    - configuration
+    - firewall
   community.general.ufw:
     comment: "{{ item.comment }}"
     from_ip: "{{ item.src }}"
@@ -19,6 +22,9 @@
   loop: "{{ common.ufw.rules }}"
 
 - name: 'Group-specific UFW rules configurer'
+  tags:
+    - configuration
+    - firewall
   community.general.ufw:
     comment: "{{ item.comment }}"
     from_ip: "{{ item.src }}"
@@ -29,6 +35,9 @@
   loop: "{{ group.ufw.rules }}"
 
 - name: 'Host-specific UFW rules configurer'
+  tags:
+    - configuration
+    - firewall
   community.general.ufw:
     comment: "{{ item.comment }}"
     from_ip: "{{ item.src }}"
@@ -39,5 +48,8 @@
   loop: "{{ host.ufw.rules }}"
 
 - name: 'UFW enabler'
+  tags:
+    - configuration
+    - firewall
   community.general.ufw:
     policy: 'allow'

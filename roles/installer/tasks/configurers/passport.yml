@@ -1,14 +1,17 @@
 # Title         : passport.yml
 # Description   : Configures the Passport system
 # Author        : Veltys
-# Date          : 2024-01-22
-# Version       : 1.0.0
+# Date          : 2024-05-19
+# Version       : 1.0.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
 - name: 'Copy required files'
+  tags:
+    - configuration
+    - passport
   ansible.builtin.copy:
     src: "passport/{{ item.src }}"
     dest: "{{ item.dest }}/{{ item.src }}"
@@ -16,6 +19,9 @@
   loop: "{{ passport.files }}"
 
 - name: 'Copy required templates'
+  tags:
+    - configuration
+    - passport
   ansible.builtin.template:
     src: "passport/{{ item.src }}.j2"
     dest: "{{ item.dest }}/{{ item.src }}"
@@ -23,6 +29,9 @@
   loop: "{{ passport.templates }}"
 
 - name: 'Installing crontabs'
+  tags:
+    - configuration
+    - passport
   ansible.builtin.cron:
     job: "{{ item.job }}"
     name: "{{ item.name }}"

@@ -1,18 +1,24 @@
 # Title         : kde.yml
 # Description   : Install KDE
 # Author        : Veltys
-# Date          : 2023-10-04
-# Version       : 1.1.0
+# Date          : 2024-05-19
+# Version       : 1.1.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
 - name: 'Clean previous variables'
+  tags:
+    - installation
+    - kde
   ansible.builtin.set_fact:
     packages_to_install: []
 
 - name: 'Find required packages'
+  tags:
+    - installation
+    - kde
   ansible.builtin.include_tasks: ../configurers/packages_finder_loop.yml
   loop: "{{ kde.packages }}"
   loop_control:
@@ -21,6 +27,9 @@
     loop_var: outer_item
 
 - name: 'Debian-based installer'
+  tags:
+    - installation
+    - kde
   ansible.builtin.package:
     name: "{{ packages_to_install }}"
     state: 'present'
@@ -30,6 +39,9 @@
     "
 
 - name: 'Centos installer'
+  tags:
+    - installation
+    - kde
   ansible.builtin.dnf:
     name: "{{ packages_to_install }}"
     state: 'present'
@@ -38,6 +50,9 @@
     "
 
 - name: 'SUSE installer'
+  tags:
+    - installation
+    - kde
   community.general.zypper:
     name: "{{ packages_to_install }}"
     type: pattern
