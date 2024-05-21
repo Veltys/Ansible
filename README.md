@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.43] - 2024-05-21
+#### Fixed
+- Changed some storage servers
+
 ### [0.3.42] - 2024-05-19
 #### Added
 - Support for snap packages
