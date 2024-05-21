@@ -20,6 +20,7 @@ Ansible master repository that contains a collection of different useful roles t
 - Changed some storage servers
 - Useless packages existence checking
 - This task has to be executed even in check mode
+- There is no need to hide this task
 
 ### [0.3.42] - 2024-05-19
 #### Added
