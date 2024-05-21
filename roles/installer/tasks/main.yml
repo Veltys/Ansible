@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2024-05-19
-# Version       : 1.5.0
+# Date          : 2024-05-21
+# Version       : 1.5.1
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -21,6 +21,7 @@
     - backup
     - mailers
     - apache
+    - fstab
   ansible.builtin.import_tasks: configurers/packages_finder.yml
 
 - name: 'Password changer'

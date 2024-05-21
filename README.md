@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.43] - 2024-05-21
 #### Fixed
 - Changed some storage servers
+- Useless packages existence checking
 
 ### [0.3.42] - 2024-05-19
 #### Added
