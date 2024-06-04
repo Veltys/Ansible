@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.45] - 2024-06-04
 #### Fixed
 - CIFS and SSHFS mounts cleanup
+- Better SSH keys management for SSHFS fstab mounts
 
 ### [0.3.44] - 2024-06-02
 #### Added

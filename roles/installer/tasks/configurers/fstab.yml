@@ -1,8 +1,8 @@
 # Title         : fstab.yml
 # Description   : Configure fstab
 # Author        : Veltys
-# Date          : 2024-05-22
-# Version       : 1.2.3
+# Date          : 2024-06-03
+# Version       : 1.3.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -56,7 +56,8 @@
     run_once: True
     ansible.builtin.shell:
 #     cmd: "echo -n '[{{ item.addr }}]:{{ item.port }}' | openssl sha1 -mac HMAC -macopt hexkey:$(echo {{ item.ssh_key.salt }} | base64 -d | xxd -p) | awk '{print $2}' | xxd -r -p | base64"
-      cmd: "echo -n '{{ item.addr }}' | openssl sha1 -mac HMAC -macopt hexkey:$(echo {{ item.ssh_key.salt }} | base64 -d | xxd -p) | awk '{print $2}' | xxd -r -p | base64"
+#     cmd: "ssh-keyscan '{{ item.addr }}' | openssl sha1 -mac HMAC -macopt hexkey:$(echo {{ item.ssh_key.salt }} | base64 -d | xxd -p) | awk '{print $2}' | xxd -r -p | base64"
+      cmd: "ssh-keyscan '{{ item.addr }}'"
     register: ssh_hashes
     loop: "{{ common.fstab.sshfs + group.fstab.sshfs + host.fstab.sshfs }}"
     loop_control:
@@ -68,13 +69,10 @@
       state: 'directory'
 
   - name: 'Add entries in know_hosts for SSHFS mounts'
-    ansible.builtin.known_hosts:
-      path: '/root/.ssh/known_hosts'
-      name: "{{ item.0.addr }}"
-      key: "|1|{{ item.0.ssh_key.salt }}|{{ item.1.stdout }} {{ item.0.ssh_key.ssh_key }}"
-    loop: "{{ common.fstab.sshfs + group.fstab.sshfs + host.fstab.sshfs | zip(ssh_hashes.results) }}"
+    ansible.builtin.include_tasks: fstab_sshfs_known_hosts.yml
+    loop: "{{ ssh_hashes.results }}"
     loop_control:
-      label: "{{ item.0.addr }}"
+      loop_var: outer_item
 
   - name: 'Entries in fstab for SSHFS mounts'
     ansible.posix.mount:
