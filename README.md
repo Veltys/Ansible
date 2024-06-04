@@ -19,6 +19,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - CIFS and SSHFS mounts cleanup
 - Better SSH keys management for SSHFS fstab mounts
+- IPv6 support is temporarily disabled
 
 ### [0.3.44] - 2024-06-02
 #### Added

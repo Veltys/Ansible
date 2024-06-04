@@ -4,8 +4,8 @@
 ## @file	: passport.sh
 ## @brief	: Passport system updater script
 ## @author	: Veltys
-## @Date	: 2024-01-22
-## @version	: 2.0.1
+## @Date	: 2024-06-04
+## @version	: 2.0.2
 ## @usage	: ./passport.sh | sudo sh passport.sh
 ## @note	: It is recommended that it be called through crontab
 
@@ -22,5 +22,5 @@ else
 	fi
 
 	# Update Passport
-	sleep "$SLEEP_TIME" && echo "$(date), $(curl "$url")" >> "$log_file"
+	sleep "$SLEEP_TIME" && echo "$(date), $(curl -4 "$url")" >> "$log_file"
 fi
