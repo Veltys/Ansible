@@ -16,6 +16,9 @@ Ansible master repository that contains a collection of different useful roles t
 - [ ] Create a to-do list
 
 ### [0.3.46] - 2024-06-05
+#### Added
+- *Saturnus* host SSH key
+
 #### Fixed
 - Some cosmetic changes
 
