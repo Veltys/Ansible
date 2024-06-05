@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.46] - 2024-06-05
+#### Fixed
+- Some cosmetic changes
+
 ### [0.3.45] - 2024-06-04
 #### Fixed
 - CIFS and SSHFS mounts cleanup

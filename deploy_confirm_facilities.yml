@@ -1,0 +1,16 @@
+#!/usr/bin/env ansible-playbook
+
+# Title         : deploy_confirm_facilities.yml
+# Description   : Ansible Confirm facilities deploy test
+# Author        : Veltys
+# Date          : 2023-06-05
+# Version       : 3.0.1
+# Usage         : ansible-playbook deploy_confirm_facilities.yml | sh deploy_confirm_facilities.yml | bash deploy_confirm_facilities.yml | ./deploy_confirm_facilities.yml
+# Notes         : 
+
+
+---
+- name: 'confirm_facilities role deployer'
+  hosts: all
+  roles: 
+    - role: confirm_facilities
