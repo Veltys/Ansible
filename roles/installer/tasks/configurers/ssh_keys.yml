@@ -1,8 +1,8 @@
 # Title         : ssh_keys.yml
 # Description   : Configures the SSH keys
 # Author        : Veltys
-# Date          : 2024-02-22
-# Version       : 1.3.0
+# Date          : 2024-06-05
+# Version       : 1.4.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -26,67 +26,69 @@
       mode: "{{ item[0].mode }}"
     loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
 
-  rescue:
-    - name: 'Generating new key files'
-      delegate_to: localhost
-      community.crypto.openssh_keypair:
-        comment: "{{ general.name }}"
-        path: "roles/installer/files/ssh_keys/{{ general.name }}"
-        size: 2048
-        state: 'present'
-        type: 'rsa'
-
-    - name: 'Renaming key file'
-      delegate_to: localhost
-      ansible.builtin.command:
-        cmd: "mv roles/installer/files/ssh_keys/{{ general.name }} roles/installer/files/ssh_keys/{{ general.name }}.pem"
-
-    - name: 'Encrypting new key files'
-      delegate_to: localhost
-      ansible.builtin.command:
-        cmd: 'ansible-vault encrypt roles/installer/files/ssh_keys/{{ general.name }}.{{ item }}'
-      loop: [ 'pem', 'pub' ]
-
-    - name: 'Temporary decrypting authorized_keys file'
-      delegate_to: localhost
-      ansible.builtin.command:
-        cmd: 'ansible-vault decrypt roles/installer/files/ssh_keys/authorized_keys'
-
-    - name: 'Adding pub key to authorized_keys file'
-      delegate_to: localhost
-      ansible.builtin.lineinfile:
-        create: True
-        line: "{{ lookup('ansible.builtin.file', 'roles/installer/files/ssh_keys/' + general.name + '.pub') }}"
-        path: 'roles/installer/files/ssh_keys/authorized_keys'
-
-    - name: 'Re-encrypting authorized_keys file'
-      delegate_to: localhost
-      ansible.builtin.command:
-        cmd: 'ansible-vault encrypt roles/installer/files/ssh_keys/authorized_keys'
-
-    - name: 'Generating and pushing new commit'
-      delegate_to: localhost
-      ansible.builtin.shell:
-        cmd: "git add roles/installer/files/ssh_keys/* && git commit -m'ADD: New server ({{ general.name }})' && git push"
-
-    - name: 'Deploying new authorized_keys file in all available hosts'
-      delegate_to: localhost
-      ignore_errors: True
-      ansible.builtin.command:
-        cmd: 'ansible-playbook installer.yml --tags authorized_keys_file'
-      register: log_stdout
-
-    - name: 'Show deploying log'
-      delegate_to: localhost
-      ansible.builtin.debug:
-        var: log_stdout.stdout_lines
-
-    - name: 'Copy required files (1/2)'
-      ansible.builtin.copy:
-        src: "ssh_keys/{{ item[0].src }}.{{ item[1] }}"
-        dest: "{{ item[0].dest }}/{{ item[0].src }}.{{ item[1] }}"
-        mode: "{{ item[0].mode }}"
-      loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
+#  rescue:
+#    # TODO: Jenkins integration
+#
+#    - name: 'Generating new key files'
+#      delegate_to: localhost
+#      community.crypto.openssh_keypair:
+#        comment: "{{ general.name }}"
+#        path: "roles/installer/files/ssh_keys/{{ general.name }}"
+#        size: 2048
+#        state: 'present'
+#        type: 'rsa'
+#
+#    - name: 'Renaming key file'
+#      delegate_to: localhost
+#      ansible.builtin.command:
+#        cmd: "mv roles/installer/files/ssh_keys/{{ general.name }} roles/installer/files/ssh_keys/{{ general.name }}.pem"
+#
+#    - name: 'Encrypting new key files'
+#      delegate_to: localhost
+#      ansible.builtin.command:
+#        cmd: 'ansible-vault encrypt roles/installer/files/ssh_keys/{{ general.name }}.{{ item }}'
+#      loop: [ 'pem', 'pub' ]
+#
+#    - name: 'Temporary decrypting authorized_keys file'
+#      delegate_to: localhost
+#      ansible.builtin.command:
+#        cmd: 'ansible-vault decrypt roles/installer/files/ssh_keys/authorized_keys'
+#
+#    - name: 'Adding pub key to authorized_keys file'
+#      delegate_to: localhost
+#      ansible.builtin.lineinfile:
+#        create: True
+#        line: "{{ lookup('ansible.builtin.file', 'roles/installer/files/ssh_keys/' + general.name + '.pub') }}"
+#        path: 'roles/installer/files/ssh_keys/authorized_keys'
+#
+#    - name: 'Re-encrypting authorized_keys file'
+#      delegate_to: localhost
+#      ansible.builtin.command:
+#        cmd: 'ansible-vault encrypt roles/installer/files/ssh_keys/authorized_keys'
+#
+#    - name: 'Generating and pushing new commit'
+#      delegate_to: localhost
+#      ansible.builtin.shell:
+#        cmd: "git add roles/installer/files/ssh_keys/* && git commit -m'ADD: New server ({{ general.name }})' && git push"
+#
+#    - name: 'Deploying new authorized_keys file in all available hosts'
+#      delegate_to: localhost
+#      ignore_errors: True
+#      ansible.builtin.command:
+#        cmd: 'ansible-playbook installer.yml --tags authorized_keys_file'
+#      register: log_stdout
+#
+#    - name: 'Show deploying log'
+#      delegate_to: localhost
+#      ansible.builtin.debug:
+#        var: log_stdout.stdout_lines
+#
+#    - name: 'Copy required files (1/2)'
+#      ansible.builtin.copy:
+#        src: "ssh_keys/{{ item[0].src }}.{{ item[1] }}"
+#        dest: "{{ item[0].dest }}/{{ item[0].src }}.{{ item[1] }}"
+#        mode: "{{ item[0].mode }}"
+#      loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
 
   when: host.ssh_keys_config
 

@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - Some cosmetic changes
 
+#### Deleted
+- Pseudo-automatic SSH key generator
+
 ### [0.3.45] - 2024-06-04
 #### Fixed
 - CIFS and SSHFS mounts cleanup
