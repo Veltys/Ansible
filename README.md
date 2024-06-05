@@ -24,6 +24,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Deleted
 - Pseudo-automatic SSH key generator
+- Unnecessary *Rayo* host SSH key file
 
 ### [0.3.45] - 2024-06-04
 #### Fixed
