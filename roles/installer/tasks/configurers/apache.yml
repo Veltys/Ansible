@@ -1,20 +1,26 @@
 # Title         : apache.yml
 # Description   : Configure Apache
 # Author        : Veltys
-# Date          : 2023-10-19
-# Version       : 1.0.1
+# Date          : 2024-06-19
+# Version       : 1.0.2
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
 - name: 'Enable required modules'
+  tags:
+    - configuration
+    - apache
   community.general.apache2_module:
     name: "{{ item }}"
     state: 'present'
   loop: "{{ host.apache.modules }}"
 
 - name: 'Copy required templates'
+  tags:
+    - configuration
+    - apache
   ansible.builtin.template:
     src: 'apache/000-site.conf.j2'
     dest: "/etc/apache2/sites-available/{{ '%03d' | format(i + 1) }}-{{ item.site }}.conf"
@@ -25,12 +31,18 @@
     label: "{{ '%03d' | format(i + 1) }}-{{ item.site }}.conf"
 
 - name: 'Remove default site link'
+  tags:
+    - configuration
+    - apache
   ignore_errors: True
   ansible.builtin.file:
     path: '/etc/apache2/sites-enabled/000-default.conf'
     state: absent
 
 - name: 'Enable configured sites'
+  tags:
+    - configuration
+    - apache
   ansible.builtin.file:
     dest: "/etc/apache2/sites-enabled/{{ '%03d' | format(i + 1) }}-{{ item.site }}.conf"
     src: "../sites-available/{{ '%03d' | format(i + 1) }}-{{ item.site }}.conf"
@@ -41,6 +53,9 @@
     label: "{{ '%03d' | format(i + 1) }}-{{ item.site }}"
 
 - name: 'Creating configured sites directories'
+  tags:
+    - configuration
+    - apache
   ansible.builtin.file:
     path: "/var/www/vhosts/{{ item.site }}/httpdocs"
     state: 'directory'
@@ -49,6 +64,9 @@
     label: "/var/www/vhosts/{{ item.site }}/httpdocs"
 
 - name: 'Setting configured sites passwords'
+  tags:
+    - configuration
+    - apache
   ansible.builtin.include_tasks: apache_loop.yml
   loop: "{{ host.apache.credentials }}"
   loop_control:
@@ -58,12 +76,18 @@
   when: host.apache.sites[i].auth
 
 - name: 'Testing new configuration'
+  tags:
+    - configuration
+    - apache
   ignore_errors: True
   ansible.builtin.command:
     cmd: 'apachectl configtest'
   register: test_status
 
 - name: 'Restarting Apache 2 service'
+  tags:
+    - configuration
+    - apache
   ansible.builtin.systemd_service:
     name: 'apache2'
     state: 'restarted'

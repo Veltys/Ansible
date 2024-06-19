@@ -1,19 +1,25 @@
 # Title         : apache_passwords.yml
 # Description   : Configure Apache passwords
 # Author        : Veltys
-# Date          : 2023-08-10
-# Version       : 1.0.0
+# Date          : 2024-06-19
+# Version       : 1.0.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
 - name: 'Ensure passwords file exists'
+  tags:
+    - configuration
+    - apache
   ansible.builtin.file:
     path: "/var/www/vhosts/{{ host.apache.sites[i].site }}/passwords"
     state: 'touch'
 
 - name: 'Setting configured sites passwords'
+  tags:
+    - configuration
+    - apache
   ansible.builtin.include_tasks: apache_passwords.yml
   loop: "{{ outer_item }}"
   loop_control:

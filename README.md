@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - More packages to install in *Saturnus* host
 
+#### Fixed
+- Apache tasks needs Apache tags
+
 ### [0.3.47] - 2024-06-13
 #### Fixed
 - *dos2unix* conversion
