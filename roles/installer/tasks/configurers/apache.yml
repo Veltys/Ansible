@@ -1,8 +1,8 @@
 # Title         : apache.yml
 # Description   : Configure Apache
 # Author        : Veltys
-# Date          : 2024-06-19
-# Version       : 1.0.2
+# Date          : 2024-06-28
+# Version       : 1.0.3
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -51,6 +51,7 @@
   loop_control:
     index_var: i
     label: "{{ '%03d' | format(i + 1) }}-{{ item.site }}"
+  when: not ansible_check_mode
 
 - name: 'Creating configured sites directories'
   tags:
@@ -73,7 +74,9 @@
     index_var: i
     label: "{{ host.apache.sites[i].site }}"
     loop_var: outer_item
-  when: host.apache.sites[i].auth
+  when:
+    not ansible_check_mode and
+    host.apache.sites[i].auth
 
 - name: 'Testing new configuration'
   tags:
@@ -91,4 +94,6 @@
   ansible.builtin.systemd_service:
     name: 'apache2'
     state: 'restarted'
-  when: not test_status.failed
+  when:
+    not ansible_check_mode and
+    not test_status.failed
