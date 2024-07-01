@@ -16,12 +16,13 @@ Ansible master repository that contains a collection of different useful roles t
 - [ ] Create a to-do list
 
 
-### [0.3.50] - 2024-06-28
+### [0.3.50] - 2024-07-01
 #### Added
 - More domains in Saturnus host
 
 #### Fixed
 - ansible_check_mode check required
+- Some hosts IP changes
 
 ### [0.3.49] - 2024-06-21
 #### Fixed
