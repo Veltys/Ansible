@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.51] - 2024-07-04
 #### Added
 - Python packages finder
+- certbot configurer
 
 #### Fixed
 - KDE installler optimization

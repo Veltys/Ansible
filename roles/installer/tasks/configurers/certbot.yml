@@ -1,0 +1,35 @@
+# Title         : certbot.yml
+# Description   : Configure certbot
+# Author        : Veltys
+# Date          : 2024-07-04
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Check certificate existence'
+  tags:
+    - configuration
+    - apache
+    - certbot
+  ansible.builtin.stat:
+    path: "/etc/letsencrypt/live/{{ item.site }}"
+  register: cert_exists
+  loop: "{{ host.apache.sites }}"
+  loop_control:
+    label: "/etc/letsencrypt/live/{{ item.site }}"
+
+- name: 'Get a new certificate'
+  tags:
+    - configuration
+    - apache
+    - certbot
+  ansible.builtin.command:
+    cmd: "certbot certonly -d {{ item.item.site }} --dns-ovh --dns-ovh-credentials /root/.ovh.ini"
+  when:
+    not item.stat.exists or 
+    not item.stat.isdir
+  loop: "{{ cert_exists.results }}"
+  loop_control:
+    label: "{{ item.invocation.module_args.path }}"
