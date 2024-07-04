@@ -1,14 +1,14 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2024-05-21
-# Version       : 1.5.1
+# Date          : 2024-07-03
+# Version       : 1.6.0
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
-- name: 'Packages finder'
+- name: 'Distro packages finder'
   tags:
     - configuration
     - installation
@@ -22,13 +22,23 @@
     - mailers
     - apache
     - fstab
-  ansible.builtin.import_tasks: configurers/packages_finder.yml
+  ansible.builtin.import_tasks: 'configurers/distro_packages_finder.yml'
+
+- name: 'Python packages finder'
+  tags:
+    - configuration
+    - installation
+    - packages_finder
+    - packages
+    - python
+  ansible.builtin.import_tasks: 'configurers/distro_packages_finder.yml'
+  when: "'python3-pip' in distro_packages_to_install"
 
 - name: 'Password changer'
   tags:
     - configuration
     - passwords
-  ansible.builtin.include_tasks: configurers/passwords.yml
+  ansible.builtin.include_tasks: 'configurers/passwords.yml'
   when: host.passwords.password | length > 0
 
 - name: 'Include updater role'
@@ -38,33 +48,33 @@
   vars:
     netdata_build: 'N'
   ansible.builtin.include_role:
-    name: updater
+    name: 'updater'
 
-- name: 'General installer'
+- name: 'Distro packages installer'
   tags:
     - installation
     - packages
-  ansible.builtin.import_tasks: installers/general.yml
+  ansible.builtin.import_tasks: 'installers/distro.yml'
 
 - name: 'Python installer'
   tags:
     - installation
     - python
-  ansible.builtin.include_tasks: installers/python.yml
-  when: "'python3-pip' in packages_to_install"
+  ansible.builtin.include_tasks: 'installers/python.yml'
+  when: "'python3-pip' in distro_packages_to_install"
 
 - name: 'Snap installer'
   tags:
     - installation
     - snap
-  ansible.builtin.include_tasks: installers/snap.yml
-  when: "'snapd' in packages_to_install"
+  ansible.builtin.include_tasks: 'installers/snap.yml'
+  when: "'snapd' in distro_packages_to_install"
 
 - name: 'MOTD configurer'
   tags:
     - configuration
     - motd
-  ansible.builtin.include_tasks: configurers/motd.yml
+  ansible.builtin.include_tasks: 'configurers/motd.yml'
   vars:
     motd: "{{ common.motd | combine(group.motd, host.motd, list_merge = 'append', recursive = true) }}"
   when: "
@@ -80,93 +90,94 @@
   tags:
     - configuration
     - timezone
-  ansible.builtin.import_tasks: configurers/timezone.yml
+  ansible.builtin.import_tasks: 'configurers/timezone.yml'
 
 - name: 'NTP configurer'
   tags:
     - configuration
     - ntp
-  ansible.builtin.include_tasks: configurers/ntp.yml
-  when: "'ntp' in packages_to_install"
+  ansible.builtin.include_tasks: 'configurers/ntp.yml'
+  when: "'ntp' in distro_packages_to_install"
 
 - name: 'General cleaner'
   tags:
     - installation
     - cleaner
-  ansible.builtin.import_tasks: installers/cleaner.yml
+  ansible.builtin.import_tasks: 'installers/cleaner.yml'
 
 - name: 'IPv6 configurer'
   tags:
     - configuration
     - ipv6
-  ansible.builtin.include_tasks: configurers/ipv6.yml
+  ansible.builtin.include_tasks: 'configurers/ipv6.yml'
   when: host.ipv6_config
 
 - name: 'Firewall configurer'
   tags:
     - configuration
     - firewall
-  ansible.builtin.include_tasks: configurers/firewall.yml
-  when: "'ufw' in packages_to_install"
+  ansible.builtin.include_tasks: 'configurers/firewall.yml'
+  when: "'ufw' in distro_packages_to_install"
 
 - name: 'Dynamic DNS configurer'
   tags:
     - configuration
     - dynamic_dns
-  ansible.builtin.include_tasks: configurers/dynamic_dns.yml
+  ansible.builtin.include_tasks: 'configurers/dynamic_dns.yml'
   when: host.dynamic_dns.hosts | length > 0
 
 - name: 'Passport system configurer'
   tags:
     - configuration
     - passport
-  ansible.builtin.include_tasks: configurers/passport.yml
+  ansible.builtin.include_tasks: 'configurers/passport.yml'
   when: host.passport.enabled
 
 - name: 'Backup configurer'
   tags:
     - configuration
     - backup
-  ansible.builtin.include_tasks: configurers/backup.yml
-  when: "'duplicity' in packages_to_install"
+  ansible.builtin.include_tasks: 'configurers/backup.yml'
+  when: "'duplicity' in distro_packages_to_install"
 
 - name: 'Mailers configurer'
   tags:
     - configuration
     - mailers
-  ansible.builtin.include_tasks: configurers/mailers.yml
-  when: "'mutt' in packages_to_install"
+  ansible.builtin.include_tasks: 'configurers/mailers.yml'
+  when: "'mutt' in distro_packages_to_install"
 
 - name: 'Apache configurer'
   tags:
     - configuration
     - apache
-  ansible.builtin.include_tasks: configurers/apache.yml
-  when: "'apache2' in packages_to_install"
+    - certbot
+  ansible.builtin.include_tasks: 'configurers/apache.yml'
+  when: "'apache2' in distro_packages_to_install"
 
 - name: 'SSH keys configurer'
   tags:
     - configuration
     - ssh_keys
-  ansible.builtin.import_tasks: configurers/ssh_keys.yml
+  ansible.builtin.import_tasks: 'configurers/ssh_keys.yml'
 
 - name: 'Environment customizer'
   tags:
     - customization
     - environment
-  ansible.builtin.import_tasks: customizers/environment.yml
+  ansible.builtin.import_tasks: 'customizers/environment.yml'
 
 - name: 'fstab configurer'
   tags:
     - configuration
     - fstab
-  ansible.builtin.import_tasks: configurers/fstab.yml
+  ansible.builtin.import_tasks: 'configurers/fstab.yml'
 
 - name: 'crontab configurer'
   tags:
     - configuration
     - crontab
-  ansible.builtin.import_tasks: configurers/crontab.yml
+  ansible.builtin.import_tasks: 'configurers/crontab.yml'
 
 - name: 'Include confirm_facilities role'
   tags:
@@ -179,13 +190,13 @@
   tags:
     - installation
     - locale
-  ansible.builtin.import_tasks: installers/locale.yml
+  ansible.builtin.import_tasks: 'installers/locale.yml'
 
 - name: 'KDE installer'
   tags:
     - installation
     - kde
-  ansible.builtin.include_tasks: installers/kde.yml
+  ansible.builtin.include_tasks: 'installers/kde.yml'
   when: common.kde.install or
     group.kde.install or
     host.kde.install
@@ -194,4 +205,4 @@
   tags:
     - informer
     - warnings
-  ansible.builtin.import_tasks: informers/warnings.yml
+  ansible.builtin.import_tasks: 'informers/warnings.yml'

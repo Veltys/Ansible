@@ -1,19 +1,19 @@
 # Title         : locale.yml
 # Description   : Install Spanish locale
 # Author        : Veltys
-# Date          : 2023-10-04
-# Version       : 1.1.0
+# Date          : 2024-07-04
+# Version       : 1.1.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
-- name: 'Clean previous variables'
+- name: 'Clean previous variable states'
   ansible.builtin.set_fact:
     packages_to_install: []
 
 - name: 'Find required packages'
-  ansible.builtin.include_tasks: ../configurers/packages_finder_loop.yml
+  ansible.builtin.include_tasks: '../configurers/packages_finder_loop.yml'
   loop: "{{ locale.packages }}"
   loop_control:
     index_var: i

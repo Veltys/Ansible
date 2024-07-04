@@ -1,13 +1,17 @@
-# Title         : packages_finder.yml
-# Description   : Find packages to be installed
+# Title         : distro_packages_finder.yml
+# Description   : Find distro packages to be installed
 # Author        : Veltys
-# Date          : 2023-10-04
-# Version       : 1.0.1
+# Date          : 2024-07-04
+# Version       : 2.0.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
+- name: 'Clean previous variable states'
+  ansible.builtin.set_fact:
+    packages_to_install: []
+
 - name: 'Common packages finder'
   tags:
     - configuration
@@ -40,3 +44,7 @@
     index_var: i
     label: "{{ host.packages_to_install.general[i].distro }}"
     loop_var: outer_item
+
+- name: 'Save current state'
+  ansible.builtin.set_fact:
+    distro_packages_to_install: "{{ packages_to_install }}"

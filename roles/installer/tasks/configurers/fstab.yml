@@ -1,8 +1,8 @@
 # Title         : fstab.yml
 # Description   : Configure fstab
 # Author        : Veltys
-# Date          : 2024-06-03
-# Version       : 1.3.0
+# Date          : 2024-07-04
+# Version       : 1.3.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -38,7 +38,7 @@
     loop_control:
       label: "{{ item.1.name }}"
 
-  when: "'cifs-utils' in packages_to_install"
+  when: "'cifs-utils' in distro_packages_to_install"
 
 - name: 'fstab configurer for SSHFS mounts'
   block:
@@ -87,4 +87,4 @@
     loop_control:
       label: "{{ item.1.name }}"
 
-  when: "('fuse-sshfs' in packages_to_install) or ('sshfs' in packages_to_install)"
+  when: "('fuse-sshfs' in distro_packages_to_install) or ('sshfs' in distro_packages_to_install)"
