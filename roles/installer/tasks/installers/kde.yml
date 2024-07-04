@@ -2,7 +2,7 @@
 # Description   : Install KDE
 # Author        : Veltys
 # Date          : 2024-07-04
-# Version       : 1.1.2
+# Version       : 1.2.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -33,29 +33,3 @@
   ansible.builtin.package:
     name: "{{ packages_to_install }}"
     state: 'present'
-  when: "
-    'debian' in ansible_facts['distribution'] | lower() or
-    'ubuntu' in ansible_facts['distribution'] | lower()
-    "
-
-- name: 'Centos installer'
-  tags:
-    - installation
-    - kde
-  ansible.builtin.dnf:
-    name: "{{ packages_to_install }}"
-    state: 'present'
-  when: "
-    'centos' in ansible_facts['distribution'] | lower()
-    "
-
-- name: 'SUSE installer'
-  tags:
-    - installation
-    - kde
-  community.general.zypper:
-    name: "{{ packages_to_install }}"
-    type: pattern
-  when: "
-    'suse' in ansible_facts['distribution'] | lower()
-    "

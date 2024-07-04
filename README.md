@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - Python packages finder
 
+#### Fixed
+- KDE installler optimization
+
 ### [0.3.50] - 2024-07-01
 #### Added
 - More domains in Saturnus host
