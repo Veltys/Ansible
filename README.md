@@ -17,6 +17,10 @@ Ansible master repository that contains a collection of different useful roles t
 
 
 
+### [0.3.50] - 2024-06-28
+#### Added
+- More domains in Saturnus host
+
 ### [0.3.49] - 2024-06-21
 #### Fixed
 - Some domains in Saturnus host
