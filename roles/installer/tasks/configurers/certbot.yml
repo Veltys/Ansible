@@ -1,8 +1,8 @@
 # Title         : certbot.yml
 # Description   : Configure certbot
 # Author        : Veltys
-# Date          : 2024-07-04
-# Version       : 1.0.0
+# Date          : 2024-07-10
+# Version       : 1.1.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -26,10 +26,11 @@
     - apache
     - certbot
   ansible.builtin.command:
-    cmd: "certbot certonly -d {{ item.item.site }} --dns-ovh --dns-ovh-credentials /root/.ovh.ini"
+    cmd: "certbot certonly -d '{{ item.item.site }}'{% if 'www' in host.apache.sites[i].types %} -d 'www.{{ item.item.site }}'{% endif %} --dns-ovh --dns-ovh-credentials /root/.ovh.ini"
   when:
     not item.stat.exists or 
     not item.stat.isdir
   loop: "{{ cert_exists.results }}"
   loop_control:
+    index_var: i
     label: "{{ item.invocation.module_args.path }}"

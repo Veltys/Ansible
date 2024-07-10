@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.52] - 2024-07-10
+#### Added
+- Support for domains with 'www'
+
 ### [0.3.51] - 2024-07-04
 #### Added
 - Python packages finder
