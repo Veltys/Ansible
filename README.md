@@ -15,9 +15,12 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.52] - 2024-07-10
+### [0.3.52] - 2024-07-11
 #### Added
 - Support for domains with 'www'
+
+#### Fixed
+- More consistent formatting in **README.md**
 
 ### [0.3.51] - 2024-07-04
 #### Added
@@ -29,19 +32,19 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.50] - 2024-07-01
 #### Added
-- More domains in Saturnus host
+- More domains in **Saturnus** host
 
 #### Fixed
-- ansible_check_mode check required
+- *ansible_check_mode* check required
 - Some hosts IP changes
 
 ### [0.3.49] - 2024-06-21
 #### Fixed
-- Some domains in Saturnus host
+- Some domains in **Saturnus** host
 
 ### [0.3.48] - 2024-06-19
 #### Added
-- More packages to install in *Saturnus* host
+- More packages to install in **Saturnus** host
 
 #### Fixed
 - Apache tasks needs Apache tags
@@ -52,27 +55,27 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.46] - 2024-06-05
 #### Added
-- *Saturnus* host SSH key
+- **Saturnus** host SSH key
 
 #### Fixed
 - Some cosmetic changes
 
 #### Deleted
 - Pseudo-automatic SSH key generator
-- Unnecessary *Rayo* host SSH key file
+- Unnecessary **Rayo** host SSH key file
 
 ### [0.3.45] - 2024-06-04
 #### Fixed
-- CIFS and SSHFS mounts cleanup
-- Better SSH keys management for SSHFS fstab mounts
+- *CIFS* and *SSHFS* mounts cleanup
+- Better SSH keys management for *SSHFS* *fstab* mounts
 - IPv6 support is temporarily disabled
 
 ### [0.3.44] - 2024-06-02
 #### Added
-- *Saturnus* host
+- **Saturnus** host
 
 #### Fixed
-- Some *Iuppiter* host missconfigurations
+- Some **Iuppiter** host missconfigurations
 
 ### [0.3.43] - 2024-05-21
 #### Fixed
@@ -83,7 +86,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.42] - 2024-05-19
 #### Added
-- Support for snap packages
+- Support for *snap* packages
 
 ### [0.3.41] - 2024-05-16
 #### Added
@@ -93,11 +96,11 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - Apache template change
 - More active modules in Apache
-- Bad authentication configuration for *Xana* host
+- Bad authentication configuration for **Xana** host
 
 #### Deleted
 - Some old hosts
-- *Rayo* host does not need Apache as it uses a K8s version
+- **Rayo** host does not need Apache as it uses a K8s version
 
 ### [0.3.39] - 2024-04-01
 #### Fixed
@@ -110,7 +113,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.37] - 2024-03-01
 #### Added
-- *Nike* host
+- **Nike** host
     - Still experimental
 
 #### Fixed
@@ -121,18 +124,18 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.36] - 2024-02-26
 #### Added
-- Deployer for authorized_keys file in native Ansible format
+- Deployer for **authorized_keys** file in native Ansible format
 - Executable permissions for **deploy_authorized_keys.yml** playbook file
 - New *sk-ssh-ed25519* key for an existent host
 - New *sk-ssh-ed25519* key for another existent host
 - New *sk-ssh-ed25519* key for the last intended existent host
-- *Rayo* host
+- **Rayo** host
 
 #### Fixed
 - Various improvements
 
 #### Deleted
-- Deployer for authorized_keys file in bash format
+- Deployer for **authorized_keys** file in bash format
 
 ### [0.3.35] - 2024-01-21
 #### Added
@@ -167,7 +170,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.32] - 2023-12-14
 #### Fixed
 - **Xana** server connectivity issues
-- **README.md** format
+- **README.md** formatting
 
 ### [0.3.31] - 2023-11-30
 #### Added
@@ -369,7 +372,7 @@ Ansible master repository that contains a collection of different useful roles t
 - **inventory** folder
 
 #### Fixed
-- **README.md** file format
+- **README.md** file formatting
 
 ### [0.0.2] - 2023-02-18
 #### Added
