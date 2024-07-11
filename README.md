@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.52] - 2024-07-11
 #### Added
 - Support for domains with 'www'
+- More required packages in **Satunus** host
 
 #### Fixed
 - More consistent formatting in **README.md**
