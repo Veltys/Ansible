@@ -1,8 +1,8 @@
 # Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
 # Description   : Apache virtualhost config file
 # Author        : Veltys
-# Date          : 2024-05-16
-# Version       : 1.10.0
+# Date          : 2024-07-11
+# Version       : 1.10.1
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -16,7 +16,7 @@
 	# However, you must set it for any further virtual host explicitly.
 	ServerName {{ item.site }}
 	{%- if 'www' in item.types %}{{ "\n\t" -}}
-	ServerName www.{{ item.site }}
+	ServerAlias www.{{ item.site }}
 	{%- endif %}{{ "\n\n\t" -}}
 
 	ServerAdmin webmaster@veltys.es
@@ -71,7 +71,7 @@
 	<VirtualHost *:443>
 		ServerName {{ item.site }}
 		{%- if 'www' in item.types %}{{ "\n\t\t" -}}
-		ServerName www.{{ item.site }}
+		ServerAlias www.{{ item.site }}
 		{%- endif %}{{ "\n\n\t\t" -}}
 
 		<IfModule mod_headers.c>
