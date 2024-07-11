@@ -23,6 +23,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - More consistent formatting in **README.md**
 - Error in Apache virtual sites template
+- Wrong tags in *certbot* tasks
 
 ### [0.3.51] - 2024-07-04
 #### Added
