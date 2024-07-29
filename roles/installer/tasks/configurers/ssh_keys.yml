@@ -1,8 +1,8 @@
 # Title         : ssh_keys.yml
 # Description   : Configures the SSH keys
 # Author        : Veltys
-# Date          : 2024-06-05
-# Version       : 1.4.0
+# Date          : 2024-07-29
+# Version       : 1.4.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -27,8 +27,6 @@
     loop: "{{ ssh_keys.ssh_keys | product([ 'pem', 'pub' ]) | list }}"
 
 #  rescue:
-#    # TODO: Jenkins integration
-#
 #    - name: 'Generating new key files'
 #      delegate_to: localhost
 #      community.crypto.openssh_keypair:
@@ -92,6 +90,7 @@
 
   when: host.ssh_keys_config
 
+# TODO: To be replaced by a Jenkins integration
 - name: 'authorized_keys files deployer'
   tags:
     - configuration

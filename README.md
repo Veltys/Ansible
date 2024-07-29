@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.54] - 2024-07-29
+#### Added
+- **Ozono** host
+
 ### [0.3.53] - 2024-07-16
 #### Fixed
 - Wrong security in some sites in **Saturnus** host
