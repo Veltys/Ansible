@@ -19,6 +19,15 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - **Ozono** host
 
+#### Fixed
+- Internal hosts no longer need a jump host
+    - **Boreal**
+    - **Carpo**
+    - **Heracles**
+    - **Nike**
+    - **Perseo**
+    - **Xana**
+
 ### [0.3.53] - 2024-07-16
 #### Fixed
 - Wrong security in some sites in **Saturnus** host
