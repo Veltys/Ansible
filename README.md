@@ -15,9 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.54] - 2024-07-29
+### [0.3.54] - 2024-08-03
 #### Added
 - **Ozono** host
+- Support for 'systemd-timesyncd'
 
 #### Fixed
 - Internal hosts no longer need a jump host

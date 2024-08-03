@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main vars file
 # Author        : Veltys
-# Date          : 2024-01-22
-# Version       : 1.3.0
+# Date          : 2024-08-03
+# Version       : 1.4.0
 # Usage         : (imported as a var file by those playbooks, roles, etc. which need it)
 # Notes         : 
 
@@ -76,7 +76,7 @@ mailers				: {
   ],
 }
 ntp					: {
-  file				: '/etc/ntp.conf',
+  files				: [ '/etc/ntp.conf', '/etc/systemd/timesyncd.conf' ],
   servers			: [ 'hora.roa.es' ],
 }
 passport			: {

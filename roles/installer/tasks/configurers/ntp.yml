@@ -1,14 +1,17 @@
 # Title         : ntp.yml
 # Description   : Configures the NTP client
 # Author        : Veltys
-# Date          : 2024-05-19
-# Version       : 1.0.3
+# Date          : 2024-08-03
+# Version       : 2.0.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
 
 ---
-- name: 'NTP configurer'
+- name: 'Gather service facts'
+  ansible.builtin.service_facts:
+
+- name: 'NTP service configurer'
   tags:
     - configuration
     - ntp
@@ -17,6 +20,21 @@
     backup: False
     insertbefore: '^pool 0\.[a-z]*\.pool\.ntp\.org iburst$'
     line: "server {{ item }}"
-    path: "{{ ntp.file }}"
+    path: "{{ ntp.files[0] }}"
     state: 'present'
   loop: "{{ ntp.servers }}"
+  when: "'ntp' in services and services['ntp'].state == 'running'"
+
+- name: '''systemd-timesyncd'' service configurer'
+  tags:
+    - configuration
+    - ntp
+  ansible.builtin.lineinfile:
+    backup: False
+    create: False
+    insertafter: '^\[Time\]$'
+    line: "NTP={{ ntp.servers | join(' ') }}"
+    path: "{{ ntp.files[1] }}"
+    regexp: '^#?NTP='
+    state: 'present'
+  when: "'systemd-timesyncd' in services and services['systemd-timesyncd'].state == 'running'"
