@@ -20,6 +20,7 @@ Ansible master repository that contains a collection of different useful roles t
 - **Ozono** host
 - Some cosmetic changes
 - Support for 'systemd-timesyncd'
+- Some more packages
 
 #### Fixed
 - Internal hosts no longer need a jump host
