@@ -119,7 +119,11 @@
     - configuration
     - firewall
   ansible.builtin.include_tasks: 'configurers/firewall.yml'
-  when: "'ufw' in distro_packages_to_install"
+  when:
+    "
+      not ansible_check_mode and
+      'ufw' in distro_packages_to_install
+    "
 
 - name: 'Dynamic DNS configurer'
   tags:

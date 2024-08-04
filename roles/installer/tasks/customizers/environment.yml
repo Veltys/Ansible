@@ -1,8 +1,8 @@
 # Title         : environment.yml
 # Description   : Customize some environment variables
 # Author        : Veltys
-# Date          : 2023-11-20
-# Version       : 1.4.1
+# Date          : 2024-08-04
+# Version       : 1.4.2
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -41,3 +41,4 @@
     path: '~/.bash_aliases'
     regexp: '^( )*alias {{ item.name }}=''{{ item.command }}'''
   loop: "{{ common.env.aliases + group.env.aliases + host.env.aliases }}"
+  when: not ansible_check_mode

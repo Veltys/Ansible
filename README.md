@@ -15,7 +15,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.54] - 2024-08-03
+### [0.3.54] - 2024-08-04
 #### Added
 - **Ozono** host
 - Support for 'systemd-timesyncd'
@@ -28,6 +28,7 @@ Ansible master repository that contains a collection of different useful roles t
     - **Nike**
     - **Perseo**
     - **Xana**
+- These tasks sould not be executed when we are in *check mode*
 
 ### [0.3.53] - 2024-07-16
 #### Fixed
