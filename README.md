@@ -29,6 +29,7 @@ Ansible master repository that contains a collection of different useful roles t
     - **Nike**
     - **Perseo**
     - **Xana**
+- Some firewall rules adjusting
 - These tasks sould not be executed when we are in *check mode*
 
 ### [0.3.53] - 2024-07-16
