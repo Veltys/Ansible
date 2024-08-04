@@ -2,7 +2,7 @@
 # Description   : Customize some environment variables
 # Author        : Veltys
 # Date          : 2024-08-04
-# Version       : 1.4.2
+# Version       : 1.5.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -27,6 +27,13 @@
       ssh-add ~/.ssh/id_ed25519
     path: '~/.bashrc'
   when: host.env.ssh_agent
+
+- name: 'Cosmetic change in ~/.bashrc file'
+  become: False
+  ansible.builtin.replace:
+    path: '~/.bashrc'
+    regexp: "\n+(# BEGIN ANSIBLE MANAGED BLOCK)"
+    replace: '\n\n\n\1'
 
 - name: 'Ensure required file existence'
   become: False

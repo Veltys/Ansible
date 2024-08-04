@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.54] - 2024-08-04
 #### Added
 - **Ozono** host
+- Some cosmetic changes
 - Support for 'systemd-timesyncd'
 
 #### Fixed
