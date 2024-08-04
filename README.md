@@ -32,6 +32,9 @@ Ansible master repository that contains a collection of different useful roles t
 - Some firewall rules adjusting
 - These tasks sould not be executed when we are in *check mode*
 
+#### Deleted
+- **Iuppiter** host
+
 ### [0.3.53] - 2024-07-16
 #### Fixed
 - Wrong security in some sites in **Saturnus** host
