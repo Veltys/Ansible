@@ -15,7 +15,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.3.54] - 2024-08-04
+### [0.3.54] - 2024-08-07
 #### Added
 - **Ozono** host
 - Some cosmetic changes
@@ -31,6 +31,7 @@ Ansible master repository that contains a collection of different useful roles t
     - **Perseo**
     - **Xana**
 - Some firewall rules adjusting
+- Some packages adjusting in **Perseo**
 - These tasks sould not be executed when we are in *check mode*
 
 #### Deleted
