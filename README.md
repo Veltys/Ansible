@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.3.55] - 2024-08-10
+#### Fixed
+- New **iptables_replacer.sh** version
+
 ### [0.3.54] - 2024-08-07
 #### Added
 - **Ozono** host
@@ -357,7 +361,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.3.3] - 2023-05-19
 #### Fixed
-- Error if ~/.bash_aliases doesn't exist
+- Error if **~/.bash_aliases** doesn't exist
 
 ### [0.3.2] - 2023-05-19
 #### Added
