@@ -3,8 +3,8 @@
 # Title         : 50-custom-motd.sh
 # Description   : Muestra un MOTD personalizado para Raspberries Pi
 # Author        : Veltys
-# Date          : 2023-03-22
-# Version       : 3.0.2
+# Date          : 2024-04-11
+# Version       : 3.0.3
 # Usage         : (llamado al iniciar sesión, si está correctamente instalado)
 # Notes         : Es necesaria una terminal de 256 colores para apreciar el dibujo ASCII adecuadamente
 
@@ -32,7 +32,7 @@ SDAVAIL=$(df -h | grep 'dev/root' | awk '{print $4}' | xargs)
 read one five fifteen rest < /proc/loadavg
 
 
-ips=( $(ip a | grep global | awk '{print $2}' | cut -f1 -d/) )
+ips=( $(ip a | grep 'global' | grep -v 'cali' | awk '{print $2}' | cut -f1 -d'/') )
 
 declare ips_txt
 
