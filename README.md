@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.4.0] - 2024-08-22
+#### Fixed
+- Submodule URL
+
 ### [0.3.55] - 2024-08-11
 #### Fixed
 - New **iptables_replacer.sh** version
