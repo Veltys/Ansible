@@ -1,3 +1,9 @@
 [submodule "roles/installer/files/grafico_temperaturas"]
 	path = roles/installer/files/grafico_temperaturas
 	url = git@github.com:Veltys/Grafico_temperaturas.git
+[submodule "roles/installer/files/K8s-YAMLs/rayo"]
+	path = roles/installer/files/K8s-YAMLs/rayo
+	url = git@github.com:Veltys/K8s-YAMLs.git
+[submodule "roles/installer/files/K8s-YAMLs/ozono"]
+	path = roles/installer/files/K8s-YAMLs/ozono
+	url = git@github.com:Veltys/K8s-YAMLs.git

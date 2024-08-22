@@ -16,6 +16,10 @@ Ansible master repository that contains a collection of different useful roles t
 - [ ] Create a to-do list
 
 ### [0.4.0] - 2024-08-22
+#### Added
+- Submodules for K8s-YAMLs repo
+    - Sorry, that one is a private repo
+
 #### Fixed
 - Submodule URL
 
