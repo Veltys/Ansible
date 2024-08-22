@@ -22,6 +22,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - Submodule URL
+- Bad description in **snap.yml**
 
 ### [0.3.55] - 2024-08-11
 #### Fixed

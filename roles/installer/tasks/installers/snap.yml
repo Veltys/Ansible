@@ -1,8 +1,8 @@
-# Title         : general.yml
-# Description   : Install required Python packages
+# Title         : snap.yml
+# Description   : Install required Snap packages
 # Author        : Veltys
-# Date          : 2024-05-19
-# Version       : 1.0.0
+# Date          : 2024-08-22
+# Version       : 1.0.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
