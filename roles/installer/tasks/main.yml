@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2024-07-03
-# Version       : 1.6.1
+# Date          : 2024-08-28
+# Version       : 1.6.2
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -23,7 +23,7 @@
     - apache
     - certbot
     - fstab
-  ansible.builtin.import_tasks: 'configurers/distro_packages_finder.yml'
+  ansible.builtin.import_tasks: 'configurers/packages_finder_distro.yml'
 
 - name: 'Python packages finder'
   tags:
@@ -33,7 +33,7 @@
     - packages
     - python
     - certbot
-  ansible.builtin.import_tasks: 'configurers/python_packages_finder.yml'
+  ansible.builtin.import_tasks: 'configurers/packages_finder_python.yml'
   when: "'python3-pip' in distro_packages_to_install"
 
 - name: 'Password changer'

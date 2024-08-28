@@ -15,7 +15,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.4.0] - 2024-08-22
+### [0.4.0] - 2024-08-28
 #### Added
 - Submodules for K8s-YAMLs repo
     - Sorry, that one is a private repo
@@ -23,6 +23,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - Submodule URL
 - Bad description in **snap.yml**
+- File naming consistency:
+    - **distro_packages_finder.yml** ➡ **packages_finder_distro.yml**
+    - **python_packages_finder.yml** ➡ **packages_finder_python.yml**
 
 ### [0.3.55] - 2024-08-11
 #### Fixed
