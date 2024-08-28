@@ -2,7 +2,7 @@
 # Description   : Find distro packages to be installed
 # Author        : Veltys
 # Date          : 2024-08-28
-# Version       : 2.0.1
+# Version       : 2.0.2
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -17,7 +17,7 @@
     - configuration
     - packages_finder
   ansible.builtin.include_tasks: configurers/packages_finder_loop.yml
-  loop: "{{ common.packages_to_install.general }}"
+  loop: "{{ common.packages_to_install.general | default([]) }}"
   loop_control:
     index_var: i
     label: "{{ common.packages_to_install.general[i].distro }}"
@@ -28,7 +28,7 @@
     - configuration
     - packages_finder
   ansible.builtin.include_tasks: configurers/packages_finder_loop.yml
-  loop: "{{ group.packages_to_install.general }}"
+  loop: "{{ group.packages_to_install.general | default([]) }}"
   loop_control:
     index_var: i
     label: "{{ group.packages_to_install.general[i].distro }}"
@@ -39,7 +39,7 @@
     - configuration
     - packages_finder
   ansible.builtin.include_tasks: configurers/packages_finder_loop.yml
-  loop: "{{ host.packages_to_install.general }}"
+  loop: "{{ host.packages_to_install.general | default([]) }}"
   loop_control:
     index_var: i
     label: "{{ host.packages_to_install.general[i].distro }}"
@@ -47,4 +47,4 @@
 
 - name: 'Save current state'
   ansible.builtin.set_fact:
-    distro_packages_to_install: "{{ packages_to_install }}"
+    distro_packages_to_install: "{{ packages_to_install | unique }}"

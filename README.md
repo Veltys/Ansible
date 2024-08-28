@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - Submodules for K8s-YAMLs repo
     - Sorry, that one is a private repo
+- More security checks in packages finders:
+    - **distro_packages_finder.yml**
+    - **python_packages_finder.yml**
 
 #### Fixed
 - Submodule URL
