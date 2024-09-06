@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.4.1] - 2024-09-07
+#### Added
+- **Uranus** server
+
 ### [0.4.0] - 2024-08-28
 #### Added
 - Submodules for K8s-YAMLs repo
