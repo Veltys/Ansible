@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - **Uranus** server
 
+#### Fixed
+- *certbot* command fine tuning
+
 #### Deleted
 - **Boreal** host
 
