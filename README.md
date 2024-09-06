@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - **Uranus** server
 
+#### Deleted
+- **Boreal** host
+
 ### [0.4.0] - 2024-08-28
 #### Added
 - Submodules for K8s-YAMLs repo
