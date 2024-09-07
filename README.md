@@ -21,6 +21,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - *certbot* command fine tuning
+- Files format
 - Various improvements
 - **.ovh.ini** file copy
 
