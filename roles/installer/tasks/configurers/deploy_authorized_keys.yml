@@ -1,8 +1,8 @@
 # Title         : deploy_authorized_keys.yml
 # Description   : Deploys authorized_keys file
 # Author        : Veltys
-# Date          : 2024-02-22
-# Version       : 1.0.0
+# Date          : 2024-09-07
+# Version       : 1.0.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : 
 
@@ -10,7 +10,8 @@
 ---
 - name: 'Copy required files (2/2)'
   become: False
-  tags: authorized_keys_file
+  tags:
+    - authorized_keys_file
   ansible.builtin.copy:
     src: "ssh_keys/{{ item.src }}"
     dest: "{{ item.dest }}/{{ item.src }}"

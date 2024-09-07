@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2024-08-28
-# Version       : 1.6.2
+# Date          : 2024-09-07
+# Version       : 1.6.3
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -79,14 +79,13 @@
   ansible.builtin.include_tasks: 'configurers/motd.yml'
   vars:
     motd: "{{ common.motd | combine(group.motd, host.motd, list_merge = 'append', recursive = true) }}"
-  when: "
+  when: >
     (
       'ubuntu' in ansible_facts['distribution'] | lower() or
       'debian' in ansible_facts['distribution'] | lower() or
       'raspios' in ansible_facts['distribution'] | lower()
     ) and
     host.motd.enabled
-    "
 
 - name: 'Timezone configurer'
   tags:
@@ -119,11 +118,9 @@
     - configuration
     - firewall
   ansible.builtin.include_tasks: 'configurers/firewall.yml'
-  when:
-    "
-      not ansible_check_mode and
-      'ufw' in distro_packages_to_install
-    "
+  when: >
+    not ansible_check_mode and
+    'ufw' in distro_packages_to_install
 
 - name: 'Dynamic DNS configurer'
   tags:

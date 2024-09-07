@@ -1,8 +1,8 @@
 # Title         : ntp.yml
 # Description   : Configures the NTP client
 # Author        : Veltys
-# Date          : 2024-08-03
-# Version       : 2.0.0
+# Date          : 2024-09-07
+# Version       : 2.0.1
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -23,7 +23,9 @@
     path: "{{ ntp.files[0] }}"
     state: 'present'
   loop: "{{ ntp.servers }}"
-  when: "'ntp' in services and services['ntp'].state == 'running'"
+  when: >
+    'ntp' in services and
+    services['ntp'].state == 'running'
 
 - name: '''systemd-timesyncd'' service configurer'
   tags:
@@ -37,4 +39,6 @@
     path: "{{ ntp.files[1] }}"
     regexp: '^#?NTP='
     state: 'present'
-  when: "'systemd-timesyncd' in services and services['systemd-timesyncd'].state == 'running'"
+  when: >
+    'systemd-timesyncd' in services and
+    services['systemd-timesyncd'].state == 'running'

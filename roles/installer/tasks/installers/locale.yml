@@ -1,8 +1,8 @@
 # Title         : locale.yml
 # Description   : Install Spanish locale
 # Author        : Veltys
-# Date          : 2024-07-04
-# Version       : 1.1.1
+# Date          : 2024-09-07
+# Version       : 1.1.2
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -31,10 +31,9 @@
   community.general.locale_gen:
     name: 'es_ES.UTF-8'
     state: 'present'
-  when: "
+  when: >
     'debian' in ansible_facts['distribution'] | lower() or
     'ubuntu' in ansible_facts['distribution'] | lower()
-    "
 
 - name: 'Spanish locale installer for CentOS and SUSE'
   ansible.builtin.command:
