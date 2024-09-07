@@ -20,6 +20,11 @@ backup				: {
     { src: 'backup'						, dest: '/etc'						, mode: '0644' },
   ],
 }
+certbot				: {
+  files				: [
+    { src: '.ovh.ini'					, dest: '/root'						, mode: '0600' },
+  ],
+}
 cleaner				: {
   packages			: [ 'dphys-swapfile' ],
 }

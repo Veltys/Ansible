@@ -21,6 +21,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - *certbot* command fine tuning
+- **.ovh.ini** file copy
 
 #### Deleted
 - **Boreal** host
