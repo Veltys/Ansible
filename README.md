@@ -23,6 +23,7 @@ Ansible master repository that contains a collection of different useful roles t
 - *certbot* command fine tuning
 - Files format
 - Various improvements
+- Wrong **Uranus** host mailer password
 - Wrong **Xana** host mailer password
 - **.ovh.ini** file copy
 
