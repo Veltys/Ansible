@@ -21,6 +21,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - *certbot* command fine tuning
+- Connections to servers in the "VPSs" group switched to VPN route
 - Files format
 - Various improvements
 - Wrong **Carpo** host mailer password
