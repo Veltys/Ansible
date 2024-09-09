@@ -15,9 +15,9 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.4.1] - 2024-09-08
+### [0.4.1] - 2024-09-09
 #### Added
-- **Uranus** server
+- ~**Uranus** server~
 
 #### Fixed
 - *certbot* command fine tuning
