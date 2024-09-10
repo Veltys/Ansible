@@ -23,6 +23,7 @@ Ansible master repository that contains a collection of different useful roles t
 - *certbot* command fine tuning
 - Connections to servers in the "VPSs" group switched to VPN route
 - Files format
+- Updated **Ozono** submodule
 - Various improvements
 - Wrong **Carpo** host mailer password
 - Wrong **Uranus** host mailer password
