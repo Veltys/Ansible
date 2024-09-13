@@ -15,7 +15,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.4.1] - 2024-09-09
+### [0.4.1] - 2024-09-14
 #### Added
 - ~**Uranus** server~
 
@@ -23,6 +23,7 @@ Ansible master repository that contains a collection of different useful roles t
 - *certbot* command fine tuning
 - Connections to servers in the "VPSs" group switched to VPN route
 - Files format
+- More directories existance checks in **fstab.yml**
 - Updated **Ozono** submodule
 - Various improvements
 - Wrong **Carpo** host mailer password
