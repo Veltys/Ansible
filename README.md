@@ -22,6 +22,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - *certbot* command fine tuning
 - Connections to servers in the "VPSs" group switched to VPN route
+- **Eros** host update and some *dos2unix* conversions
 - Files format
 - More directories existance checks in **fstab.yml**
 - Updated **Ozono** submodule
