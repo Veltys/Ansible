@@ -26,6 +26,7 @@ Ansible master repository that contains a collection of different useful roles t
 - Files format
 - More directories existance checks in **fstab.yml**
 - Updated **Ozono** submodule
+- Updated **Rayo** submodule
 - Various improvements
 - Wrong **Carpo** host mailer password
 - Wrong **Uranus** host mailer password
