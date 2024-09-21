@@ -1,8 +1,8 @@
 # Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
 # Description   : Apache virtualhost config file
 # Author        : Veltys
-# Date          : 2024-07-11
-# Version       : 1.10.1
+# Date          : 2024-09-21
+# Version       : 1.11.0
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -137,7 +137,8 @@
 			SSLProxyCheckPeerCN Off
 			SSLProxyCheckPeerName Off
 			SSLProxyCheckPeerExpire Off
-			{{- "\n\n\t\t\t" }}{% endif -%}
+			{{- "\n\n\t\t\t" -}}
+		{%- endif -%}
 
 			<IfModule mod_proxy_http.c>
 				ProxyPass			"/.well-known"	!
@@ -225,7 +226,18 @@
 				{%- endif %}{{ "\n\t\t\t" -}}
 			</Location>
 		</IfModule>
-			{%- endif %}
+			{%- endif -%}
+
+			{%- if 'nagios' in item.types %}{{ "\n\n\t\t" -}}
+		<IfModule mod_rewrite.c>
+			RewriteEngine On
+			RewriteCond %{REQUEST_FILENAME} !-f
+			RewriteCond %{REQUEST_FILENAME} !-d
+			RewriteRule nagiosxi/api/v1/(.*)$ /usr/local/nagiosxi/html/api/v1/index.php?request=$1 [QSA,NC,L]
+			RewriteRule nagiosxi/api/v2/(.*)$ /usr/local/nagiosxi/html/api/v2/index.php [QSA,NC,L]
+		</IfModule>
+			{%- endif -%}
+
 		{{- "\n\t" }}{% endif -%}
 	</VirtualHost>
 </IfModule>
