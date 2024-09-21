@@ -31,6 +31,7 @@ Ansible master repository that contains a collection of different useful roles t
 - Updated **Ozono** submodule
 - Updated **Rayo** submodule
 - Various improvements
+- VPN connection in SSHFS mounts
 - Wrong **Carpo** host mailer password
 - Wrong **Uranus** host mailer password
 - Wrong **Xana** host mailer password
