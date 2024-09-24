@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.5.0] - 2024-09-24
+#### Added
+- VPN installer
+
 ### [0.4.1] - 2024-09-24
 #### Added
 - **Mars** server

@@ -136,6 +136,16 @@
   ansible.builtin.include_tasks: 'configurers/passport.yml'
   when: host.passport.enabled
 
+- name: 'VPN installer'
+  tags:
+    - installation
+    - vpn
+  ansible.builtin.include_tasks: 'installers/vpn.yml'
+  when: >
+    common.vpn.install or
+    group.vpn.install or
+    host.vpn.install
+
 - name: 'Backup configurer'
   tags:
     - configuration
@@ -200,7 +210,8 @@
     - installation
     - kde
   ansible.builtin.include_tasks: 'installers/kde.yml'
-  when: common.kde.install or
+  when: >
+    common.kde.install or
     group.kde.install or
     host.kde.install
 

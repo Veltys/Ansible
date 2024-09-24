@@ -1,0 +1,23 @@
+# Title         : vpn.yml
+# Description   : Installs ZeroTier VPN service
+# Author        : Veltys
+# Date          : 2024-09-24
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Package installer'
+  tags:
+    - installation
+    - vpn
+  ansible.builtin.shell:
+    cmd: "{{ vpn.install_command }}"
+
+- name: 'Host joining'
+  tags:
+    - installation
+    - vpn
+  ansible.builtin.command:
+    cmd: "{{ vpn.join_command }} {{ host.vpn.network_id | default(group.vpn.network_id) | default(common.vpn.network_id) }}"
