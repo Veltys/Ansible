@@ -15,11 +15,12 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.4.1] - 2024-09-22
+### [0.4.1] - 2024-09-24
 #### Added
-- ~**Uranus** server~
+- **Mars** server
 - *Nagios* Apache template type
 - ~**Pluto** server~
+- ~**Uranus** server~
 
 #### Fixed
 - Better port searching method
