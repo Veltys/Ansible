@@ -19,7 +19,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - ~**Uranus** server~
 - *Nagios* Apache template type
-- **Pluto** server
+- ~**Pluto** server~
 
 #### Fixed
 - Better port searching method
