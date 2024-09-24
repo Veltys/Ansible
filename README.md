@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - VPN installer
 
+#### Fixed
+- Transfer of powers **Eros** ➡ **Ozono**
+
 ### [0.4.1] - 2024-09-24
 #### Added
 - **Mars** server
