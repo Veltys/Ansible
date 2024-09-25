@@ -21,6 +21,7 @@ Ansible master repository that contains a collection of different useful roles t
 - VPN installer
 
 #### Fixed
+- Better list printing
 - Transfer of powers **Eros** ➡ **Ozono**
 - Updated **updater** role
 - Warnings armonization
