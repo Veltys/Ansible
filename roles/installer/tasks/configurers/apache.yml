@@ -1,8 +1,8 @@
 # Title         : apache.yml
 # Description   : Configure Apache
 # Author        : Veltys
-# Date          : 2024-09-07
-# Version       : 1.1.3
+# Date          : 2024-09-25
+# Version       : 1.2.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -78,13 +78,6 @@
   when:
     not ansible_check_mode and
     host.apache.sites[i].auth
-
-- name: 'Certbot configurer'
-  tags:
-    - configuration
-    - certbot
-  ansible.builtin.include_tasks: certbot.yml
-  when: "'certbot' in python_packages_to_install"
 
 - name: 'Testing new configuration'
   tags:

@@ -23,6 +23,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - Better list printing
+- Better installation order
 - Transfer of powers **Eros** ➡ **Ozono**
 - Updated **updater** role
 - Warnings armonization
