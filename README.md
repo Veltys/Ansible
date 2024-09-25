@@ -21,6 +21,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Fixed
 - Transfer of powers **Eros** ➡ **Ozono**
+- Updated **updater** role
 - Warnings armonization
 
 ### [0.4.1] - 2024-09-24

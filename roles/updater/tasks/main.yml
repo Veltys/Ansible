@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Updater role main file
 # Author        : Veltys
-# Date          : 2023-08-01
-# Version       : 4.0.1
+# Date          : 2024-09-25
+# Version       : 4.1.0
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -16,27 +16,15 @@
     name: '*'
     state: 'latest'
     update_cache: yes
-  when: "
+  when: >
     'centos'	in ansible_facts['distribution'] | lower() or
     'debian'	in ansible_facts['distribution'] | lower() or
     'fedora'	in ansible_facts['distribution'] | lower() or
     'red hat'	in ansible_facts['distribution'] | lower() or
     'suse'		in ansible_facts['distribution'] | lower() or
     'ubuntu'	in ansible_facts['distribution'] | lower()
-    "
 
-- name: 'Netdata upgrader for systems with no Netdata binary repo'
-  tags:
-  - netdata
-  - upgrade
-  ansible.builtin.shell:
-    cmd: '/usr/libexec/netdata/netdata-updater.sh'
-  when:
-    ansible_facts.architecture == 'armv6l' and
-    netdata_build | lower() == 'y'
-
-# TODO: Better condition
-- name: 'Old ansible updater and upgrader (opkg) for OpenSPA'
+- name: 'Old updater and upgrader (opkg) for OpenSPA'
   tags:
   - opkg
   - update
@@ -51,11 +39,37 @@
     ansible.builtin.shell:
       cmd: 'opkg upgrade'
 
-  when: "
+  when: >
+    'openspa'	in ansible_facts['distribution'] | lower() or
+    'openpli'	in ansible_facts['distribution'] | lower()
+
+- name: 'Unknown updater and upgrader'
+  tags:
+  - unknown
+  - update
+  - upgrade
+
+  block:
+  - name: 'Updater and upgrader for unknown systems'
+    ansible.builtin.debug:
+      msg: "WARNING: Unknown reported system in ansible facts ({{ ansible_facts['distribution'] }}), cannot update and upgrade"
+
+  when: >
     'centos'	not in ansible_facts['distribution'] | lower() and
     'debian'	not in ansible_facts['distribution'] | lower() and
     'fedora'	not in ansible_facts['distribution'] | lower() and
     'red hat'	not in ansible_facts['distribution'] | lower() and
     'suse'		not in ansible_facts['distribution'] | lower() and
-    'ubuntu'	not in ansible_facts['distribution'] | lower()
-    "
+    'ubuntu'	not in ansible_facts['distribution'] | lower() and
+    'openspa'	not in ansible_facts['distribution'] | lower() and
+    'openpli'	not in ansible_facts['distribution'] | lower()
+
+- name: 'Netdata upgrader for systems with no Netdata binary repo'
+  tags:
+  - netdata
+  - upgrade
+  ansible.builtin.shell:
+    cmd: '/usr/libexec/netdata/netdata-updater.sh'
+  when:
+    ansible_facts.architecture == 'armv6l' and
+    netdata_build | lower() == 'y'
