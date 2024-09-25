@@ -24,6 +24,9 @@ Ansible master repository that contains a collection of different useful roles t
 - Updated **updater** role
 - Warnings armonization
 
+#### Deleted
+- Netdata upgrader for lecagy systems
+
 ### [0.4.1] - 2024-09-24
 #### Added
 - **Mars** server
