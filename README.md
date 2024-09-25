@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.5.0] - 2024-09-25
 #### Added
 - End play condition
+- Let's Encrypt SSL config file for Apache
 - VPN installer
 
 #### Fixed
