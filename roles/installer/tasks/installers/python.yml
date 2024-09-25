@@ -1,8 +1,8 @@
 # Title         : general.yml
 # Description   : Install required Python packages
 # Author        : Veltys
-# Date          : 2024-07-04
-# Version       : 1.2.0
+# Date          : 2024-09-25
+# Version       : 1.3.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -25,3 +25,9 @@
       - python
     ansible.builtin.debug:
       msg: "It seems the Python installer cannot install automatically the required packages. Please, install them manually: [sudo] pip[3] install [--break-system-packages]' {{ python_packages_to_install }}"
+
+  - name: 'Cannot continue'
+    tags:
+      - installation
+      - python
+    ansible.builtin.meta: end_play

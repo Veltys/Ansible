@@ -17,6 +17,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.5.0] - 2024-09-25
 #### Added
+- End play condition
 - VPN installer
 
 #### Fixed
