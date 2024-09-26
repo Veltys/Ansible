@@ -21,6 +21,9 @@ backup				: {
   ],
 }
 certbot				: {
+  directories		: [
+    '/etc/letsencrypt',
+  ],
   files				: [
     { src: '.ovh.ini'					, dest: '/root'						, mode: '0600' },
     { src: 'options-ssl-apache.conf'	, dest: '/etc/letsencrypt'			, mode: '0644' },

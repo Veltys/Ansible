@@ -24,6 +24,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - Better list printing
 - Better installation order
+- Directories existence in *Certbot* module
 - Some fine-tunning on **Eros**
 - Transfer of powers **Eros** ➡ **Ozono**
 - Updated **updater** role
