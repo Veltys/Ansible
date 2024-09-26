@@ -1,8 +1,8 @@
 # Title         : vpn.yml
 # Description   : Installs ZeroTier VPN service
 # Author        : Veltys
-# Date          : 2024-09-24
-# Version       : 1.0.0
+# Date          : 2024-09-26
+# Version       : 1.1.0
 # Usage         : (included as a tasks file by those tasks files which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
 
@@ -21,3 +21,10 @@
     - vpn
   ansible.builtin.command:
     cmd: "{{ vpn.join_command }} {{ host.vpn.network_id | default(group.vpn.network_id) | default(common.vpn.network_id) }}"
+
+- name: 'Pause for user confirmation'
+  tags:
+    - installation
+    - vpn
+  ansible.builtin.pause:
+    prompt: "ZeroTier VPN client is installed and has requested to join the network. Press 'Enter' when the join is approved or Ctrl+C to abort..."
