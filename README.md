@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - Pause for user confirmation on VPN module
 
+#### Fixed
+- Some errors in **Mars** host configuration
+
 ### [0.5.0] - 2024-09-26
 #### Added
 - End play condition
