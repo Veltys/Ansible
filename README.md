@@ -15,7 +15,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.5.0] - 2024-09-25
+### [0.5.0] - 2024-09-26
 #### Added
 - End play condition
 - Let's Encrypt SSL config file for Apache
@@ -24,6 +24,7 @@ Ansible master repository that contains a collection of different useful roles t
 #### Fixed
 - Better list printing
 - Better installation order
+- Some fine-tunning on **Eros**
 - Transfer of powers **Eros** ➡ **Ozono**
 - Updated **updater** role
 - Warnings armonization
