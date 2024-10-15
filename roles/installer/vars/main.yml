@@ -1,8 +1,8 @@
 # Title         : main.yml
 # Description   : Installer role main vars file
 # Author        : Veltys
-# Date          : 2024-09-24
-# Version       : 1.5.0
+# Date          : 2024-10-10
+# Version       : 1.5.1
 # Usage         : (imported as a var file by those playbooks, roles, etc. which need it)
 # Notes         : 
 
@@ -91,16 +91,10 @@ ntp					: {
 passport			: {
   crontab_entries	: [
     { job: '/usr/local/bin/iptables_cleaner.sh'		, name: 'Daily iptables cleaning'						, minute		: '0'		, hour	: '0'						 },
-    { job: '/usr/local/bin/passport.sh'				, name: 'Passport system (1/2)'							, special_time	: 'reboot'										 },
-    { job: '/usr/local/bin/passport.sh'				, name: 'Passport system (2/2)'							, minute		: '0,30'										 },
   ],
   files			: [
     { src: 'iptables_cleaner.sh'		, dest: '/usr/local/bin'			, mode: '0744' },
     { src: 'iptables_replacer.sh'		, dest: '/usr/local/bin'			, mode: '0744' },
-  ],
-  templates			: [
-    { src: 'passport'					, dest: '/etc'						, mode: '0600' },
-    { src: 'passport.sh'				, dest: '/usr/local/bin'			, mode: '0744' },
   ],
 }
 ssh_directory		: "/home/{{ ansible_user }}/.ssh"
