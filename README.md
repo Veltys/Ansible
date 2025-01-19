@@ -17,6 +17,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 ### [0.6.0] - 2025-01-16
 #### Added
+- Certbot renewal in crontab in **Saturnus** host
 - DHCP server installer
 
 #### Fixed
