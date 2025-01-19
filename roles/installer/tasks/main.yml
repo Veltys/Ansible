@@ -1,7 +1,7 @@
 # Title         : main.yml
 # Description   : Installer role main file
 # Author        : Veltys
-# Date          : 2024-09-25
+# Date          : 2024-11-12
 # Version       : 1.7.0
 # Usage         : (imported as a role by those playbooks which need it)
 # Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
@@ -20,8 +20,9 @@
     - firewall
     - backup
     - mailers
-    - apache
     - certbot
+    - apache
+    - dhcp_server
     - fstab
   ansible.builtin.import_tasks: 'configurers/packages_finder_distro.yml'
 
@@ -175,6 +176,15 @@
     - apache
   ansible.builtin.include_tasks: 'configurers/apache.yml'
   when: "'apache2' in distro_packages_to_install"
+
+- name: 'DHCP server configurer'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.include_tasks: 'configurers/dhcp_server.yml'
+  when: >
+    'dhcp' in distro_packages_to_install or
+    'isc-dhcp-server' in distro_packages_to_install
 
 - name: 'SSH keys configurer'
   tags:

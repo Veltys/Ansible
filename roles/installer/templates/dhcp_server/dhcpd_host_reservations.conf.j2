@@ -1,0 +1,15 @@
+{%- for category in dhcp_server.leases -%}
+	{{- '#' }} {{ category.name }}{{ "\n\n" -}}
+	{%- for lease in category.leases -%}
+		{{- '#' }} {{ lease.name }}{% if lease.owner | default(false) %} ({{ lease.owner }}){% endif %} - {{ lease.place }}{{ "\n" -}}
+		{{- '#' }} Dominio: {{ lease.domain | default('----------.----------') }}.veltys.net{{ "\n" -}}
+		{%- for ip in lease.ips -%}
+			{{- 'host' }} {{ ip.host }} {{ "{\n" -}}
+			{{- '    hardware ethernet' }} {{ ip.mac }};{{ "\n" -}}
+			{{- '    fixed-address' }} {{ general.subnet }}.{{ "%03d" | format(ip.ip) }};{{ "\n" -}}
+			{{- "}\n" -}}
+		{%- endfor -%}
+		{{- "\n" -}}
+	{% endfor %}
+	{{- "\n" -}}
+{% endfor %}

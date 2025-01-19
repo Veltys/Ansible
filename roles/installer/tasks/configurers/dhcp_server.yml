@@ -1,0 +1,74 @@
+# Title         : apache.yml
+# Description   : Configure DHCP server
+# Author        : Veltys
+# Date          : 2025-01-16
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'DHCP server configuration (1/2)'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.lineinfile:
+    insertbefore: "{{ item.insertbefore | default(omit) }}"
+    line: "{{ item.line }}"
+    path: '/etc/dhcp/dhcpd.conf'
+    regexp: "{{ item.regexp | default(omit) }}"
+  loop: "{{ dhcp_server.lines }}"
+  loop_control:
+    label: "{{ item.line }}"
+
+- name: 'DHCP server configuration (2/2)'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.blockinfile:
+    block: "{{ item.block }}"
+    insertbefore: "{{ item.insertbefore }}"
+    marker: "{{ item.marker }}"
+    path: '/etc/dhcp/dhcpd.conf'
+  loop: "{{ dhcp_server.blocks }}"
+  loop_control:
+    label: "{{ item.marker }}"
+
+- name: 'Cosmetic change in /etc/dhcp/dhcpd.conf file'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.replace:
+    path: '/etc/dhcp/dhcpd.conf'
+    regexp: "\n+(# BEGIN SUBNET CONFIGURATION FOR .*)"
+    replace: '\n\n\1'
+
+- name: 'Copy required templates'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.template:
+    src: "dhcp_server/{{ item.src }}.j2"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ dhcp_server.templates }}"
+
+- name: 'Testing new configuration'
+  tags:
+    - configuration
+    - dhcp_server
+  ignore_errors: True
+  ansible.builtin.command:
+    cmd: 'sudo dhcpd -t -cf /etc/dhcp/dhcpd.conf'
+  register: test_status
+
+- name: 'Restarting DHCP server service'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.systemd_service:
+    name: 'isc-dhcp-server'
+    state: 'restarted'
+  when: >
+    not ansible_check_mode and
+    not test_status.failed

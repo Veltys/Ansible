@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.6.0] - 2025-01-16
+#### Added
+- DHCP server installer
+
 ### [0.5.2] - 2024-10-10
 #### Fixed
 - Changes in encryption system
