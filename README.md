@@ -19,6 +19,9 @@ Ansible master repository that contains a collection of different useful roles t
 #### Added
 - DHCP server installer
 
+#### Fixed
+- *ansible_python_interpreter* variable support
+
 ### [0.5.2] - 2024-10-10
 #### Fixed
 - Changes in encryption system
