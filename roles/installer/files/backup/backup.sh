@@ -3,8 +3,8 @@
 # Title         : backup.sh
 # Description   : Realiza una copia de seguridad con duplicity en el directorio indicado
 # Author        : Veltys
-# Date          : 2023-02-14
-# Version       : 2.1.0
+# Date          : 2025-01-27
+# Version       : 2.1.1
 # Usage         : sudo bash backup.sh | sudo ./instalador.sh | instalar en la crontab del superusuario
 # Notes         : Es necesario ser superusuario para su correcto funcionamiento
 
@@ -21,6 +21,6 @@ else
 	if ! mountpoint -q "${montaje}/"; then
 		echo "ERROR: El intento de copia de seguridad de $fecha ha fracasado debido a que el dispositivo de destino no estaba montado" >> "$log_file"
 	else
-		duplicity --no-encryption --full-if-older-than 1M --exclude /media --exclude /mnt --exclude /proc --exclude /run --exclude /sys --exclude /tmp --exclude /var/lib/lxcfs / "file://${montaje}/${ruta}" >> "$log_file"
+		duplicity --exclude /media --exclude /mnt --exclude /proc --exclude /run --exclude /sys --exclude /tmp --exclude /var/lib/lxcfs --full-if-older-than 7D --no-encryption  / "file://${montaje}/${ruta}" >> "$log_file"
 	fi
 fi

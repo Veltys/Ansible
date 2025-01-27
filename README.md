@@ -15,13 +15,14 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
-### [0.6.0] - 2025-01-16
+### [0.6.0] - 2025-01-27
 #### Added
 - Certbot renewal in crontab in **Saturnus** host
 - DHCP server installer
 
 #### Fixed
 - *ansible_python_interpreter* variable support
+- Backup and cleaning parameters adjustment
 
 ### [0.5.2] - 2024-10-10
 #### Fixed
