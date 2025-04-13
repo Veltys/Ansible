@@ -15,6 +15,10 @@ Ansible master repository that contains a collection of different useful roles t
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+### [0.6.1] - 2025-04-13
+#### Fixed
+- Apache users reconfiguration
+
 ### [0.6.0] - 2025-01-27
 #### Added
 - Certbot renewal in crontab in **Saturnus** host
