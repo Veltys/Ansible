@@ -1,5 +1,5 @@
 # Ansible
-[![GitHub commits](https://badgen.net/github/commits/Veltys/Ansible)](https://GitHub.com/Veltys/Ansible/commit/)
+[![GitHub commits](https://badgen.net/github/commits/Veltys/Ansible)](https://github.com/Veltys/Ansible/activity?ref=master)
 [![GitHub latest commit](https://badgen.net/github/last-commit/Veltys/Ansible)](https://GitHub.com/Veltys/Ansible/commit/)
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Veltys/Ansible/blob/master/LICENSE.md)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/891edd40bfb14decb9efedbf5ee5f6a9)](https://app.codacy.com/gh/Veltys/Ansible/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
@@ -8,7 +8,7 @@ Ansible master repository with different useful roles
 
 
 ## Description
-Ansible master repository that contains a collection of different useful roles that can be leveraged in the automation of various tasks
+Ansible repository containing useful roles to automate various tasks
 
 
 ## Changelog
@@ -18,6 +18,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.6.1] - 2025-04-13
 #### Fixed
 - Apache users reconfiguration
+- Some typos in **README.md**
 
 ### [0.6.0] - 2025-01-27
 #### Added
@@ -52,13 +53,13 @@ Ansible master repository that contains a collection of different useful roles t
 - Better list printing
 - Better installation order
 - Directories existence in *Certbot* module
-- Some fine-tunning on **Eros**
+- Some fine-tuning on **Eros**
 - Transfer of powers **Eros** ➡ **Ozono**
 - Updated **updater** role
-- Warnings armonization
+- Warnings harmonization
 
 #### Deleted
-- Netdata upgrader for lecagy systems
+- Netdata upgrader for legacy systems
 
 ### [0.4.1] - 2024-09-24
 #### Added
@@ -75,7 +76,7 @@ Ansible master repository that contains a collection of different useful roles t
 - Crontab updates
 - **Eros** host update and some *dos2unix* conversions
 - Files format
-- More directories existance checks in **fstab.yml**
+- More directories existence checks in **fstab.yml**
 - Updated **Ozono** submodule
 - Updated **Rayo** submodule
 - Various improvements
@@ -126,7 +127,7 @@ Ansible master repository that contains a collection of different useful roles t
 - More adjusts for **Perseo**
 - Some firewall rules adjusting
 - Some packages adjusting in **Perseo**
-- These tasks sould not be executed when we are in *check mode*
+- These tasks should not be executed when we are in *check mode*
 
 #### Deleted
 - **Iuppiter** host
@@ -138,7 +139,7 @@ Ansible master repository that contains a collection of different useful roles t
 ### [0.3.52] - 2024-07-11
 #### Added
 - Support for domains with 'www'
-- More required packages in **Satunus** host
+- More required packages in **Saturnus** host
 
 #### Fixed
 - More consistent formatting in **README.md**
@@ -151,7 +152,7 @@ Ansible master repository that contains a collection of different useful roles t
 - certbot configurer
 
 #### Fixed
-- KDE installler optimization
+- KDE installer optimization
 
 ### [0.3.50] - 2024-07-01
 #### Added
@@ -198,7 +199,7 @@ Ansible master repository that contains a collection of different useful roles t
 - **Saturnus** host
 
 #### Fixed
-- Some **Iuppiter** host missconfigurations
+- Some **Iuppiter** host misconfigurations
 
 ### [0.3.43] - 2024-05-21
 #### Fixed
@@ -309,7 +310,7 @@ Ansible master repository that contains a collection of different useful roles t
 
 #### Deleted
 - Old servers (**Neptuno**, **Tellus** and **Uranus**)
-- Unnecesary apache mods
+- Unnecessary apache mods
 
 ### [0.3.30] - 2023-11-20
 #### Added
@@ -507,4 +508,4 @@ Ansible master repository that contains a collection of different useful roles t
 
 
 ## Acknowledgments, sources consulted and other credits
-* To the [official Ansible documentation](https://docs.ansible.com/ansible/latest/index.html), for obvious reasons
+* To the [official Ansible documentation](https://docs.ansible.com/ansible/latest/index.html), for being the primary and most reliable reference source
