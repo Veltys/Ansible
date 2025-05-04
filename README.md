@@ -20,6 +20,9 @@ Ansible repository containing useful roles to automate various tasks
 #### Added:
 - Hades host
 
+#### Fixed:
+- Inventory adjustment
+
 ### [0.6.1] - 2025-04-13
 #### Fixed
 - Apache users reconfiguration
