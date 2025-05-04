@@ -15,6 +15,11 @@ Ansible repository containing useful roles to automate various tasks
 ### To-do (*TODO*)
 - [ ] Create a to-do list
 
+
+### [0.6.2] - 2025-04-27
+#### Added:
+- Hades host
+
 ### [0.6.1] - 2025-04-13
 #### Fixed
 - Apache users reconfiguration
