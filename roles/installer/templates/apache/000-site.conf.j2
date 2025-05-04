@@ -1,8 +1,8 @@
 # Title         : {{ '%03d' | format(i + 1) }}-{{ item.site }}.conf
 # Description   : Apache virtualhost config file
 # Author        : Veltys
-# Date          : 2024-09-21
-# Version       : 1.11.0
+# Date          : 2025-05-03
+# Version       : 1.11.1
 # Usage         : (automatically loaded by Apache if configured)
 # Notes         : Ansible-generated, do not manually edit
 
@@ -162,9 +162,9 @@
 				ProxyAddHeaders		Off
 
 				<IfModule mod_substitute.c>
-					AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE audio/x-mpegurl
+					AddOutputFilterByType INFLATE;SUBSTITUTE;DEFLATE application/x-mpegurl
 					{% if 'enigma2' in item.types -%}
-					Substitute "s|http://(.*)@{{ item.dest }}:8001/|https://{{ item.site }}:8001/|i"
+					Substitute "s|http://(?:.*\:?.*?@)?{{ item.dest }}:8001/|https://{{ item.site }}:8001/|i"
 					{%- elif 'tvheadend' in item.types -%}
 					Substitute "s|http://{{ item.dest }}:{{ item.port | default(80) }}/|https://{{ item.site }}/|i"
 					{%- endif %}{{ "\n\t\t\t\t" -}}
