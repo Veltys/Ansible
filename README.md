@@ -16,6 +16,10 @@ Ansible repository containing useful roles to automate various tasks
 - [ ] Create a to-do list
 
 
+### [0.6.4] - 2025-05-17
+#### Fixed:
+- Revert 'Apache users reconfiguration'
+
 ### [0.6.3] - 2025-05-05
 #### Fixed:
 - Changes to the reverse proxy
