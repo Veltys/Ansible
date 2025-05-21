@@ -1,0 +1,39 @@
+# Title         : deploy_dhcp_server.yml
+# Description   : Deploys dhcpd_host_reservations.conf.j2 template
+# Author        : Veltys
+# Date          : 2025-05-20
+# Version       : 1.0.0
+# Usage         : (included as a tasks file by those tasks files which need it)
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'Copy required templates'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.template:
+    src: "dhcp_server/{{ item.src }}.j2"
+    dest: "{{ item.dest }}/{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop: "{{ dhcp_server.templates }}"
+
+- name: 'Testing new configuration'
+  tags:
+    - configuration
+    - dhcp_server
+  ignore_errors: True
+  ansible.builtin.command:
+    cmd: 'sudo dhcpd -t -cf /etc/dhcp/dhcpd.conf'
+  register: test_status
+
+- name: 'Restarting DHCP server service'
+  tags:
+    - configuration
+    - dhcp_server
+  ansible.builtin.systemd_service:
+    name: 'isc-dhcp-server'
+    state: 'restarted'
+  when: >
+    not ansible_check_mode and
+    not test_status.failed

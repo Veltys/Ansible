@@ -22,6 +22,7 @@ Ansible repository containing useful roles to automate various tasks
 - **Hebe** host
 - **Rea** host
 - New **Heracles** host MAC address
+- Standalone DHCP server deployer
 
 #### Fixed:
 - **Hades** host IP

@@ -1,0 +1,20 @@
+#!/usr/bin/env -S ansible-playbook
+
+# Title         : deploy_dhcp_server.yml
+# Description   : dhcp_server file deployer
+# Author        : Veltys
+# Date          : 2025-05-20
+# Version       : 1.0.0
+# Usage         : ansible-playbook deploy_dhcp_server.yml | sh deploy_dhcp_server.yml | bash deploy_dhcp_server.yml | ./deploy_dhcp_server.yml
+# Notes         : It is not necessary to be super user for it to work correctly, but it is necessary to become it (become, do you get it?)
+
+
+---
+- name: 'dhcp_server role deployer'
+  become: True
+  gather_facts: false
+  hosts: 'ozono'
+  tasks:
+    - include_role:
+        name: installer
+        tasks_from: configurers/deploy_dhcp_server
