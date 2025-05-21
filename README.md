@@ -18,7 +18,8 @@ Ansible repository containing useful roles to automate various tasks
 
 ### [0.6.4] - 2025-05-20
 #### Added:
-- Boreal-sk SSH public key
+- *Boreal-sk* SSH public key
+- New **Heracles** host MAC address
 
 #### Fixed:
 - **Hades** host IP
