@@ -16,9 +16,10 @@ Ansible repository containing useful roles to automate various tasks
 - [ ] Create a to-do list
 
 
-### [0.6.4] - 2025-05-17
+### [0.6.4] - 2025-05-20
 #### Fixed:
 - Revert 'Apache users reconfiguration'
+- **Hades** host IP
 
 ### [0.6.3] - 2025-05-05
 #### Fixed:
@@ -28,7 +29,7 @@ Ansible repository containing useful roles to automate various tasks
 
 ### [0.6.2] - 2025-04-27
 #### Added:
-- Hades host
+- **Hades** host
 
 #### Fixed:
 - Inventory adjustment
