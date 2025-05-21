@@ -16,9 +16,10 @@ Ansible repository containing useful roles to automate various tasks
 - [ ] Create a to-do list
 
 
-### [0.6.4] - 2025-05-20
+### [0.6.4] - 2025-05-21
 #### Added:
 - *Boreal-sk* SSH public key
+- **Asteria** host
 - **Filotes** host
 - **Hebe** host
 - **Rea** host
