@@ -16,10 +16,11 @@ Ansible repository containing useful roles to automate various tasks
 - [ ] Create a to-do list
 
 
-### [0.6.3] - 2025-05-04
+### [0.6.3] - 2025-05-05
 #### Fixed:
 - Changes to the reverse proxy
 - New replacement pattern and other improvements
+- Several improvements to the 'Passport' system scripts
 
 ### [0.6.2] - 2025-04-27
 #### Added:
