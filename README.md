@@ -20,6 +20,7 @@ Ansible repository containing useful roles to automate various tasks
 #### Added:
 - *Boreal-sk* SSH public key
 - **Hebe** host
+- **Rea** host
 - New **Heracles** host MAC address
 
 #### Fixed:
