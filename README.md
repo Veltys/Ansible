@@ -18,8 +18,9 @@ Ansible repository containing useful roles to automate various tasks
 
 ### [0.6.4] - 2025-05-20
 #### Fixed:
-- Revert 'Apache users reconfiguration'
 - **Hades** host IP
+- Revert 'Apache users reconfiguration'
+- Submodules update
 
 ### [0.6.3] - 2025-05-05
 #### Fixed:
